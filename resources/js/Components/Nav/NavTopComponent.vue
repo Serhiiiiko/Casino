@@ -135,11 +135,11 @@
                                            required>
 
                                     <button v-if="searchTerm.length > 0" @click.prevent="clearData" type="button" class="absolute top-0 end-0 h-full p-2.5 text-sm font-medium text-white rounded-e-lg dark:bg-[#1C1E22] ">
-                                        <span class="">Recusar</span>
+                                        <span class="">Мусор</span>
                                     </button>
                                 </div>
                                 <div class="text-center mt-4">
-                                    <p>A pesquisa requer pelo menos 3 caracteres</p>
+                                    <p>Требуется не менее 3 символов</p>
                                 </div>
                             </div>
 
@@ -224,7 +224,7 @@
                                 {{ $t('Log in') }}
                             </button>
                         </div>
-                        <p class="text-sm text-gray-500 dark:text-gray-300 mb-6">Novo por aqui? <a href="" @click.prevent="hideLoginShowRegisterToggle"><strong>Criar conta</strong></a></p>
+                        <p class="text-sm text-gray-500 dark:text-gray-300 mb-6">Новая запись? <a href="" @click.prevent="hideLoginShowRegisterToggle"><strong>Зарегистрироваться</strong></a></p>
                     </form>
 
                     <div class="login-wrap mt-5">

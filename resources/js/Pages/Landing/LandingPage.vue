@@ -2,7 +2,7 @@
     <LandingLayout>
         <LoadingComponent :isLoading="isLoading">
             <div class="text-center">
-                <span>Carregando...</span>
+                <span>Загрузка ...</span>
             </div>
         </LoadingComponent>
 

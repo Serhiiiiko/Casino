@@ -26,14 +26,14 @@
                                 <img :src="`/assets/images/00.png`" alt="" class="h-16">
                             </div>
                             <div class="flex gap-2">
-                                <p>Para o próximo nível</p>
+                                <p>Для следующего уровня</p>
                                 <a href="" class="font-bold text-primary">Vip {{ nextLevel.bet_level }}</a>
-                                <p>Aposta válida ainda é necessária </p>
+                                <p>Действительная ставка все еще необходима </p>
                                 <a href="" class="font-bold text-primary">{{ nextLevel.bet_required }}</a>
                             </div>
                             <div class="flex gap-2">
                                 <button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-                                    Regras
+                                    Правила
                                 </button>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
 
                 <div class="dark:bg-gray-800 rounded-lg mt-5 w-full p-4">
                     <div class="title-vip flex justify-between">
-                        <p class="text-2xl">Lista de níveis VIP</p>
+                        <p class="text-2xl">Список уровней VIP</p>
                         <p class="text-2xl"><i class="fa-sharp fa-light fa-coins mr-2"></i> {{ vipPoints }}</p>
                     </div>
 
@@ -58,7 +58,7 @@
                                     aria-controls="vipdefault-panel"
                                     aria-selected="false"
                                 >
-                                    Bônus de aumento de nível
+                                    Уровень повышения бонусов
                                 </button>
                             </li>
                             <li class="me-2" role="presentation">
@@ -70,7 +70,7 @@
                                     aria-controls="weeklybonus-panel"
                                     aria-selected="false"
                                 >
-                                    Bônus Semanal
+                                    Еженедельный бонус
                                 </button>
                             </li>
                             <li class="me-2" role="presentation">
@@ -82,7 +82,7 @@
                                     aria-controls="monthlybonus-panel"
                                     aria-selected="false"
                                 >
-                                    Bônus Mensal
+                                    Ежемесячный бонус
                                 </button>
                             </li>
                             <li class="me-2" role="presentation">
@@ -94,7 +94,7 @@
                                     aria-controls="annualbonus-panel"
                                     aria-selected="false"
                                 >
-                                    Bônus Anual
+                                    Ежемесячный бонус
                                 </button>
                             </li>
                         </ul>

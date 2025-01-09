@@ -95,7 +95,7 @@
                 <div>
                     <RouterLink :to="{ name: 'eventsPage' }" active-class="category-action" class="relative">
                         <img :src="`/assets/images/eventos.png`" alt="" class="w-full">
-                        <h1 class="button-title-menu">Eventos</h1>
+                        <h1 class="button-title-menu">События</h1>
                     </RouterLink>
                 </div>
                 <div>

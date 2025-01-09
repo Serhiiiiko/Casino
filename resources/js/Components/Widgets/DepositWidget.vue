@@ -62,7 +62,7 @@
             <div v-if="showPixQRCode && wallet" class="flex flex-col ">
                 <div class="w-full p-4 bg-white dark:bg-gray-700 rounded mb-3">
                     <div class="flex justify-between">
-                        <h2 class="text-lg">Falta pouco! Escaneie o código QR pelo seu app de pagamentos ou Internet Banking</h2>
+                        <h2 class="text-lg">Не хватает!Сканируйте QR -код для вашего приложения для платежей или интернет -банкинга</h2>
                         <div class="text-4xl">
                             <i class="fa-regular fa-circle-dollar"></i>
                         </div>
@@ -71,16 +71,16 @@
 
                 <div class="w-full p-4">
                     <div>
-                        <p class="font-bold">Valor do Pix a pagar: {{ state.currencyFormat(parseFloat(deposit.amount), wallet.currency) }}</p>
+                        <p class="font-bold">Сумма pix: {{ state.currencyFormat(parseFloat(deposit.amount), wallet.currency) }}</p>
                     </div>
                     <div class="p-3 flex justify-center items-center">
                         <QRCodeVue3 :value="qrcodecopypast"/>
                     </div>
                     <div>
-                        <p class="font-bold">Código válido por 23 horas.</p>
+                        <p class="font-bold">Действующий код 23 часа.</p>
                     </div>
                     <div class="mt-4">
-                        <p class="mb-3">Se preferir, você pode pagá-lo copiando e colando o código abaixo:</p>
+                        <p class="mb-3">Если вы предпочитаете, вы можете заплатить его, копировав и вставляя код ниже:</p>
                         <input id="pixcopiaecola" type="text" class="input" v-model="qrcodecopypast">
                     </div>
 
@@ -171,7 +171,7 @@
                                             '##.###.###/####-##'
                                           ]"
                                    class="mt-2 border-none text-gray-600 placeholder:text-gray-300 dark:text-gray-200 dark:placeholder:text-gray-500  w-full bg-white dark:bg-gray-900 font-sans transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-75 px-2 text-sm leading-5 rounded py-3"
-                                   placeholder="Digite o CPF"
+                                   placeholder="Информация o CPF"
                                    required>
                         </div>
 

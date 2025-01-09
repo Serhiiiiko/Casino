@@ -6,95 +6,95 @@
                     <img :src="`/assets/images/terms-conditions.png`" alt="" class="w-full">
                 </div>
                 <div class="">
-                    <h4 class="text-2xl">Introdução</h4>
+                    <h4 class="text-2xl">Введение</h4>
                     <br>
-                    <p>1.1. Ao usar, visitar e/ou acessar qualquer parte do site {{ setting.software_name }} e/ou qualquer subdomínio, site ou aplicativo móvel que possuímos ou operamos (o “Site”) e/ou registrar uma conta no Site, você concorda em estar vinculado por estes Termos e Condições, nossa Política de Privacidade, nossa Política de Cookies e quaisquer outras regras aplicáveis aos nossos produtos de apostas ou jogos disponíveis no Site (juntos os 'Termos'), e considera-se que aceitou e entendeu todos os Termos.</p>
+                    <p>1.1. Используя, посещая и/или получая доступ к любой части сайта {{ setting.software_name }} и/или любому поддомену, а также любому сайту или мобильному приложению, принадлежащему нам или управляемому нами (далее – «Сайт»), и/или регистрируя учётную запись на Сайте, вы соглашаетесь соблюдать данные Условия и положения, а также нашу Политику конфиденциальности, Политику в отношении файлов cookie и любые другие правила, применимые к нашим продуктам для ставок или игр, доступным на Сайте (совместно именуемые «Условия»). Считается, что вы приняли и поняли все указанные Условия.</p>
                     <br>
-                    <h4 class="text-2xl">2.1. Requerimentos Legais</h4>
+                    <h4 class="text-2xl">2.1. Юридические требования</h4>
                     <br>
-                    <p>2.1.1. Referência à “Conta” significa uma conta registrada por você no Site após aceitar e concordar com estes Termos. Ao registrar uma Conta, você declara que tem mais de 18 anos ou uma idade mínima legal superior, conforme estipulado na jurisdição de sua residência de acordo com as leis aplicáveis a você. É de sua exclusiva responsabilidade saber se os serviços disponíveis no Site são legais no país de sua residência. Pessoas menores de 18 anos não estão autorizadas a usar o Site e/ou quaisquer serviços nele disponíveis.</p>
+                    <p>2.1.1. Под «Учётной записью» понимается учётная запись, зарегистрированная вами на Сайте после принятия и согласия с настоящими Условиями. Регистрируя Учётную запись, вы подтверждаете, что вам исполнилось 18 лет или вы достигли другого минимального совершеннолетия в соответствии с законодательством вашей юрисдикции. Вы самостоятельно несёте ответственность за то, чтобы убедиться в законности использования услуг Сайта в стране вашего проживания. Лица, не достигшие 18 лет, не имеют права использовать Сайт и/или какие-либо доступные на нём сервисы.</p>
                     <br>
-                    <h4 class="text-2xl">3. Transações Financeiras e Saques</h4>
+                    <h4 class="text-2xl">3. Финансовые операции и вывод средств</h4>
                     <br>
-                    <p>3.1. A {{ setting.software_name }} reserva-se o direito de verificar a identidade do usuário antes de processar qualquer transação financeira. Isso pode incluir, mas não está limitado a, solicitar documentos de identificação e comprovantes de residência.</p>
-                    <p>3.2. A {{ setting.software_name }} se reserva o direito de impor limites de saque a seu critério. Esses limites podem ser alterados a qualquer momento e sem aviso prévio.</p>
-                    <p>3.3. A {{ setting.software_name }} não é responsável por quaisquer taxas ou encargos que possam ser cobrados pelo seu banco ou provedor de serviços financeiros.</p>
-                    <p>3.4. As transações financeiras devem ser realizadas em nome do titular da conta registrada.</p>
+                    <p>3.1. {{ setting.software_name }} оставляет за собой право проверять личность пользователя перед обработкой любых финансовых операций. Это может включать в себя, помимо прочего, запрос документов, удостоверяющих личность, и подтверждение адреса проживания.</p>
+                    <p>3.2. {{ setting.software_name }} оставляет за собой право по своему усмотрению устанавливать лимиты на вывод средств. Эти лимиты могут быть изменены в любое время и без предварительного уведомления.</p>
+                    <p>3.3. {{ setting.software_name }} не несёт ответственности за любые комиссии или сборы, которые могут взиматься вашим банком или финансовым провайдером.</p>
+                    <p>3.4. Финансовые операции должны осуществляться от имени владельца зарегистрированной учётной записи.</p>
                     <br>
-                    <h4 class="text-2xl">4. Política de Privacidade</h4>
+                    <h4 class="text-2xl">4. Политика конфиденциальности</h4>
                     <br>
-                    <p>4.1. Ao registrar uma conta no Site, você concorda com nossa Política de Privacidade. A Política de Privacidade é incorporada por referência a estes Termos e Condições.</p>
+                    <p>4.1. Регистрируя учётную запись на Сайте, вы соглашаетесь с нашей Политикой конфиденциальности. Политика конфиденциальности включена в данные Условия путём ссылки.</p>
                     <br>
-                    <h4 class="text-2xl">5. Direitos de Propriedade Intelectual</h4>
+                    <h4 class="text-2xl">5. Права интеллектуальной собственности</h4>
                     <br>
-                    <p>5.1. O Site e todos os materiais nele contidos, incluindo, mas não se limitando a, logotipos, designs, textos, gráficos, fotos, vídeos, informações, software, música, som e outros arquivos, e sua seleção e arranjo (o "Conteúdo do Site"), são propriedade da {{ setting.software_name }} ou de seus licenciadores. Nenhum direito ou interesse no Conteúdo do Site é transferido para você.</p>
+                    <p>5.1. Сайт и все материалы, содержащиеся на нем, включая, помимо прочего, логотипы, дизайн, тексты, графику, фотографии, видео, информацию, программное обеспечение, музыку, звук и другие файлы, а также их подбор и расположение (далее – «Контент Сайта»), принадлежат {{ setting.software_name }} или её лицензиарам. Никакие права или интересы в отношении Контента Сайта не передаются вам.</p>
                     <br>
-                    <h4 class="text-2xl">6. Rescisão</h4>
+                    <h4 class="text-2xl">6. Расторжение</h4>
                     <br>
-                    <p>6.1. A {{ setting.software_name }} reserva-se o direito de encerrar a sua conta a qualquer momento, a seu exclusivo critério, sem aviso prévio.</p>
+                    <p>6.1. {{ setting.software_name }} оставляет за собой право в любой момент по собственному усмотрению прекратить действие вашей учётной записи без предварительного уведомления.</p>
                     <br>
-                    <h4 class="text-2xl">7. Alterações aos Termos</h4>
+                    <h4 class="text-2xl">7. Изменения в Условиях</h4>
                     <br>
-                    <p>7.1. A {{ setting.software_name }} reserva-se o direito de alterar, modificar, adicionar ou remover partes destes Termos a qualquer momento e a seu exclusivo critério. Quando as alterações forem feitas, publicaremos as alterações revisadas no Site. Sua utilização contínua do Site após a publicação dessas alterações constituirá a sua aceitação dessas alterações.</p>
-
-                    <h4 class="text-2xl">8. Limitação de Responsabilidade</h4>
+                    <p>7.1. {{ setting.software_name }} оставляет за собой право изменять, дополнять или удалять любые части данных Условий в любое время и по собственному усмотрению. При внесении изменений мы опубликуем пересмотренную версию Условий на Сайте. Дальнейшее использование вами Сайта после размещения таких изменений будет означать ваше согласие с этими изменениями.</p>
                     <br>
-                    <p>8.1. A {{ setting.software_name }} não será responsável por quaisquer danos diretos, indiretos, especiais, punitivos, incidentais, exemplares ou consequentes, ou quaisquer outros danos de qualquer tipo, incluindo, mas não se limitando a, perda de uso, perda de lucros ou perda de dados, seja em ação por contrato, delito (incluindo, mas não se limitando a, negligência) ou de outra forma, decorrentes de ou de qualquer forma relacionados com o uso ou incapacidade de usar o Site, os serviços, ou os materiais contidos em ou acessados através do Site.</p>
+                    <h4 class="text-2xl">8. Ограничение ответственности</h4>
                     <br>
-                    <h4 class="text-2xl">9. Lei Aplicável</h4>
+                    <p>8.1. {{ setting.software_name }} не несёт ответственности за любые прямые, косвенные, особые, штрафные, побочные, примерные или косвенные убытки либо любые другие убытки любого вида, включая, помимо прочего, утрату возможности использования, упущенную выгоду или потерю данных, независимо от оснований (договор, деликт (включая, но не ограничиваясь небрежностью) или иное), возникающие вследствие или в связи с использованием или невозможностью использования Сайта, услуг или материалов, содержащихся на Сайте или полученных через него.</p>
                     <br>
-                    <p>9.1. Estes Termos serão regidos e interpretados de acordo com as leis do país em que a {{ setting.software_name }} está registrada. Você concorda que qualquer ação legal ou equitativa que surja de ou esteja relacionada a estes Termos será decidida pelos tribunais do país em que a {{ setting.software_name }} está registrada, e você concorda e se submete à jurisdição pessoal e exclusiva desses tribunais.</p>
+                    <h4 class="text-2xl">9. Применимое право</h4>
                     <br>
-                    <h4 class="text-2xl">10. Uso de Hacks ou Bugs</h4>
+                    <p>9.1. Настоящие Условия регулируются и толкуются в соответствии с законодательством страны, в которой зарегистрирована компания {{ setting.software_name }}. Вы соглашаетесь, что любые судебные или эквивалентные разбирательства, возникающие из настоящих Условий или связанные с ними, будут рассматриваться судами страны, в которой зарегистрирована компания {{ setting.software_name }}, и настоящим вы даёте согласие на исключительную юрисдикцию этих судов.</p>
                     <br>
-                    <p>10.1. O uso de hacks, bugs ou qualquer outra forma de manipulação do sistema para obter uma vantagem injusta é estritamente proibido. A detecção de tais atividades levará ao bloqueio imediato da conta do usuário e à proibição de saques. A {{ setting.software_name }} se reserva o direito de tomar medidas legais contra qualquer usuário que esteja envolvido em tais atividades.</p>
+                    <h4 class="text-2xl">10. Использование хаков или багов</h4>
                     <br>
-                    <h4 class="text-2xl">11. Serviços de Terceiros</h4>
+                    <p>10.1. Строго запрещается использование хаков, багов или любых других способов манипуляции системой для получения несправедливого преимущества. Обнаружение подобной деятельности приведёт к немедленной блокировке учётной записи пользователя и запрету на вывод средств. {{ setting.software_name }} оставляет за собой право предпринять юридические действия в отношении любого пользователя, вовлечённого в такие действия.</p>
                     <br>
-                    <p>11.1. O Site pode conter links para sites de terceiros que não são de propriedade ou controlados pela {{ setting.software_name }}. A {{ setting.software_name }} não tem controle sobre, e não assume nenhuma responsabilidade pelo conteúdo, políticas de privacidade ou práticas de qualquer site de terceiros. Ao usar o Site, você expressamente isenta a {{ setting.software_name }} de toda e qualquer responsabilidade decorrente do uso de qualquer site de terceiros.</p>
+                    <h4 class="text-2xl">11. Сервисы третьих сторон</h4>
                     <br>
-                    <h4 class="text-2xl">12. Indenização</h4>
+                    <p>11.1. На Сайте могут быть ссылки на сайты третьих сторон, которые не принадлежат компании {{ setting.software_name }} и не контролируются ею. {{ setting.software_name }} не контролирует и не несёт ответственности за контент, политику конфиденциальности или практики любых сторонних сайтов. Используя Сайт, вы явно освобождаете {{ setting.software_name }} от любой ответственности, возникающей в связи с использованием вами таких сторонних сайтов.</p>
                     <br>
-                    <p>12.1. Você concorda em defender, indenizar e isentar a {{ setting.software_name }}, seus diretores, funcionários e agentes, de e contra quaisquer reivindicações, ações ou demandas, incluindo, sem limitação, custos legais e contábeis razoáveis, alegando ou resultantes de seu uso do Site e dos Serviços ou sua violação destes Termos.</p>
+                    <h4 class="text-2xl">12. Возмещение убытков (Индентификация)</h4>
                     <br>
-                    <h4 class="text-2xl">13. Reclamações de Direitos Autorais</h4>
+                    <p>12.1. Вы соглашаетесь защищать, возмещать убытки и ограждать {{ setting.software_name }}, её директоров, сотрудников и агентов от любых претензий, исков или требований, включая, помимо прочего, разумные юридические и бухгалтерские расходы, выдвинутые третьими лицами вследствие или в связи с вашим использованием Сайта и услуг или вашим нарушением настоящих Условий.</p>
                     <br>
-                    <p>13.1. Se você acredita que seu trabalho foi copiado de uma maneira que constitui violação de direitos autorais, por favor, forneça as seguintes informações em sua reclamação: (a) identificação do trabalho protegido por direitos autorais que você alega ter sido violado; (b) identificação do material no Site que você alega estar infringindo; (c) seu endereço, número de telefone e endereço de e-mail; (d) uma declaração de que você acredita de boa fé que o uso disputado não é autorizado pelo proprietário dos direitos autorais, seu agente ou pela lei; (e) uma declaração feita por você, sob pena de perjúrio, de que as informações acima em sua reclamação são precisas e que você é o proprietário dos direitos autorais ou está autorizado a agir em nome do proprietário dos direitos autorais.</p>
+                    <h4 class="text-2xl">13. Претензии в отношении авторских прав</h4>
                     <br>
-                    <h4 class="text-2xl">14. Serviços de Atendimento ao Cliente</h4>
+                    <p>13.1. Если вы считаете, что ваша работа была скопирована таким образом, что это нарушает авторские права, пожалуйста, предоставьте в своей жалобе следующую информацию: (a) идентификацию защищённой авторским правом работы, которая, по вашему мнению, была нарушена; (b) идентификацию материала на Сайте, который, по вашему мнению, нарушает авторские права; (c) ваш адрес, номер телефона и адрес электронной почты; (d) заявление о том, что вы добросовестно полагаете, что спорное использование не было разрешено владельцем авторских прав, его агентом или законом; (e) заявление, сделанное вами под страхом наказания за дачу ложных показаний, о том, что изложенная в вашей жалобе информация является точной, и что вы являетесь владельцем авторских прав или уполномочены действовать от имени владельца авторских прав.</p>
                     <br>
-                    <p>14.1. Se você tiver alguma dúvida ou reclamação sobre o Site, os Serviços, ou estes Termos, você pode entrar em contato com o nosso serviço de atendimento ao cliente através do endereço de e-mail fornecido no Site.</p>
+                    <h4 class="text-2xl">14. Служба поддержки</h4>
                     <br>
-                    <h4 class="text-2xl">15. Disposições Gerais</h4>
+                    <p>14.1. Если у вас есть какие-либо вопросы или жалобы относительно Сайта, услуг или настоящих Условий, вы можете связаться со службой поддержки по адресу электронной почты, указанному на Сайте.</p>
                     <br>
-                    <p>15.1. Se qualquer parte destes Termos for considerada inválida ou inexequível de acordo com a lei aplicável, a provisão inválida ou inexequível será considerada substituída por uma provisão válida e exequível que mais se aproxima da intenção da provisão original, e o restante dos Termos continuará em vigor.</p>
-                    <p>15.2. Estes Termos, juntamente com a Política de Privacidade e quaisquer outros acordos legais publicados no Site, constituem o acordo integral entre você e a {{ setting.software_name }} em relação ao uso do Site e dos Serviços.</p>
-                    <p>15.3. Qualquer falha da {{ setting.software_name }} em exercer ou impor qualquer direito ou disposição destes Termos não será considerada uma renúncia a tal direito ou disposição.</p>
+                    <h4 class="text-2xl">15. Общие положения</h4>
                     <br>
-                    <h4 class="text-2xl">16. Política de Jogo Responsável</h4>
+                    <p>15.1. Если какая-либо часть настоящих Условий будет признана недействительной или неисполнимой в соответствии с применимым законодательством, недействительная или неисполнимая часть будет заменена действующей и подлежащей исполнению нормой, максимально приближённой к намерениям исходной части, а остальные положения Условий сохранят свою силу.</p>
+                    <p>15.2. Настоящие Условия, вместе с Политикой конфиденциальности и любыми другими правовыми соглашениями, опубликованными на Сайте, составляют полное соглашение между вами и {{ setting.software_name }} в отношении использования Сайта и услуг.</p>
+                    <p>15.3. Любое неосуществление или неприменение компанией {{ setting.software_name }} какого-либо права или положения настоящих Условий не считается отказом от такого права или положения.</p>
                     <br>
-                    <p>16.1. A {{ setting.software_name }} está comprometida em fornecer um ambiente de jogo seguro e responsável. Encorajamos todos os nossos jogadores a jogar de forma responsável e a reconhecer que o jogo é uma forma de entretenimento e não deve ser usado como meio de ganhar dinheiro.</p>
-                    <p>16.2. Se você acredita que pode ter um problema de jogo, recomendamos que você procure ajuda profissional e que você se auto-exclua do nosso site.</p>
+                    <h4 class="text-2xl">16. Политика ответственной игры</h4>
                     <br>
-                    <h4 class="text-2xl">17. Política de Autoexclusão</h4>
+                    <p>16.1. {{ setting.software_name }} стремится обеспечить безопасную и ответственную игровую среду. Мы призываем всех наших пользователей играть ответственно и помнить, что игра является формой развлечения, а не способом заработка.</p>
+                    <p>16.2. Если вы считаете, что у вас могут быть проблемы с азартными играми, мы рекомендуем обратиться за профессиональной помощью и воспользоваться возможностью самоисключения с нашего сайта.</p>
                     <br>
-                    <p>17.1. A {{ setting.software_name }} oferece uma política de autoexclusão para aqueles que acreditam que podem ter um problema de jogo. Se você optar por se autoexcluir, sua conta será fechada e você não poderá acessar o site por um período de tempo especificado.</p>
+                    <h4 class="text-2xl">17. Политика самоисключения</h4>
                     <br>
-                    <h4 class="text-2xl">18. Política de Reembolso</h4>
+                    <p>17.1. {{ setting.software_name }} предлагает политику самоисключения для тех, кто считает, что у них могут быть проблемы с азартными играми. Если вы решите самоисключиться, ваша учётная запись будет закрыта, и вы не сможете получить доступ к сайту в течение определённого периода времени.</p>
                     <br>
-                    <p>18.1. A {{ setting.software_name }} não oferece reembolsos, exceto em circunstâncias excepcionais. Qualquer pedido de reembolso será avaliado caso a caso.</p>
+                    <h4 class="text-2xl">18. Политика возврата средств</h4>
                     <br>
-                    <h4 class="text-2xl">19. Política de Conta</h4>
+                    <p>18.1. {{ setting.software_name }} не осуществляет возврат средств, за исключением исключительных обстоятельств. Любой запрос на возврат будет рассматриваться в индивидуальном порядке.</p>
                     <br>
-                    <p>19.1 Cada usuário está estritamente proibido de registrar e manter mais de uma conta no Site. A violação desta política resultará no encerramento imediato de todas as contas associadas ao usuário, bem como em possíveis restrições de saques.</p>
+                    <h4 class="text-2xl">19. Политика учётной записи</h4>
                     <br>
-                    <h4 class="text-2xl">20. Política de Verificação de Idade</h4>
+                    <p>19.1. Каждому пользователю строго запрещено регистрировать и поддерживать более одной учётной записи на Сайте. Нарушение данной политики приведёт к немедленному закрытию всех учётных записей, связанных с пользователем, а также к возможным ограничениям на вывод средств.</p>
                     <br>
-                    <p>20.1. A {{ setting.software_name }} leva a verificação de idade muito a sério. Qualquer usuário suspeito de ser menor de idade será solicitado a fornecer prova de idade. A falha em fornecer tal prova resultará no fechamento da conta do usuário.</p>
+                    <h4 class="text-2xl">20. Политика проверки возраста</h4>
                     <br>
-                    <h4 class="text-2xl">21. Política de Jogo Justo</h4>
+                    <p>20.1. {{ setting.software_name }} придаёт большое значение проверке возраста. Любой пользователь, в отношении которого имеется подозрение на несовершеннолетие, будет обязан предоставить доказательства возраста. Непредоставление таких доказательств приведёт к закрытию учётной записи пользователя.</p>
                     <br>
-                    <p>21.1. A {{ setting.software_name }} está comprometida em fornecer um ambiente de jogo justo para todos os seus usuários. Qualquer usuário encontrado manipulando o sistema de qualquer maneira será banido permanentemente do site.</p>
+                    <h4 class="text-2xl">21. Политика честной игры</h4>
+                    <br>
+                    <p>21.1. {{ setting.software_name }} стремится обеспечить честную игру для всех своих пользователей. Любой пользователь, уличённый в каком-либо виде манипуляции системой, будет навсегда заблокирован на Сайте.</p>
                 </div>
             </div>
         </div>
@@ -118,8 +118,6 @@ export default {
         }
     },
     setup(props) {
-
-
         return {};
     },
     computed: {

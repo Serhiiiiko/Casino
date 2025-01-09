@@ -23,7 +23,7 @@ return [
     'timezone' => 'America/Sao_Paulo',
 
 
-    'locale' => 'ru_RU',
+    'locale' => 'ru',
 
 
     'fallback_locale' => 'en',

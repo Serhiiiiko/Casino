@@ -12,17 +12,17 @@
                     <td style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);">
                         <h2 style="margin-bottom: 20px;">Redefinição de Senha</h2>
                         <p>
-                            Você está recebendo este e-mail porque recebemos uma solicitação para redefinir a senha da sua conta. O token é esse abaixo:
+                            Вы получаете это письмо, потому что мы получаем запрос на переопределение пароля вашей учетной записи.Токен это ниже:                            
                             <br>
                             <br>
                             <br>
                             <code style="padding: 5px; background-color: #9ca3af46;">{{ $token }}</code>
                             <br>
                             <br>
-                            <a href="{{ $resetLink }}" style="background-color: #007BFF; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Redefinir Senha</a>
+                            <a href="{{ $resetLink }}" style="background-color: #007BFF; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Смена пароля</a>
                         </p>
                         <p>
-                            Se você não solicitou uma redefinição de senha, ignore este e-mail.
+                            Если вы не запросили переосмысление пароля, игнорируйте это письмо.
                         </p>
                     </td>
                 </tr>

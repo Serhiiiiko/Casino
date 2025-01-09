@@ -10,9 +10,9 @@
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #fff; border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
                 <tr>
                     <td style="padding: 20px;">
-                        <h2 style="margin-bottom: 20px;">NOVA SOLICITAÇÃO DE SAQUE</h2>
-                        <p>Prezado Administrador,</p>
-                        <p>Desejamos informar que o usuário <strong>{{ $usuario }}</strong> acabou de solicitar um saque de <strong>{{ $valor }}</strong> em nossa plataforma.</p>
+                        <h2 style="margin-bottom: 20px;">Новый запрос о выходе</h2>
+                        <p>Уважаемый администратор,</p>
+                        <p>Мы хотим сообщить, что пользователь <strong>{{ $usuario }}</strong> только что запросил вывод <strong>{{ $valor }}</strong> на нашей платформе.</p>
                     </td>
                 </tr>
             </table>

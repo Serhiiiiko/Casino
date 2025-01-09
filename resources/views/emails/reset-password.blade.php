@@ -10,15 +10,15 @@
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto;">
                 <tr>
                     <td style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);">
-                        <h2 style="margin-bottom: 20px;">Redefinição de Senha</h2>
+                        <h2 style="margin-bottom: 20px;">Обновить пароль</h2>
                         <p>
-                            Você está recebendo este e-mail porque recebemos uma solicitação para redefinir a senha da sua conta.
+                            Вы получаете это письмо, потому что мы получили запрос на обновление пароля вашей учетной записи.
                             <br>
-                            <a href="{{ $resetLink }}" style="background-color: #007BFF; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Redefinir Senha</a>
+                            <a href="{{ $resetLink }}" style="background-color: #007BFF; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Обновление пароля</a>
                         </p>
                         <p>
-                            Se você não solicitou uma redefinição de senha, ignore este e-mail.
-                        </p>
+                            Если вы не запросили обновление пароля, игнорируйте это письмо. 
+                       </p>
                     </td>
                 </tr>
             </table>

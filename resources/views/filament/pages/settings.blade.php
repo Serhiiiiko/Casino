@@ -7,7 +7,7 @@
             :actions="$this->getFormActions()"
         />
 {{--        <x-filament::button type="submit" form="submit">--}}
-{{--            Atualizar dados--}}
+{{--            Обновить данные--}}
 {{--        </x-filament::button>--}}
     </form>
 </x-filament-panels::page>

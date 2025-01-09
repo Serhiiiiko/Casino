@@ -58,7 +58,7 @@
                 flex h-14 w-14 items-center justify-center rounded-full border-2
                 shadow-lg transition-all duration-300">
       <img class="h-10 w-10 rounded-full"
-           src="/assets/images/lang/russia.svg"
+           src="/assets/images/lang/brasil.svg"
            alt="Russian flag icon" />
     </div>
     <div class="bg-primary-500 dark:border-gray-800 absolute -end-1 -top-1 hidden h-7 w-7

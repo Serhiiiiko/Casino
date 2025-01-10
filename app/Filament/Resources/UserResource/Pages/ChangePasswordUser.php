@@ -21,12 +21,10 @@ class ChangePasswordUser extends Page implements HasForms
     public User $record;
     public ?array $data = [];
 
-
     protected static string $resource = UserResource::class;
-
     protected static string $view = 'filament.resources.user-resource.pages.change-password-user';
 
-    protected static ?string $title = 'Alterar Senha';
+    protected static ?string $title = 'Изменить пароль';
 
     /**
      * @return void
@@ -37,25 +35,18 @@ class ChangePasswordUser extends Page implements HasForms
     }
 
     /**
-     * @param Form $form
-     * @return Form
+     * @return void
      */
-//    public function form(Form $form): Form
-//    {
-//        return $form
-//            ->schema($this->getFormSchema())
-//            ->statePath('data');
-//    }
-
     public function save()
     {
         try {
             $user = User::find($this->record->id);
 
             $user->update(['password' => $this->data['password']]);
+
             Notification::make()
-                ->title('Senha Alterada')
-                ->body('A senha foi alterada com sucesso!')
+                ->title('Пароль изменён')
+                ->body('Пароль был успешно изменён!')
                 ->success()
                 ->send();
         } catch (Halt $exception) {
@@ -69,25 +60,24 @@ class ChangePasswordUser extends Page implements HasForms
     public function getFormSchema(): array
     {
         return [
-            Section::make('Mude sua senha')
-                ->description('Formulário para alterar a nova senha')
+            Section::make('Измените свой пароль')
+                ->description('Форма для изменения нового пароля')
                 ->schema([
-                   TextInput::make('password')
-                        ->label('Senha')
-                        ->placeholder('Digite a senha')
+                    TextInput::make('password')
+                        ->label('Пароль')
+                        ->placeholder('Введите пароль')
                         ->password()
                         ->required()
                         ->maxLength(191),
                     TextInput::make('confirm_password')
-                        ->label('Confirme Senha')
-                        ->placeholder('Confirme sua senha')
+                        ->label('Подтвердите пароль')
+                        ->placeholder('Подтвердите свой пароль')
                         ->password()
                         ->confirmed()
                         ->maxLength(191),
                 ])
                 ->columns(2)
-                ->statePath('data')
-
+                ->statePath('data'),
         ];
     }
 }

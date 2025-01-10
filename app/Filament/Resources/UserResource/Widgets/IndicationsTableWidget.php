@@ -23,7 +23,7 @@ class IndicationsTableWidget extends BaseWidget
         $this->record = $record;
     }
 
-    protected static ?string $heading = 'Todas Indicações';
+    protected static ?string $heading = 'Все рефералы';
 
     protected static ?int $navigationSort = -1;
 
@@ -40,30 +40,36 @@ class IndicationsTableWidget extends BaseWidget
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Usuário')
+                    ->label('Пользователь')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('losses')
-                    ->formatStateUsing(fn (AffiliateHistory $record): string => 'Qtd: '.$record->losses.' - Total: R$'.$record->losses_amount)
-                    ->label('Perdas')
+                    ->formatStateUsing(fn (AffiliateHistory $record): string => 
+                        'Кол-во: '.$record->losses.' - Сумма: R$'.$record->losses_amount
+                    )
+                    ->label('Потери')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('commission_type')
-                    ->label('Tipo de Comissão')
+                    ->label('Тип комиссии')
                     ->badge()
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('commission_paid')
-                    ->label('Comissão')
+                    ->label('Комиссия')
                     ->money('BRL')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Data')
+                    ->label('Дата')
                     ->dateTime()
                     ->sortable(),
             ])
             ->filters([
                 Filter::make('created_at')
                     ->form([
-                        DatePicker::make('created_from')->label('Data Inicial'),
-                        DatePicker::make('created_until')->label('Data Final'),
+                        DatePicker::make('created_from')->label('Начальная дата'),
+                        DatePicker::make('created_until')->label('Конечная дата'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -80,19 +86,19 @@ class IndicationsTableWidget extends BaseWidget
                         $indicators = [];
 
                         if ($data['created_from'] ?? null) {
-                            $indicators['created_from'] = 'Criação Inicial ' . Carbon::parse($data['created_from'])->toFormattedDateString();
+                            $indicators['created_from'] = 'Начало создания ' .
+                                Carbon::parse($data['created_from'])->toFormattedDateString();
                         }
 
                         if ($data['created_until'] ?? null) {
-                            $indicators['created_until'] = 'Criação Final ' . Carbon::parse($data['created_until'])->toFormattedDateString();
+                            $indicators['created_until'] = 'Конец создания ' .
+                                Carbon::parse($data['created_until'])->toFormattedDateString();
                         }
 
                         return $indicators;
                     }),
-            ])
-            ;
+            ]);
     }
-
 
     /**
      * @return bool

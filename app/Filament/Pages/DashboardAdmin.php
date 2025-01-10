@@ -31,7 +31,7 @@ class DashboardAdmin extends \Filament\Pages\Dashboard
             $roleName = 'Afiliado';
         }
 
-        return "Olá, $roleName! Seja muito bem-vindo ao seu painel.";
+        return "Привет, $roleName! добро пожаловать на панель.";
     }
 
     /**

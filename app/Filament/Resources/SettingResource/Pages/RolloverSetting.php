@@ -26,7 +26,6 @@ class RolloverSetting extends Page implements HasForms
     use HasPageSidebar, InteractsWithForms;
 
     protected static string $resource = SettingResource::class;
-
     protected static string $view = 'filament.resources.setting-resource.pages.rollover-setting';
 
     /**
@@ -44,14 +43,14 @@ class RolloverSetting extends Page implements HasForms
      */
     public function getTitle(): string | Htmlable
     {
-        return __('Rollover');
+        return __('Ролловер');
     }
 
     public Setting $record;
     public ?array $data = [];
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev victormsalatiel - Мой Instagram
      * @return void
      */
     public function mount(): void
@@ -67,10 +66,10 @@ class RolloverSetting extends Page implements HasForms
     public function save()
     {
         try {
-            if(env('APP_DEMO')) {
+            if (env('APP_DEMO')) {
                 Notification::make()
-                    ->title('Atenção')
-                    ->body('Você não pode realizar está alteração na versão demo')
+                    ->title('Внимание')
+                    ->body('Вы не можете выполнить это изменение в демо-версии')
                     ->danger()
                     ->send();
                 return;
@@ -78,17 +77,16 @@ class RolloverSetting extends Page implements HasForms
 
             $setting = Setting::find($this->record->id);
 
-            if($setting->update($this->data)) {
+            if ($setting->update($this->data)) {
                 Cache::put('setting', $setting);
 
                 Notification::make()
-                    ->title('Dados alterados')
-                    ->body('Dados alterados com sucesso!')
+                    ->title('Данные изменены')
+                    ->body('Данные успешно изменены!')
                     ->success()
                     ->send();
 
                 redirect(route('filament.admin.resources.settings.bonus', ['record' => $this->record->id]));
-
             }
         } catch (Halt $exception) {
             return;
@@ -96,7 +94,7 @@ class RolloverSetting extends Page implements HasForms
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev victormsalatiel - Мой Instagram
      * @param Form $form
      * @return Form
      */
@@ -104,25 +102,27 @@ class RolloverSetting extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Ajuste de Bônus')
-                    ->description('Formulário ajustar o Bônus plataforma')
+                Section::make('Настройка Бонуса')
+                    ->description('Форма для настройки бонуса на платформе')
                     ->schema([
                         TextInput::make('rollover_deposit')
-                            ->label('Rollover Deposito')
+                            ->label('Ролловер депозита')
                             ->numeric()
                             ->default(1)
                             ->suffix('x')
-                            ->helperText('Coloque a quantidade de multiplicação do Deposito')
+                            ->helperText('Укажите коэффициент умножения для депозита')
                             ->maxLength(191),
+
                         TextInput::make('rollover')
-                            ->label('Rollover Bônus')
+                            ->label('Ролловер бонуса')
                             ->numeric()
                             ->default(1)
                             ->suffix('x')
-                            ->helperText('Coloque a quantidade de multiplicação do Bônus')
+                            ->helperText('Укажите коэффициент умножения для бонуса')
                             ->maxLength(191),
-                    ])->columns(2)
+                    ])
+                    ->columns(2),
             ])
-            ->statePath('data') ;
+            ->statePath('data');
     }
 }

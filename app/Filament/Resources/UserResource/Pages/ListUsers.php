@@ -10,7 +10,6 @@ use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use AymanAlhattami\FilamentPageWithSidebar\Traits\HasPageSidebar;
 
-
 class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;
@@ -45,16 +44,17 @@ class ListUsers extends ListRecords
             ->toArray();
 
         return [
-            'all' => Tab::make('Todos Usuários')
-                                ->modifyQueryUsing(function($query) {
-                                    return $query;
-                                }),
+            'all' => Tab::make('Все пользователи')
+                ->modifyQueryUsing(function($query) {
+                    return $query;
+                }),
 
-            'admins' => Tab::make('Todos Administradores')
+            'admins' => Tab::make('Все администраторы')
                 ->modifyQueryUsing(function($query) use ($admins) {
                     return $query->whereIn('id', $admins);
                 }),
-            'affiliates' => Tab::make('Todos Afiliados')
+
+            'affiliates' => Tab::make('Все аффилиаты')
                 ->modifyQueryUsing(function($query) use ($afiliados) {
                     return $query->whereIn('id', $afiliados);
                 }),

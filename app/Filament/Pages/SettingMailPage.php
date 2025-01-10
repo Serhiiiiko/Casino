@@ -42,7 +42,7 @@ class SettingMailPage extends Page
         if(!empty($smtp)) {
             $this->setting = $smtp;
             $this->form->fill($this->setting->toArray());
-        }else{
+        } else {
             $this->form->fill();
         }
     }
@@ -56,45 +56,44 @@ class SettingMailPage extends Page
         return $form
             ->schema([
                 Section::make('SMTP')
-                    ->description('Ajustes de credenciais para a SMTP')
+                    ->description('Настройки учётных данных для SMTP')
                     ->schema([
                         TextInput::make('software_smtp_type')
                             ->label('Mailer')
-                            ->placeholder('Digite o mailer (smtp)')
+                            ->placeholder('Введите mailer (smtp)')
                             ->maxLength(191),
                         TextInput::make('software_smtp_mail_host')
-                            ->label('Host')
-                            ->placeholder('Digite seu mail host')
+                            ->label('Хост')
+                            ->placeholder('Введите mail host')
                             ->maxLength(191),
                         TextInput::make('software_smtp_mail_port')
-                            ->label('Porta')
-                            ->placeholder('Digite a porta')
+                            ->label('Порт')
+                            ->placeholder('Введите порт')
                             ->maxLength(191),
                         TextInput::make('software_smtp_mail_username')
-                            ->label('Usuário')
-                            ->placeholder('Digite o usuário')
+                            ->label('Пользователь')
+                            ->placeholder('Введите имя пользователя')
                             ->maxLength(191),
                         TextInput::make('software_smtp_mail_password')
-                            ->label('Senha')
-                            ->placeholder('Digite a senha')
+                            ->label('Пароль')
+                            ->placeholder('Введите пароль')
                             ->maxLength(191),
                         TextInput::make('software_smtp_mail_encryption')
-                            ->label('Encryption')
-                            ->placeholder('Digite a criptografia')
+                            ->label('Шифрование')
+                            ->placeholder('Введите тип шифрования')
                             ->maxLength(191),
                         TextInput::make('software_smtp_mail_from_address')
-                            ->label('E-mail Cabeçalho')
-                            ->placeholder('Digite o endereço de E-mail de Cabeçalho')
+                            ->label('E-mail (От)')
+                            ->placeholder('Введите адрес E-mail «От»')
                             ->maxLength(191),
                         TextInput::make('software_smtp_mail_from_name')
-                            ->label('Nome Cabeçalho')
-                            ->placeholder('Digite o nome de Cabeçalho')
-                            ->maxLength(191)
+                            ->label('Имя (От)')
+                            ->placeholder('Введите имя «От»')
+                            ->maxLength(191),
                     ])->columns(4),
             ])
             ->statePath('data');
     }
-
 
     /**
      * @return void
@@ -102,56 +101,56 @@ class SettingMailPage extends Page
     public function submit(): void
     {
         try {
-            if(env('APP_DEMO')) {
+            if (env('APP_DEMO')) {
                 Notification::make()
-                    ->title('Atenção')
-                    ->body('Você não pode realizar está alteração na versão demo')
+                    ->title('Внимание')
+                    ->body('Вы не можете выполнить это изменение в демо-версии')
                     ->danger()
                     ->send();
                 return;
             }
 
             $setting = SettingMail::first();
-            if(!empty($setting)) {
-                if(!empty($this->data['software_smtp_type'])) {
+            if (!empty($setting)) {
+                // Если указаны новые параметры, обновляем .env
+                if (!empty($this->data['software_smtp_type'])) {
                     $envs = DotenvEditor::load(base_path('.env'));
 
                     $envs->setKeys([
-                        'MAIL_MAILER' => $this->data['software_smtp_type'],
-                        'MAIL_HOST' => $this->data['software_smtp_mail_host'],
-                        'MAIL_PORT' => $this->data['software_smtp_mail_port'],
-                        'MAIL_USERNAME' => $this->data['software_smtp_mail_username'],
-                        'MAIL_PASSWORD' => $this->data['software_smtp_mail_password'],
-                        'MAIL_ENCRYPTION' => $this->data['software_smtp_mail_encryption'],
+                        'MAIL_MAILER'       => $this->data['software_smtp_type'],
+                        'MAIL_HOST'         => $this->data['software_smtp_mail_host'],
+                        'MAIL_PORT'         => $this->data['software_smtp_mail_port'],
+                        'MAIL_USERNAME'     => $this->data['software_smtp_mail_username'],
+                        'MAIL_PASSWORD'     => $this->data['software_smtp_mail_password'],
+                        'MAIL_ENCRYPTION'   => $this->data['software_smtp_mail_encryption'],
                         'MAIL_FROM_ADDRESS' => $this->data['software_smtp_mail_from_address'],
-                        'MAIL_FROM_NAME' => $this->data['software_smtp_mail_from_name'],
+                        'MAIL_FROM_NAME'    => $this->data['software_smtp_mail_from_name'],
                     ]);
 
                     $envs->save();
                 }
 
-                if($setting->update($this->data)) {
+                if ($setting->update($this->data)) {
                     Notification::make()
-                        ->title('Chaves Alteradas')
-                        ->body('Suas chaves foram alteradas com sucesso!')
+                        ->title('Настройки изменены')
+                        ->body('Ваши почтовые настройки успешно изменены!')
                         ->success()
                         ->send();
                 }
-            }else{
-                if(SettingMail::create($this->data)) {
+            } else {
+                // Если ранее не было записей, создаём новую
+                if (SettingMail::create($this->data)) {
                     Notification::make()
-                        ->title('Chaves Criadas')
-                        ->body('Suas chaves foram criadas com sucesso!')
+                        ->title('Настройки созданы')
+                        ->body('Ваши почтовые настройки успешно созданы!')
                         ->success()
                         ->send();
                 }
             }
-
-
         } catch (Halt $exception) {
             Notification::make()
-                ->title('Erro ao alterar dados!')
-                ->body('Erro ao alterar dados!')
+                ->title('Ошибка при изменении данных!')
+                ->body('Ошибка при изменении данных!')
                 ->danger()
                 ->send();
         }

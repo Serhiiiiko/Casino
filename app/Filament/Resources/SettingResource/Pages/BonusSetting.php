@@ -44,14 +44,14 @@ class BonusSetting extends Page implements HasForms
      */
     public function getTitle(): string | Htmlable
     {
-        return __('Bônus Vip');
+        return __('VIP Бонус');
     }
 
     public Setting $record;
     public ?array $data = [];
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev @victormsalatiel - Мой Instagram
      * @return void
      */
     public function mount(): void
@@ -67,10 +67,10 @@ class BonusSetting extends Page implements HasForms
     public function save()
     {
         try {
-            if(env('APP_DEMO')) {
+            if (env('APP_DEMO')) {
                 Notification::make()
-                    ->title('Atenção')
-                    ->body('Você não pode realizar está alteração na versão demo')
+                    ->title('Внимание')
+                    ->body('Вы не можете выполнить это изменение в демо-версии')
                     ->danger()
                     ->send();
                 return;
@@ -78,17 +78,16 @@ class BonusSetting extends Page implements HasForms
 
             $setting = Setting::find($this->record->id);
 
-            if($setting->update($this->data)) {
+            if ($setting->update($this->data)) {
                 Cache::put('setting', $setting);
 
                 Notification::make()
-                    ->title('Dados alterados')
-                    ->body('Dados alterados com sucesso!')
+                    ->title('Данные изменены')
+                    ->body('Данные успешно изменены!')
                     ->success()
                     ->send();
 
                 redirect(route('filament.admin.resources.settings.bonus', ['record' => $this->record->id]));
-
             }
         } catch (Halt $exception) {
             return;
@@ -96,7 +95,7 @@ class BonusSetting extends Page implements HasForms
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev @victormsalatiel - Мой Instagram
      * @param Form $form
      * @return Form
      */
@@ -104,20 +103,20 @@ class BonusSetting extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Ajuste de Bônus')
-                    ->description('Formulário ajustar o Bônus plataforma')
+                Section::make('Настройка Бонуса')
+                    ->description('Форма для настройки бонуса на платформе')
                     ->schema([
                         TextInput::make('bonus_vip')
-                            ->label('Bônus Vip')
-                            ->placeholder('Defina o Bônus vip, quanto de bônus ganha a cada 1 real/dolar depositado.')
+                            ->label('VIP Бонус')
+                            ->placeholder('Укажите размер VIP-бонуса, который начисляется за каждый 1 рубль/доллар депозита.')
                             ->numeric()
-                            ->helperText('Este é o valor de bônus associado a cada depósito de 1 real. Por exemplo, quando o usuário realiza um depósito de 1 real, ele recebe a quantia correspondente em Bônus VIP.')
+                            ->helperText('Это сумма бонуса, связанная с каждым депозитом в 1 рубль. Например, если пользователь вносит 1 рубль, он получает указанное здесь количество VIP-бонусов.')
                             ->maxLength(191),
                         Toggle::make('activate_vip_bonus')
                             ->inline(false)
-                            ->label('Ativar/Desativar Bônus Vip'),
-                    ])->columns(2)
+                            ->label('Активировать/Деактивировать VIP-бонус'),
+                    ])->columns(2),
             ])
-            ->statePath('data') ;
+            ->statePath('data');
     }
 }

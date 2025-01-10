@@ -213,8 +213,8 @@ class LayoutCssCustom extends Page implements HasForms
         try {
             if(env('APP_DEMO')) {
                 Notification::make()
-                    ->title('Atenção')
-                    ->body('Você não pode realizar está alteração na versão demo')
+                    ->title('Внимание')
+                    ->body('Вы не можете внести эти изменения в демонстрационную версию')
                     ->danger()
                     ->send();
                 return;
@@ -228,8 +228,8 @@ class LayoutCssCustom extends Page implements HasForms
                     Cache::put('custom', $custom);
 
                     Notification::make()
-                        ->title('Dados alterados')
-                        ->body('Dados alterados com sucesso!')
+                        ->title('Изменить данные')
+                        ->body('Успешные изменили данные!')
                         ->success()
                         ->send();
                 }
@@ -238,8 +238,8 @@ class LayoutCssCustom extends Page implements HasForms
 
         } catch (Halt $exception) {
             Notification::make()
-                ->title('Erro ao alterar dados!')
-                ->body('Erro ao alterar dados!')
+                ->title('Ошибка')
+                ->body('Неизвестная ошибка!')
                 ->danger()
                 ->send();
         }

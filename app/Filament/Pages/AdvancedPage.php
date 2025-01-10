@@ -34,11 +34,11 @@ class AdvancedPage extends Page implements HasForms
 
     protected static string $view = 'filament.pages.advanced-page';
 
-    protected static ?string $navigationLabel = 'Opções Avançada';
+    protected static ?string $navigationLabel = 'Расширенные настройки';
 
-    protected static ?string $modelLabel = 'Opções Avançada';
+    protected static ?string $modelLabel = 'Расширенные настройки';
 
-    protected static ?string $title = 'Opções Avançada';
+    protected static ?string $title = 'Расширенные настройки';
 
     protected static ?string $slug = 'advanced-options';
 
@@ -70,8 +70,8 @@ class AdvancedPage extends Page implements HasForms
     {
         self::getProviderWorldslot($type);
         Notification::make()
-            ->title('Sucesso')
-            ->body('Provedores Carregados com sucesso')
+            ->title('Успех')
+            ->body('Провайдеры успешно загружены')
             ->success()
             ->send();
     }
@@ -83,8 +83,8 @@ class AdvancedPage extends Page implements HasForms
     {
         self::getGamesWorldslot();
         Notification::make()
-            ->title('Sucesso')
-            ->body('Jogos Carregados com sucesso')
+            ->title('Успех')
+            ->body('Игры успешно загружены')
             ->success()
             ->send();
     }
@@ -103,7 +103,6 @@ class AdvancedPage extends Page implements HasForms
      */
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-
         return $data;
     }
 
@@ -115,12 +114,11 @@ class AdvancedPage extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Atualização')
-                    ->description('Carregue aqui seu arquivo de atualização no formato zip')
+                Section::make('Обновление')
+                    ->description('Загрузите здесь свой файл обновления в формате zip')
                     ->schema([
                         FileUpload::make('update')
                     ])
-
             ])
             ->statePath('data');
     }
@@ -132,33 +130,33 @@ class AdvancedPage extends Page implements HasForms
     {
         try {
             foreach ($this->data['update'] as $file) {
-                $extension  = $file->extension();
-                if($extension === "zip") {
+                $extension = $file->extension();
+                if ($extension === "zip") {
                     $filePath = $file->storeAs('updates', $file->getClientOriginalName());
 
                     $zip = new \ZipArchive;
-                    $zipPath = storage_path("app/{$filePath}"); // Caminho completo para o arquivo zip
-                    $extractPath = base_path(); // Altere para o diretório desejado
+                    $zipPath = storage_path("app/{$filePath}");
+                    $extractPath = base_path(); // Измените при необходимости путь, куда извлекать файлы
 
                     if ($zip->open($zipPath) === true) {
                         $zip->extractTo($extractPath);
                         $zip->close();
 
-                        // Exclua o arquivo zip após a extração
+                        // Удаляем zip-файл после извлечения
                         \Storage::delete($filePath);
                     }
                 }
 
                 Notification::make()
-                    ->title('Sucesso')
-                    ->body('Atualização feita com sucesso')
+                    ->title('Успех')
+                    ->body('Обновление успешно выполнено')
                     ->success()
                     ->send();
             }
         } catch (Halt $exception) {
             Notification::make()
-                ->title('Erro ao alterar dados!')
-                ->body('Erro ao alterar dados!')
+                ->title('Ошибка при изменении данных!')
+                ->body('Ошибка при изменении данных!')
                 ->danger()
                 ->send();
         }
@@ -169,17 +167,17 @@ class AdvancedPage extends Page implements HasForms
      */
     public function runMigrate()
     {
-        // Executar o comando Artisan para rodar as migrations
+        // Запускаем команду Artisan для выполнения миграций
         Artisan::call('migrate');
 
-        // Você também pode adicionar a opção '--seed' para rodar os seeders, se necessário
+        // Можно добавить '--seed', если нужно
         // Artisan::call('migrate --seed');
 
-        // Obter a saída do comando, se necessário
+        // Получаем вывод команды, если нужно
         $this->output = Artisan::output();
         Notification::make()
-            ->title('Sucesso')
-            ->body('Migrações carregadas com sucesso')
+            ->title('Успех')
+            ->body('Миграции успешно выполнены')
             ->success()
             ->send();
     }
@@ -189,17 +187,14 @@ class AdvancedPage extends Page implements HasForms
      */
     public function runMigrateWithSeed()
     {
-        // Executar o comando Artisan para rodar as migrations
+        // Запускаем команду Artisan для выполнения миграций с сидерами
         Artisan::call('migrate --seed');
 
-        // Você também pode adicionar a opção '--seed' para rodar os seeders, se necessário
-        // Artisan::call('migrate --seed');
-
-        // Obter a saída do comando, se necessário
+        // Получаем вывод команды, если нужно
         $this->output = Artisan::output();
         Notification::make()
-            ->title('Sucesso')
-            ->body('Migrações carregadas com sucesso')
+            ->title('Успех')
+            ->body('Миграции успешно выполнены')
             ->success()
             ->send();
     }

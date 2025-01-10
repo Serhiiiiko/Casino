@@ -33,7 +33,7 @@ class PaymentSetting extends Page implements HasForms
      */
     public function getTitle(): string | Htmlable
     {
-        return __('Pagamentos');
+        return __('Платежи');
     }
 
     public Setting $record;
@@ -50,7 +50,7 @@ class PaymentSetting extends Page implements HasForms
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev victormsalatiel - Мой Instagram
      * @return void
      */
     public function mount(): void
@@ -61,16 +61,16 @@ class PaymentSetting extends Page implements HasForms
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev victormsalatiel - Мой Instagram
      * @return void
      */
     public function save()
     {
         try {
-            if(env('APP_DEMO')) {
+            if (env('APP_DEMO')) {
                 Notification::make()
-                    ->title('Atenção')
-                    ->body('Você não pode realizar está alteração na versão demo')
+                    ->title('Внимание')
+                    ->body('Вы не можете выполнить это изменение в демо-версии')
                     ->danger()
                     ->send();
                 return;
@@ -78,17 +78,16 @@ class PaymentSetting extends Page implements HasForms
 
             $setting = Setting::find($this->record->id);
 
-            if($setting->update($this->data)) {
+            if ($setting->update($this->data)) {
                 Cache::put('setting', $setting);
 
                 Notification::make()
-                    ->title('Dados alterados')
-                    ->body('Dados alterados com sucesso!')
+                    ->title('Данные изменены')
+                    ->body('Данные успешно изменены!')
                     ->success()
                     ->send();
 
                 redirect(route('filament.admin.resources.settings.payment', ['record' => $this->record->id]));
-
             }
         } catch (Halt $exception) {
             return;
@@ -96,7 +95,7 @@ class PaymentSetting extends Page implements HasForms
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev victormsalatiel - Мой Instagram
      * @param Form $form
      * @return Form
      */
@@ -104,68 +103,64 @@ class PaymentSetting extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Ajuste de Taxas')
-                    ->description('Formulário ajustar as taxas da plataforma')
+                Section::make('Настройка комиссий')
+                    ->description('Форма для настройки комиссий на платформе')
                     ->schema([
                         TextInput::make('min_deposit')
-                            ->label('Min Deposito')
+                            ->label('Мин. депозит')
                             ->numeric()
                             ->maxLength(191),
                         TextInput::make('max_deposit')
-                            ->label('Max Deposito')
+                            ->label('Макс. депозит')
                             ->numeric()
                             ->maxLength(191),
                         TextInput::make('min_withdrawal')
-                            ->label('Min Saque')
+                            ->label('Мин. вывод')
                             ->numeric()
                             ->maxLength(191),
                         TextInput::make('max_withdrawal')
-                            ->label('Max Saque')
+                            ->label('Макс. вывод')
                             ->numeric()
                             ->maxLength(191),
                         TextInput::make('initial_bonus')
-                            ->label('Bônus Inicial (%)')
+                            ->label('Начальный бонус (%)')
                             ->numeric()
                             ->suffix('%')
                             ->maxLength(191),
                         TextInput::make('currency_code')
-                            ->label('Moeda')
+                            ->label('Валюта')
                             ->maxLength(191),
-//                        Select::make('decimal_format')->options([
-//                            'dot' => 'Dot',
-//                        ]),
-//                        Select::make('currency_position')->options([
-//                            'left' => 'Left',
-//                            'right' => 'Right',
-//                        ]),
 
                         Group::make()
-                            ->label('Porcentagem de Sub-Afiliados')
+                            ->label('Процент суб-аффилиатов')
                             ->schema([
-                            TextInput::make('perc_sub_lv1')
-                                ->label('% Sub afiliado LV1')
-                                ->numeric()
-                                ->maxLength(191),
-                            TextInput::make('perc_sub_lv2')
-                                ->label('% Sub afiliado LV2')
-                                ->numeric()
-                                ->maxLength(191),
-                            TextInput::make('perc_sub_lv3')
-                                ->label('% Sub afiliado LV3')
-                                ->numeric()
-                                ->maxLength(191),
-                        ])->columnSpanFull()->columns(3),
+                                TextInput::make('perc_sub_lv1')
+                                    ->label('% Суб-аффилиат Уровень 1')
+                                    ->numeric()
+                                    ->maxLength(191),
+                                TextInput::make('perc_sub_lv2')
+                                    ->label('% Суб-аффилиат Уровень 2')
+                                    ->numeric()
+                                    ->maxLength(191),
+                                TextInput::make('perc_sub_lv3')
+                                    ->label('% Суб-аффилиат Уровень 3')
+                                    ->numeric()
+                                    ->maxLength(191),
+                            ])
+                            ->columnSpanFull()
+                            ->columns(3),
+
                         Toggle::make('suitpay_is_enable')
-                            ->label('SuitPay Ativo'),
+                            ->label('SuitPay Активен'),
                         Toggle::make('stripe_is_enable')
-                            ->label('Stripe Ativo'),
+                            ->label('Stripe Активен'),
                         Toggle::make('bspay_is_enable')
-                            ->label('BSPay Ativo'),
+                            ->label('BSPay Активен'),
                         Toggle::make('disable_spin')
-                            ->label('Disable Spin')
-                        ,
-                    ])->columns(2)
+                            ->label('Отключить Spin'),
+                    ])
+                    ->columns(2),
             ])
-            ->statePath('data') ;
+            ->statePath('data');
     }
 }

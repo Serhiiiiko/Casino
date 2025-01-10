@@ -23,11 +23,11 @@ class SuitPayPaymentPage extends Page
 
     protected static string $view = 'filament.pages.suit-pay-payment-page';
 
-    protected static ?string $navigationLabel = 'SuitPay Pagamentos';
+    protected static ?string $navigationLabel = 'SuitPay Платежи';
 
-    protected static ?string $modelLabel = 'SuitPay Pagamentos';
+    protected static ?string $modelLabel = 'SuitPay Платежи';
 
-    protected static ?string $title = 'SuitPay Pagamentos';
+    protected static ?string $title = 'SuitPay Платежи';
 
     protected static ?string $slug = 'suitpay-pagamentos';
 
@@ -59,11 +59,11 @@ class SuitPayPaymentPage extends Page
     {
         return $form
             ->schema([
-                Section::make('Detalhes de Pagamento')
+                Section::make('Детали платежа')
                     ->schema([
                         Select::make('user_id')
-                            ->label('Usuários')
-                            ->placeholder('Selecione um usuário')
+                            ->label('Пользователи')
+                            ->placeholder('Выберите пользователя')
                             ->relationship(name: 'user', titleAttribute: 'name')
                             ->options(
                                 fn($get) => User::query()
@@ -74,30 +74,31 @@ class SuitPayPaymentPage extends Page
                             ->live()
                             ->required(),
                         TextInput::make('pix_key')
-                            ->label('Chave Pix')
-                            ->placeholder('Digite a chave Pix')
+                            ->label('Ключ Pix')
+                            ->placeholder('Введите ключ Pix')
                             ->required(),
                         Select::make('pix_type')
-                            ->label('Tipo de Chave')
-                            ->placeholder('Selecione o tipo de chave')
+                            ->label('Тип ключа')
+                            ->placeholder('Выберите тип ключа')
                             ->options([
-                                'document' => 'Documento',
-                                'phoneNumber' => 'Telefone',
-                                'randomKey' => 'Chave aleatória',
-                                'paymentCode' => 'Código de pagamento',
+                                'document'    => 'Документ',
+                                'phoneNumber' => 'Телефон',
+                                'randomKey'   => 'Случайный ключ',
+                                'paymentCode' => 'Код оплаты',
                             ]),
                         TextInput::make('amount')
-                            ->label('Valor')
-                            ->placeholder('Digite um valor')
+                            ->label('Сумма')
+                            ->placeholder('Введите сумму')
                             ->required()
                             ->numeric(),
                         Textarea::make('observation')
-                            ->label('Observação')
-                            ->placeholder('Deixe uma observação caso tenha')
+                            ->label('Примечание')
+                            ->placeholder('Оставьте комментарий, если нужно')
                             ->rows(5)
                             ->cols(10)
-                            ->columnSpanFull()
-                    ])->columns(2),
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2),
             ])
             ->statePath('data');
     }
@@ -107,48 +108,48 @@ class SuitPayPaymentPage extends Page
      */
     public function submit(): void
     {
-        if(env('APP_DEMO')) {
+        if (env('APP_DEMO')) {
             Notification::make()
-                ->title('Atenção')
-                ->body('Você não pode realizar está alteração na versão demo')
+                ->title('Внимание')
+                ->body('Вы не можете выполнить это изменение в демо-версии')
                 ->danger()
                 ->send();
             return;
         }
 
         $suitpayment = SuitPayPayment::create([
-            'user_id'       => $this->data['user_id'],
-            'pix_key'       => $this->data['pix_key'],
-            'pix_type'      => $this->data['pix_type'],
-            'amount'        => $this->data['amount'],
-            'observation'   => $this->data['observation'],
+            'user_id'     => $this->data['user_id'],
+            'pix_key'     => $this->data['pix_key'],
+            'pix_type'    => $this->data['pix_type'],
+            'amount'      => $this->data['amount'],
+            'observation' => $this->data['observation'],
         ]);
 
-        if($suitpayment) {
+        if ($suitpayment) {
             $resp = self::pixCashOut([
-                'pix_key' => $this->data['pix_key'],
-                'pix_type' => $this->data['pix_type'],
-                'amount' => $this->data['amount'],
-                'suitpayment_id' => $suitpayment->id
+                'pix_key'        => $this->data['pix_key'],
+                'pix_type'       => $this->data['pix_type'],
+                'amount'         => $this->data['amount'],
+                'suitpayment_id' => $suitpayment->id,
             ]);
 
-            if($resp) {
+            if ($resp) {
                 Notification::make()
-                    ->title('Saque solicitado')
-                    ->body('Saque solicitado com sucesso')
+                    ->title('Вывод запрошен')
+                    ->body('Запрос на вывод успешно отправлен')
                     ->success()
                     ->send();
-            }else{
+            } else {
                 Notification::make()
-                    ->title('Erro no saque')
-                    ->body('Erro ao solicitar o saque')
+                    ->title('Ошибка при выводе')
+                    ->body('Ошибка при запросе на вывод')
                     ->danger()
                     ->send();
             }
-        }else{
+        } else {
             Notification::make()
-                ->title('Erro ao salvar')
-                ->body('Erro ao salvar a requisição do saque')
+                ->title('Ошибка при сохранении')
+                ->body('Не удалось сохранить запрос на вывод')
                 ->danger()
                 ->send();
         }
@@ -160,7 +161,7 @@ class SuitPayPaymentPage extends Page
     public function getFooterWidgets(): array
     {
         return [
-            LatestPixPayments::class
+            LatestPixPayments::class,
         ];
     }
 }

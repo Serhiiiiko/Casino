@@ -73,8 +73,7 @@ class SettingSpin extends Page
             Action::make('save')
                 ->label(__('Submit'))
                 ->action(fn () => $this->submit())
-                ->submit('submit')
-            ,
+                ->submit('submit'),
         ];
     }
 
@@ -86,26 +85,25 @@ class SettingSpin extends Page
         try {
             if(env('APP_DEMO')) {
                 Notification::make()
-                    ->title('Atenção')
-                    ->body('Você não pode realizar está alteração na versão demo')
+                    ->title('Внимание')
+                    ->body('Вы не можете выполнить это изменение в демо-версии')
                     ->danger()
                     ->send();
                 return;
             }
 
             $setting = SpinConfigs::first();
-            if(!empty($setting)) {
-
+            if (!empty($setting)) {
                 $updatedData = [];
-                foreach($this->data['prizesArray'] as $k => $v) {
+                foreach ($this->data['prizesArray'] as $k => $v) {
                     $v['value'] = floatval($v['value']);
                     array_push($updatedData, $v);
                 }
 
-                if($setting->update(['prizes' => $updatedData])) {
+                if ($setting->update(['prizes' => $updatedData])) {
                     Notification::make()
-                        ->title('Dados alterados')
-                        ->body('Dados alterados com sucesso!')
+                        ->title('Данные изменены')
+                        ->body('Данные успешно изменены!')
                         ->success()
                         ->send();
 
@@ -114,8 +112,8 @@ class SettingSpin extends Page
             }
         } catch (Halt $exception) {
             Notification::make()
-                ->title('Erro ao alterar dados!')
-                ->body('Erro ao alterar dados!')
+                ->title('Ошибка при изменении данных!')
+                ->body('Ошибка при изменении данных!')
                 ->danger()
                 ->send();
         }
@@ -129,25 +127,19 @@ class SettingSpin extends Page
     {
         return $form
             ->schema([
-                Section::make('Ajustes do Spin')
+                Section::make('Настройки Спина')
                     ->schema([
                         Repeater::make('prizesArray')
                             ->schema([
                                 TextInput::make('currency')
-                                    ->label('Moeda')
+                                    ->label('Валюта')
                                     ->required(),
                                 TextInput::make('value')
-                                    ->label('Valor')
+                                    ->label('Значение')
                                     ->numeric()
                                     ->required(),
-                            ])
-//                            ->itemLabel(function (array $state): ?string {
-//
-//                                dd($state);
-//
-//                            })
+                            ]),
                     ]),
-
             ])
             ->statePath('data');
     }
@@ -174,7 +166,7 @@ class SettingSpin extends Page
     public function getWidgets(): array
     {
         return [
-
+            //
         ];
     }
 
@@ -184,7 +176,7 @@ class SettingSpin extends Page
     protected function getFooterWidgets(): array
     {
         return [
-
+            //
         ];
     }
 

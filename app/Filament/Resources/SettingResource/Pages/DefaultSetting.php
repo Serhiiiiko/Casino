@@ -45,14 +45,14 @@ class DefaultSetting extends Page implements HasForms
      */
     public function getTitle(): string | Htmlable
     {
-        return __('Padrão');
+        return __('По умолчанию');
     }
 
     public Setting $record;
     public ?array $data = [];
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev victormsalatiel - Мой Instagram
      * @return void
      */
     public function mount(): void
@@ -68,10 +68,10 @@ class DefaultSetting extends Page implements HasForms
     public function save()
     {
         try {
-            if(env('APP_DEMO')) {
+            if (env('APP_DEMO')) {
                 Notification::make()
-                    ->title('Atenção')
-                    ->body('Você não pode realizar está alteração na versão demo')
+                    ->title('Внимание')
+                    ->body('Вы не можете выполнить это изменение в демо-версии')
                     ->danger()
                     ->send();
                 return;
@@ -79,70 +79,73 @@ class DefaultSetting extends Page implements HasForms
 
             $setting = Setting::find($this->record->id);
 
-            $favicon   = $this->data['software_favicon'];
-            $logoWhite = $this->data['software_logo_white'];
-            $logoBlack = $this->data['software_logo_black'];
-            $softwareBackground = $this->data['software_background'];
+            $favicon             = $this->data['software_favicon'];
+            $logoWhite           = $this->data['software_logo_white'];
+            $logoBlack           = $this->data['software_logo_black'];
+            $softwareBackground  = $this->data['software_background'];
 
+            // Обработка background
             if (is_array($softwareBackground) || is_object($softwareBackground)) {
-                if(!empty($softwareBackground)) {
+                if (!empty($softwareBackground)) {
                     $this->data['software_background'] = $this->uploadFile($softwareBackground);
 
-                    if(is_array($this->data['software_background'])) {
+                    if (is_array($this->data['software_background'])) {
                         unset($this->data['software_background']);
                     }
                 }
             }
 
+            // Обработка favicon
             if (is_array($favicon) || is_object($favicon)) {
-                if(!empty($favicon)) {
+                if (!empty($favicon)) {
                     $this->data['software_favicon'] = $this->uploadFile($favicon);
 
-                    if(is_array($this->data['software_favicon'])) {
+                    if (is_array($this->data['software_favicon'])) {
                         unset($this->data['software_favicon']);
                     }
                 }
             }
 
+            // Обработка светлого логотипа
             if (is_array($logoWhite) || is_object($logoWhite)) {
-                if(!empty($logoWhite)) {
+                if (!empty($logoWhite)) {
                     $this->data['software_logo_white'] = $this->uploadFile($logoWhite);
 
-                    if(is_array($this->data['software_logo_white'])) {
+                    if (is_array($this->data['software_logo_white'])) {
                         unset($this->data['software_logo_white']);
                     }
                 }
             }
 
+            // Обработка тёмного логотипа
             if (is_array($logoBlack) || is_object($logoBlack)) {
-                if(!empty($logoBlack)) {
+                if (!empty($logoBlack)) {
                     $this->data['software_logo_black'] = $this->uploadFile($logoBlack);
 
-                    if(is_array($this->data['software_logo_black'])) {
+                    if (is_array($this->data['software_logo_black'])) {
                         unset($this->data['software_logo_black']);
                     }
                 }
             }
 
+            // Запись данных в .env
             $envs = DotenvEditor::load(base_path('.env'));
-
             $envs->setKeys([
                 'APP_NAME' => $this->data['software_name'],
             ]);
-
             $envs->save();
 
-            if($setting->update($this->data)) {
+            // Обновление настроек
+            if ($setting->update($this->data)) {
                 Cache::put('setting', $setting);
 
                 Notification::make()
-                    ->title('Dados alterados')
-                    ->body('Dados alterados com sucesso!')
+                    ->title('Данные изменены')
+                    ->body('Данные успешно изменены!')
                     ->success()
                     ->send();
 
                 redirect(route('filament.admin.resources.settings.index'));
-
             }
         } catch (Halt $exception) {
             return;
@@ -150,7 +153,7 @@ class DefaultSetting extends Page implements HasForms
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev victormsalatiel - Мой Instagram
      * @param Form $form
      * @return Form
      */
@@ -158,63 +161,67 @@ class DefaultSetting extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Ajuste Visual')
-                    ->description('Formulário ajustar o visual da plataforma')
+                Section::make('Визуальные настройки')
+                    ->description('Форма для настройки внешнего вида платформы')
                     ->schema([
                         Group::make()->schema([
                             TextInput::make('software_name')
-                                ->label('Nome')
-                                ->placeholder('Digite o nome do site')
+                                ->label('Название')
+                                ->placeholder('Введите название сайта')
                                 ->required()
                                 ->maxLength(191),
                             TextInput::make('software_description')
-                                ->placeholder('Digite a descrição do site')
-                                ->label('Descrição')
+                                ->label('Описание')
+                                ->placeholder('Введите описание сайта')
                                 ->maxLength(191),
                         ])->columns(2),
+
                         Group::make()->schema([
                             FileUpload::make('software_favicon')
                                 ->label('Favicon')
-                                ->placeholder('Carregue um favicon')
+                                ->placeholder('Загрузите favicon')
                                 ->image(),
                             Group::make()->schema([
                                 FileUpload::make('software_logo_white')
-                                    ->label('Logo Branca')
-                                    ->placeholder('Carregue uma logo branca')
+                                    ->label('Светлый логотип')
+                                    ->placeholder('Загрузите светлый логотип')
                                     ->image()
                                     ->columnSpanFull(),
                                 FileUpload::make('software_logo_black')
-                                    ->label('Logo Escura')
-                                    ->placeholder('Carregue uma logo escura')
+                                    ->label('Тёмный логотип')
+                                    ->placeholder('Загрузите тёмный логотип')
                                     ->image()
                                     ->columnSpanFull(),
-//                                FileUpload::make('software_background')
-//                                    ->label('Background')
-//                                    ->placeholder('Carregue um background')
-//                                    ->image()
-//                                    ->columnSpanFull(),
-                            ])
+                                // Если нужно вернуть загрузку фона, раскомментируйте блок ниже:
+                                /*
+                                FileUpload::make('software_background')
+                                    ->label('Фоновое изображение')
+                                    ->placeholder('Загрузите фоновое изображение')
+                                    ->image()
+                                    ->columnSpanFull(),
+                                */
+                            ]),
                         ])->columns(2),
-                    ])
+                    ]),
             ])
-            ->statePath('data') ;
+            ->statePath('data');
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev victormsalatiel - Мой Instagram
      * @param $array
      * @return mixed|void
      */
     private function uploadFile($array)
     {
-        if(!empty($array) && is_array($array) || !empty($array) && is_object($array)) {
+        if ((!empty($array) && is_array($array)) || (!empty($array) && is_object($array))) {
             foreach ($array as $k => $temporaryFile) {
                 if ($temporaryFile instanceof TemporaryUploadedFile) {
                     $path = \Helper::upload($temporaryFile);
-                    if($path) {
+                    if ($path) {
                         return $path['path'];
                     }
-                }else{
+                } else {
                     return $temporaryFile;
                 }
             }

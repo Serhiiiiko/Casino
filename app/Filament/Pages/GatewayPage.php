@@ -43,7 +43,7 @@ class GatewayPage extends Page
         if(!empty($gateway)) {
             $this->setting = $gateway;
             $this->form->fill($this->setting->toArray());
-        }else{
+        } else {
             $this->form->fill();
         }
     }
@@ -57,47 +57,46 @@ class GatewayPage extends Page
         return $form
             ->schema([
                 Section::make('Suitpay')
-                    ->description('Ajustes de credenciais para a Suitpay')
+                    ->description('Настройка учётных данных для Suitpay')
                     ->schema([
                         TextInput::make('suitpay_uri')
                             ->label('Client URI')
-                            ->placeholder('Digite a url da api')
+                            ->placeholder('Введите URL API')
                             ->maxLength(191)
                             ->columnSpanFull(),
                         TextInput::make('suitpay_cliente_id')
                             ->label('Client ID')
-                            ->placeholder('Digite o client ID')
+                            ->placeholder('Введите Client ID')
                             ->maxLength(191)
                             ->columnSpanFull(),
                         TextInput::make('suitpay_cliente_secret')
                             ->label('Client Secret')
-                            ->placeholder('Digite o client secret')
+                            ->placeholder('Введите Client Secret')
                             ->maxLength(191)
                             ->columnSpanFull(),
                     ]),
                 Section::make('Stripe')
-                    ->description('Ajustes de credenciais para a Stripe')
+                    ->description('Настройка учётных данных для Stripe')
                     ->schema([
                         TextInput::make('stripe_public_key')
-                            ->label('Chave Publica')
-                            ->placeholder('Digite a chave publica')
+                            ->label('Публичный ключ')
+                            ->placeholder('Введите публичный ключ')
                             ->maxLength(191)
                             ->columnSpanFull(),
                         TextInput::make('stripe_secret_key')
-                            ->label('Chave Privada')
-                            ->placeholder('Digite a chave privada')
+                            ->label('Приватный ключ')
+                            ->placeholder('Введите приватный ключ')
                             ->maxLength(191)
                             ->columnSpanFull(),
                         TextInput::make('stripe_webhook_key')
-                            ->label('Chave Webhook')
-                            ->placeholder('Digite a chave do webhook')
+                            ->label('Webhook ключ')
+                            ->placeholder('Введите ключ вебхука')
                             ->maxLength(191)
                             ->columnSpanFull(),
                     ])
             ])
             ->statePath('data');
     }
-
 
     /**
      * @return void
@@ -107,8 +106,8 @@ class GatewayPage extends Page
         try {
             if(env('APP_DEMO')) {
                 Notification::make()
-                    ->title('Atenção')
-                    ->body('Você não pode realizar está alteração na versão demo')
+                    ->title('Внимание')
+                    ->body('Вы не можете выполнить это изменение в демо-версии')
                     ->danger()
                     ->send();
                 return;
@@ -117,6 +116,7 @@ class GatewayPage extends Page
             $setting = Gateway::first();
             if(!empty($setting)) {
                 if($setting->update($this->data)) {
+                    // Если не пустые Stripe-параметры, обновляем .env
                     if(!empty($this->data['stripe_public_key'])) {
                         $envs = DotenvEditor::load(base_path('.env'));
 
@@ -130,26 +130,24 @@ class GatewayPage extends Page
                     }
 
                     Notification::make()
-                        ->title('Chaves Alteradas')
-                        ->body('Suas chaves foram alteradas com sucesso!')
+                        ->title('Ключи изменены')
+                        ->body('Ваши ключи были успешно изменены!')
                         ->success()
                         ->send();
                 }
-            }else{
+            } else {
                 if(Gateway::create($this->data)) {
                     Notification::make()
-                        ->title('Chaves Criadas')
-                        ->body('Suas chaves foram criadas com sucesso!')
+                        ->title('Ключи созданы')
+                        ->body('Ваши ключи были успешно созданы!')
                         ->success()
                         ->send();
                 }
             }
-
-
         } catch (Halt $exception) {
             Notification::make()
-                ->title('Erro ao alterar dados!')
-                ->body('Erro ao alterar dados!')
+                ->title('Ошибка при изменении данных!')
+                ->body('Ошибка при изменении данных!')
                 ->danger()
                 ->send();
         }

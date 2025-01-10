@@ -42,14 +42,14 @@ class FeeSetting extends Page implements HasForms
      */
     public function getTitle(): string | Htmlable
     {
-        return __('Taxas');
+        return __('Комиссии');
     }
 
     public Setting $record;
     public ?array $data = [];
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev @victormsalatiel - Мой Instagram
      * @return void
      */
     public function mount(): void
@@ -60,16 +60,16 @@ class FeeSetting extends Page implements HasForms
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev @victormsalatiel - Мой Instagram
      * @return void
      */
     public function save()
     {
         try {
-            if(env('APP_DEMO')) {
+            if (env('APP_DEMO')) {
                 Notification::make()
-                    ->title('Atenção')
-                    ->body('Você não pode realizar está alteração na versão demo')
+                    ->title('Внимание')
+                    ->body('Вы не можете выполнить это изменение в демо-версии')
                     ->danger()
                     ->send();
                 return;
@@ -77,17 +77,16 @@ class FeeSetting extends Page implements HasForms
 
             $setting = Setting::find($this->record->id);
 
-            if($setting->update($this->data)) {
+            if ($setting->update($this->data)) {
                 Cache::put('setting', $setting);
 
                 Notification::make()
-                    ->title('Dados alterados')
-                    ->body('Dados alterados com sucesso!')
+                    ->title('Данные изменены')
+                    ->body('Данные успешно изменены!')
                     ->success()
                     ->send();
 
                 redirect(route('filament.admin.resources.settings.fee', ['record' => $this->record->id]));
-
             }
         } catch (Halt $exception) {
             return;
@@ -95,7 +94,7 @@ class FeeSetting extends Page implements HasForms
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev @victormsalatiel - Мой Instagram
      * @param Form $form
      * @return Form
      */
@@ -103,28 +102,27 @@ class FeeSetting extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Ajuste de Taxas')
-                    ->description('Formulário ajustar as taxas da plataforma')
+                Section::make('Настройка комиссий')
+                    ->description('Форма для настройки комиссий на платформе')
                     ->schema([
                         TextInput::make('revshare_percentage')
                             ->label('RevShare (%)')
                             ->numeric()
                             ->suffix('%')
-                            ->helperText('Este é o revshare padrão para cada usuário que se candidata a ser afiliado.')
+                            ->helperText('Это базовый показатель RevShare для каждого пользователя, который хочет стать аффилиатом.')
                             ->maxLength(191),
                         Toggle::make('revshare_reverse')
                             ->inline(true)
-                            ->label('Ativar RevShare Negativo')
-                            ->helperText('Esta opção possibilita que o afiliado acumule saldos negativos decorrentes das perdas geradas pelos seus indicados.')
-                        ,
+                            ->label('Включить отрицательный RevShare')
+                            ->helperText('Эта опция позволяет аффилиату накапливать отрицательный баланс в результате убытков, созданных его рефералами.'),
                         TextInput::make('ngr_percent')
-                            ->helperText('Esta taxa é deduzida dos ganhos do afiliado para plataforma.')
+                            ->helperText('Эта комиссия удерживается из доходов аффилиата в пользу платформы.')
                             ->label('NGR (%)')
                             ->numeric()
                             ->suffix('%')
                             ->maxLength(191),
-                    ])
+                    ]),
             ])
-            ->statePath('data') ;
+            ->statePath('data');
     }
 }

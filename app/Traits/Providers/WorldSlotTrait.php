@@ -208,27 +208,27 @@ trait WorldSlotTrait
      * @param $userId
      * @return false|void
      */
-    public static function getWorldSlotBalance()
-    {
-        if(self::getCredentialsWorldSlot()) {
-            $dataArray = [
-                "method"        => "money_info",
-                "agent_code"    => self::$agentCode,
-                "agent_token"   => self::$agentToken,
-            ];
+    // public static function getWorldSlotBalance()
+    // {
+    //     if(self::getCredentialsWorldSlot()) {
+    //         $dataArray = [
+    //             "method"        => "money_info",
+    //             "agent_code"    => self::$agentCode,
+    //             "agent_token"   => self::$agentToken,
+    //         ];
 
-            $response = Http::post(self::$apiEndpoint, $dataArray);
+    //         $response = Http::post(self::$apiEndpoint, $dataArray);
 
-            if($response->successful()) {
-                $data = $response->json();
+    //         if($response->successful()) {
+    //             $data = $response->json();
 
-                return $data['agent']['balance'] ?? 0;
-            }else{
-                return false;
-            }
-        }
+    //             return $data['agent']['balance'] ?? 0;
+    //         }else{
+    //             return false;
+    //         }
+    //     }
 
-    }
+    // }
 
     /**
      * Prepare Transaction

@@ -15,7 +15,7 @@ class GGROverview extends BaseWidget
 
     protected function getStats(): array
     {
-        $balance = self::getWorldSlotBalance();
+        // $balance = self::getWorldSlotBalance();
         $creditoGastos = GgrGamesWorldSlot::sum('balance_bet');
         $totalPartidas = GgrGamesWorldSlot::count();
 

@@ -12,17 +12,21 @@ class NewDepositNotification extends Notification
     use Queueable;
 
     /**
-     * @var $name
+     * Имя пользователя, совершившего депозит.
+     *
+     * @var string
      */
     public $name;
 
     /**
-     * @var $amout
+     * Сумма депозита.
+     *
+     * @var float
      */
     public $amout;
 
     /**
-     * Create a new notification instance.
+     * Создаёт новый экземпляр уведомления.
      */
     public function __construct($name, $amout)
     {
@@ -31,7 +35,7 @@ class NewDepositNotification extends Notification
     }
 
     /**
-     * Get the notification's delivery channels.
+     * Определяет каналы доставки уведомления.
      *
      * @return array<int, string>
      */
@@ -41,24 +45,33 @@ class NewDepositNotification extends Notification
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Создаёт представление уведомления в виде письма (Mail).
      */
     public function toMail(object $notifiable): MailMessage
     {
+        // Если у вас есть Blade-шаблон emails.new-deposit с локализацией,
+        // можно передать переведённые ключи. Либо оставить как есть,
+        // если шаблон уже поддерживает нужную локализацию.
         return (new MailMessage)->view(
-            'emails.new-deposit', ['usuario' => $this->name, 'valor' => \Helper::amountFormatDecimal($this->amout)]
+            'emails.new-deposit', [
+                'usuario' => $this->name,
+                'valor'   => \Helper::amountFormatDecimal($this->amout),
+            ]
         );
     }
 
     /**
-     * Get the array representation of the notification.
+     * Массив данных для хранения в БД (канал 'database').
      *
      * @return array<string, mixed>
      */
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'Olá Administrador, Informamos que um novo depósito no valor de ' . \Helper::amountFormatDecimal($this->amout) . ' , realizado pelo usuário' . $this->name,
+            'message' => 'Здравствуйте, Администратор. Уведомляем вас о новом депозите на сумму ' 
+                . \Helper::amountFormatDecimal($this->amout) 
+                . ', совершённом пользователем ' 
+                . $this->name,
         ];
     }
 }

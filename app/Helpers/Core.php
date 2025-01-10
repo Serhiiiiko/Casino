@@ -157,13 +157,13 @@ class Core
     {
         switch ($order) {
             case 'balance_bonus':
-                return 'Saldo Bônus';
+                return 'Бонусный баланс';
 
             case 'balance':
-                return 'Saldo Depósito';
+                return 'Депозитный баланс';
 
             case 'balance_withdrawal':
-                return 'Saldo de Saque';
+                return 'Баланс добычи';
 
         }
     }
@@ -175,10 +175,10 @@ class Core
     public static function getTypeOrder($order)
     {
         if($order == 'win') {
-            return 'Vitória';
+            return 'Победа';
         }
 
-        return 'Perda';
+        return 'Поражение';
     }
 
     /**
@@ -271,9 +271,9 @@ class Core
     {
         switch ($data) {
             case 0:
-                return 'Pendente';
+                return 'В ожидании';
             case 1:
-                return 'Finalizado';
+                return 'Законченный';
         }
     }
 
@@ -304,13 +304,13 @@ class Core
     {
         switch ($key) {
             case 'document':
-                return 'Documento';
+                return 'Документ';
             case 'phoneNumber':
-                return 'Telefone';
+                return 'Телефон';
             case 'email':
                 return 'E-mail';
             case 'randomKey':
-                return 'Chave Aleatória';
+                return 'Случайный ключ';
             default:
                 return $key;
         }

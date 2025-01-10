@@ -17,32 +17,42 @@ class AdminWidgets extends BaseWidget
      */
     protected function getCards(): array
     {
-        if(auth()->check()) {
+        if (auth()->check()) {
             $inviterId = auth()->user()->id;
-            $usersIds = User::where('inviter', $inviterId)->get()->pluck('id');
+            $usersIds = User::where('inviter', $inviterId)->pluck('id');
 
-            if(!empty($usersIds)) {
-                $comissaoRevshare   = AffiliateHistory::whereIn('user_id', $usersIds)->where('commission_type', 'revshare')->sum('commission_paid');
-                $comissaoCPAs       = AffiliateHistory::whereIn('user_id', $usersIds)->where('commission_type', 'cpa')->sum('commission_paid');
-                $lossesRev          = AffiliateHistory::whereIn('user_id', $usersIds)->where('commission_type', 'revshare')->sum('losses_amount');
+            if (! empty($usersIds)) {
+                $comissaoRevshare = AffiliateHistory::whereIn('user_id', $usersIds)
+                    ->where('commission_type', 'revshare')
+                    ->sum('commission_paid');
+
+                $comissaoCPAs = AffiliateHistory::whereIn('user_id', $usersIds)
+                    ->where('commission_type', 'cpa')
+                    ->sum('commission_paid');
+
+                $lossesRev = AffiliateHistory::whereIn('user_id', $usersIds)
+                    ->where('commission_type', 'revshare')
+                    ->sum('losses_amount');
             }
-        }else{
-            $comissaoRevshare   = 0;
-            $comissaoCPAs       = 0;
-            $lossesRev       = 0;
+        } else {
+            $comissaoRevshare = 0;
+            $comissaoCPAs     = 0;
+            $lossesRev        = 0;
         }
 
         return [
-            Stat::make('Comissão CPA', \Helper::amountFormatDecimal($comissaoCPAs))
-                ->description('Comissão Cpa')
+            Stat::make('CPA-комиссия', \Helper::amountFormatDecimal($comissaoCPAs))
+                ->description('CPA-комиссия')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
-            Stat::make('Comissão Revshare', \Helper::amountFormatDecimal($comissaoRevshare))
-                ->description('Comissão revshare')
+
+            Stat::make('Revshare-комиссия', \Helper::amountFormatDecimal($comissaoRevshare))
+                ->description('Revshare-комиссия')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
-            Stat::make('Perdas', \Helper::amountFormatDecimal($lossesRev))
-                ->description('Perdas dos indicados')
+
+            Stat::make('Убытки', \Helper::amountFormatDecimal($lossesRev))
+                ->description('Убытки привлечённых пользователей')
                 ->descriptionIcon('heroicon-m-arrow-trending-down')
                 ->color('danger'),
         ];

@@ -29,7 +29,8 @@ class AffiliateWithdrawResource extends Resource
      */
     public static function getNavigationLabel(): string
     {
-        return auth()->user()->hasRole('afiliado') ? 'Meus Saques' : 'Saques de Afiliados';
+        // Перевод «Meus Saques» → «Мои выводы», «Saques de Afiliados» → «Выводы аффилиатов»
+        return auth()->user()->hasRole('afiliado') ? 'Мои выводы' : 'Выводы аффилиатов';
     }
 
     /**
@@ -37,7 +38,8 @@ class AffiliateWithdrawResource extends Resource
      */
     public static function getModelLabel(): string
     {
-        return auth()->user()->hasRole('afiliado') ? 'Meus Saques' : 'Saques de Afiliados';
+        // Та же логика перевода
+        return auth()->user()->hasRole('afiliado') ? 'Мои выводы' : 'Выводы аффилиатов';
     }
 
     public static function form(Form $form): Form
@@ -51,30 +53,44 @@ class AffiliateWithdrawResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(auth()->user()->hasRole('afiliado') ? AffiliateWithdraw::query()->where('user_id', auth()->id()) : AffiliateWithdraw::query())
+            ->query(
+                auth()->user()->hasRole('afiliado')
+                    ? AffiliateWithdraw::query()->where('user_id', auth()->id())
+                    : AffiliateWithdraw::query()
+            )
             ->columns([
                 Tables\Columns\TextColumn::make('amount')
-                    ->label('Valor')
+                    ->label('Сумма')
                     ->formatStateUsing(fn (AffiliateWithdraw $record): string => $record->symbol . ' ' . $record->amount)
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('pix_type')
-                    ->label('Tipo')
+                    ->label('Тип')
                     ->formatStateUsing(fn (string $state): string => \Helper::formatPixType($state))
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('pix_key')
-                    ->label('Chave Pix'),
+                    ->label('Ключ Pix'),
+
                 Tables\Columns\TextColumn::make('bank_info')
-                    ->label('Informações Bancaria'),
+                    ->label('Банковские данные'),
+
                 Tables\Columns\TextColumn::make('proof')
-                    ->label('Comprovante')
+                    ->label('Подтверждение')
                     ->html()
-                    ->formatStateUsing(fn (string $state): string => '<a href="'.url('storage/'.$state).'" target="_blank">Baixar</a>'),
-                auth()->user()->hasRole('afiliado') ? Tables\Columns\IconColumn::make('status')
-                    ->boolean() : Tables\Columns\ToggleColumn::make('status'),
+                    ->formatStateUsing(fn (string $state): string => '<a href="'.url('storage/'.$state).'" target="_blank">Скачать</a>'),
+
+                // Для аффилиата показываем просто иконку (true/false),
+                // для админа – переключатель (ToggleColumn).
+                auth()->user()->hasRole('afiliado')
+                    ? Tables\Columns\IconColumn::make('status')->boolean()
+                    : Tables\Columns\ToggleColumn::make('status'),
+
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Data')
+                    ->label('Дата')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

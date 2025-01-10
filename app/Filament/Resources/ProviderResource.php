@@ -19,9 +19,9 @@ class ProviderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Todos os Provedores';
+    protected static ?string $navigationLabel = 'Все провайдеры';
 
-    protected static ?string $modelLabel = 'Todos os Provedores';
+    protected static ?string $modelLabel = 'Все провайдеры';
 
     /**
      * @dev @victormsalatiel
@@ -37,33 +37,39 @@ class ProviderResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make('')
-                ->schema([
-                    Forms\Components\TextInput::make('code')
-                        ->label('Código')
-                        ->placeholder('Digite o Código')
-                        ->maxLength(50),
-                    Forms\Components\TextInput::make('name')
-                        ->placeholder('Digite o Nome')
-                        ->label('Nome')
-                        ->maxLength(50),
-                    Forms\Components\Select::make('distribution')
-                        ->label('Distribuição')
-                        ->placeholder('Selecione a distribuição')
-                        ->required()
-                        ->options(\Helper::getDistribution()),
-                    Forms\Components\TextInput::make('rtp')
-                        ->label('RTP')
-                        ->numeric()
-                        ->default(90),
-                    Forms\Components\TextInput::make('views')
-                        ->label('Visualizações')
-                        ->numeric()
-                        ->default(1),
-                    Forms\Components\Toggle::make('status')
-                        ->label('Status')
-                        ->inline(false)
-                        ->required(),
-                ])->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('code')
+                            ->label('Код')
+                            ->placeholder('Введите Код')
+                            ->maxLength(50),
+
+                        Forms\Components\TextInput::make('name')
+                            ->label('Название')
+                            ->placeholder('Введите Название')
+                            ->maxLength(50),
+
+                        Forms\Components\Select::make('distribution')
+                            ->label('Распределение')
+                            ->placeholder('Выберите распределение')
+                            ->required()
+                            ->options(\Helper::getDistribution()),
+
+                        Forms\Components\TextInput::make('rtp')
+                            ->label('RTP')
+                            ->numeric()
+                            ->default(90),
+
+                        Forms\Components\TextInput::make('views')
+                            ->label('Просмотры')
+                            ->numeric()
+                            ->default(1),
+
+                        Forms\Components\Toggle::make('status')
+                            ->label('Статус')
+                            ->inline(false)
+                            ->required(),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -72,29 +78,37 @@ class ProviderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('code')
-                    ->label('Código')
+                    ->label('Код')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nome')
+                    ->label('Название')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('distribution')
-                    ->label('Distribuição')
+                    ->label('Распределение')
                     ->searchable(),
+
                 Tables\Columns\IconColumn::make('status')
+                    ->label('Статус')
                     ->boolean(),
+
                 Tables\Columns\TextColumn::make('rtp')
                     ->label('RTP')
                     ->suffix('%')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('views')
-                    ->label('Visualizações')
+                    ->label('Просмотры')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -102,10 +116,9 @@ class ProviderResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('distribution')
-                    ->label('Distribuição')
+                    ->label('Распределение')
                     ->options(Helper::getDistribution())
-                    ->attribute('distribution')
-                ,
+                    ->attribute('distribution'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -130,8 +143,8 @@ class ProviderResource extends Resource
     {
         return [
             'index' => Pages\ListProviders::route('/'),
-//            'create' => Pages\CreateProvider::route('/create'),
-//            'edit' => Pages\EditProvider::route('/{record}/edit'),
+            // 'create' => Pages\CreateProvider::route('/create'),
+            // 'edit' => Pages\EditProvider::route('/{record}/edit'),
         ];
     }
 }

@@ -9,7 +9,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestPixPayments extends BaseWidget
 {
-    protected static ?string $heading = 'Pagamentos Realizados';
+    protected static ?string $heading = 'Совершённые платежи';
 
     protected static ?int $navigationSort = -1;
 
@@ -26,14 +26,14 @@ class LatestPixPayments extends BaseWidget
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('payment_id')
-                    ->label('Pagamento ID'),
+                    ->label('ID платежа'),
                 Tables\Columns\TextColumn::make('pix_key')
-                    ->label('Chave Pix'),
+                    ->label('Ключ Pix'),
                 Tables\Columns\TextColumn::make('pix_type')
-                    ->label('Tipo de Chave'),
+                    ->label('Тип ключа'),
                 Tables\Columns\TextColumn::make('amount')
                     ->money('BRL')
-                    ->label('Valor'),
+                    ->label('Сумма'),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -41,7 +41,7 @@ class LatestPixPayments extends BaseWidget
                         'pago' => 'success',
                     }),
                 Tables\Columns\TextColumn::make('dateHumanReadable')
-                    ->label('Data')
+                    ->label('Дата'),
             ]);
     }
 
@@ -50,8 +50,9 @@ class LatestPixPayments extends BaseWidget
      */
     public static function canView(): bool
     {
-        //return auth()->user()->hasRole('admin');
+        // По умолчанию возвращаем true (разрешаем просмотр).
+        // Если нужно ограничить просмотр только админом, верните:
+        // return auth()->user()->hasRole('admin');
         return true;
     }
-
 }

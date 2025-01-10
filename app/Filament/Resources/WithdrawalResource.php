@@ -16,16 +16,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class WithdrawalResource extends Resource
 {
-
     protected static ?string $model = Withdrawal::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-up-tray';
 
-    protected static ?string $navigationLabel = 'Saques';
+    protected static ?string $navigationLabel = 'Выводы средств';
 
-    protected static ?string $modelLabel = 'Saques';
+    protected static ?string $modelLabel = 'Выводы средств';
 
-    protected static ?string $navigationGroup = 'Administração';
+    protected static ?string $navigationGroup = 'Администрирование';
 
     protected static ?string $slug = 'todos-saques';
 
@@ -45,7 +44,7 @@ class WithdrawalResource extends Resource
      */
     public static function getGloballySearchableAttributes(): array
     {
-        return ['type', 'bank_info', 'user.name', 'user.last_name', 'user.cpf', 'user.phone',  'user.email'];
+        return ['type', 'bank_info', 'user.name', 'user.last_name', 'user.cpf', 'user.phone', 'user.email'];
     }
 
     /**
@@ -53,6 +52,7 @@ class WithdrawalResource extends Resource
      */
     public static function getNavigationBadge(): ?string
     {
+        // Показывает количество непроведённых (status = 0) заявок на вывод
         return static::getModel()::where('status', 0)->count();
     }
 
@@ -61,6 +61,7 @@ class WithdrawalResource extends Resource
      */
     public static function getNavigationBadgeColor(): string|array|null
     {
+        // Если больше 5 необработанных заявок, меняем цвет на 'success', иначе 'warning'
         return static::getModel()::where('status', 0)->count() > 5 ? 'success' : 'warning';
     }
 
@@ -72,37 +73,41 @@ class WithdrawalResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Cadastro de Saques')
+                Forms\Components\Section::make('Регистрация вывода средств')
                     ->schema([
                         Forms\Components\Select::make('user_id')
-                            ->label('Usuários')
-                            ->placeholder('Selecione um usuário')
+                            ->label('Пользователи')
+                            ->placeholder('Выберите пользователя')
                             ->relationship(name: 'user', titleAttribute: 'name')
                             ->options(
-                                fn($get) => User::query()
-                                    ->pluck('name', 'id')
+                                fn($get) => User::query()->pluck('name', 'id')
                             )
                             ->searchable()
                             ->preload()
                             ->live()
                             ->required(),
+
                         Forms\Components\TextInput::make('amount')
-                            ->label('Valor')
+                            ->label('Сумма')
                             ->required()
                             ->default(0.00),
+
                         Forms\Components\TextInput::make('type')
-                            ->label('Tipo')
+                            ->label('Тип')
                             ->required()
                             ->maxLength(191),
+
                         Forms\Components\FileUpload::make('proof')
-                            ->label('Comprovante')
-                            ->placeholder('Carregue a imagem do comprovante')
+                            ->label('Подтверждение')
+                            ->placeholder('Загрузите изображение квитанции')
                             ->image()
                             ->columnSpanFull()
                             ->required(),
+
                         Forms\Components\Toggle::make('status')
+                            ->label('Статус')
                             ->required(),
-                    ])
+                    ]),
             ]);
     }
 
@@ -116,31 +121,40 @@ class WithdrawalResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Nome')
+                    ->label('Имя')
                     ->searchable(['users.name', 'users.last_name'])
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('amount')
-                    ->label('Valor')
+                    ->label('Сумма')
                     ->formatStateUsing(fn (Withdrawal $record): string => $record->symbol . ' ' . $record->amount)
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('pix_type')
-                    ->label('Tipo')
+                    ->label('Тип')
                     ->formatStateUsing(fn (string $state): string => \Helper::formatPixType($state))
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('pix_key')
-                    ->label('Chave Pix'),
+                    ->label('Ключ Pix'),
+
                 Tables\Columns\TextColumn::make('bank_info')
-                    ->label('Informações Bancaria'),
+                    ->label('Банковские данные'),
+
                 Tables\Columns\TextColumn::make('proof')
-                    ->label('Comprovante')
+                    ->label('Подтверждение')
                     ->html()
-                    ->formatStateUsing(fn (string $state): string => '<a href="'.url('storage/'.$state).'" target="_blank">Baixar</a>'),
+                    ->formatStateUsing(fn (string $state): string => '<a href="'.url('storage/'.$state).'" target="_blank">Скачать</a>'),
+
                 Tables\Columns\IconColumn::make('status')
+                    ->label('Статус')
                     ->boolean(),
+
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Data')
+                    ->label('Дата')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -151,59 +165,61 @@ class WithdrawalResource extends Resource
             ])
             ->actions([
                 Action::make('deny_payment')
-                    ->label('Cancelar')
+                    ->label('Отменить')
                     ->icon('heroicon-o-banknotes')
                     ->color('danger')
                     ->visible(fn (Withdrawal $withdrawal): bool => !$withdrawal->status)
-                    ->action(function(Withdrawal $withdrawal) {
+                    ->action(function (Withdrawal $withdrawal) {
                         \Filament\Notifications\Notification::make()
-                            ->title('Cancelar Saque')
+                            ->title('Отменить вывод')
                             ->success()
                             ->persistent()
-                            ->body('Você está cancelando saque de '. \Helper::amountFormatDecimal($withdrawal->amount))
+                            ->body('Вы отменяете вывод на сумму ' . \Helper::amountFormatDecimal($withdrawal->amount))
                             ->actions([
                                 \Filament\Notifications\Actions\Action::make('view')
-                                    ->label('Confirmar')
+                                    ->label('Подтвердить')
                                     ->button()
                                     ->url(route('suitpay.cancelwithdrawal', ['id' => $withdrawal->id]))
                                     ->close(),
                                 \Filament\Notifications\Actions\Action::make('undo')
                                     ->color('gray')
-                                    ->label('Cancelar')
-                                    ->action(function(Withdrawal $withdrawal) {
-
+                                    ->label('Отмена')
+                                    ->action(function (Withdrawal $withdrawal) {
+                                        // Действие на случай, если пользователь решит отменить
                                     })
                                     ->close(),
                             ])
                             ->send();
                     }),
+
                 Action::make('approve_payment')
-                    ->label('Fazer pagamento')
+                    ->label('Выплатить')
                     ->icon('heroicon-o-banknotes')
                     ->color('success')
                     ->visible(fn (Withdrawal $withdrawal): bool => !$withdrawal->status)
-                    ->action(function(Withdrawal $withdrawal) {
+                    ->action(function (Withdrawal $withdrawal) {
                         \Filament\Notifications\Notification::make()
-                            ->title('Saque')
+                            ->title('Вывод')
                             ->success()
                             ->persistent()
-                            ->body('Você está solicitando um saque de '. \Helper::amountFormatDecimal($withdrawal->amount))
+                            ->body('Вы запрашиваете вывод на сумму ' . \Helper::amountFormatDecimal($withdrawal->amount))
                             ->actions([
                                 \Filament\Notifications\Actions\Action::make('view')
-                                    ->label('Confirmar')
+                                    ->label('Подтвердить')
                                     ->button()
                                     ->url(route('suitpay.withdrawal', ['id' => $withdrawal->id]))
                                     ->close(),
                                 \Filament\Notifications\Actions\Action::make('undo')
                                     ->color('gray')
-                                    ->label('Cancelar')
-                                    ->action(function(Withdrawal $withdrawal) {
-
+                                    ->label('Отмена')
+                                    ->action(function (Withdrawal $withdrawal) {
+                                        // Действие на случай, если пользователь решит отменить
                                     })
                                     ->close(),
                             ])
                             ->send();
                     }),
+
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -215,8 +231,6 @@ class WithdrawalResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-
-
 
     /**
      * @return array|\Filament\Resources\RelationManagers\RelationGroup[]|\Filament\Resources\RelationManagers\RelationManagerConfiguration[]|string[]

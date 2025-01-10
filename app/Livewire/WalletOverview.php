@@ -24,42 +24,50 @@ class WalletOverview extends BaseWidget
 
         $setting = \Helper::getSetting();
         $dataAtual = Carbon::now();
+
         $depositQuery = Deposit::query();
         $withdrawalQuery = Withdrawal::query();
 
-        if(empty($startDate) && empty($endDate)) {
+        // Фильтр по датам для депозитов
+        if (empty($startDate) && empty($endDate)) {
             $depositQuery->whereMonth('created_at', Carbon::now()->month);
-        }else{
+        } else {
             $depositQuery->whereBetween('created_at', [$startDate, $endDate]);
         }
 
-        // Executa a consulta para obter a soma dos depósitos para o mês atual
+        // Сумма подтверждённых (status = 1) депозитов
         $sumDepositMonth = $depositQuery
             ->where('status', 1)
             ->sum('amount');
 
+        // Фильтр по датам для выводов
         $withdrawalQuery->where('status', 1);
 
-        if(empty($startDate) && empty($endDate)) {
+        if (empty($startDate) && empty($endDate)) {
             $withdrawalQuery->whereMonth('created_at', Carbon::now()->month);
-        }else{
+        } else {
             $withdrawalQuery->whereBetween('created_at', [$startDate, $endDate]);
         }
 
+        // Сумма подтверждённых (status = 1) выводов
         $sumWithdrawalMonth = $withdrawalQuery->sum('amount');
+
+        // Расчёт Revshare от общей суммы депозитов
         $revshare = \Helper::porcentagem_xn($setting->revshare_percentage, $sumDepositMonth);
 
         return [
-            Stat::make('Depositos', \Helper::amountFormatDecimal($sumDepositMonth))
-                ->description('Total de Depositos')
+            Stat::make('Депозиты', \Helper::amountFormatDecimal($sumDepositMonth))
+                ->description('Общая сумма депозитов')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
-            Stat::make('Saques', \Helper::amountFormatDecimal($sumWithdrawalMonth))
-                ->description('Total de saques')
+
+            Stat::make('Выводы', \Helper::amountFormatDecimal($sumWithdrawalMonth))
+                ->description('Общая сумма выводов')
                 ->descriptionIcon('heroicon-m-arrow-trending-down')
                 ->color('danger'),
+
             Stat::make('Revshare', \Helper::amountFormatDecimal($revshare))
-                ->description('Ganhos da Plataforma')
+                ->description('Доход платформы')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
         ];

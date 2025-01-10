@@ -20,9 +20,9 @@ class SubAffiliateResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Sub. Afiliados';
+    protected static ?string $navigationLabel = 'Суб-аффилиаты';
 
-    protected static ?string $modelLabel = 'Sub. Afiliados';
+    protected static ?string $modelLabel = 'Суб-аффилиаты';
 
     /**
      * @dev @victormsalatiel
@@ -39,23 +39,33 @@ class SubAffiliateResource extends Resource
      */
     public static function table(Table $table): Table
     {
+        // Получаем всех пользователей, у которых inviter = id текущего пользователя
+        $usersIds = User::where('inviter', auth()->id())->pluck('id');
 
-        $usersIds = User::where('inviter', auth()->id())->get()->pluck('id');
         return $table
             ->query(User::query()->whereIn('id', $usersIds))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Имя')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('email')
+                    ->label('E-mail')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('email_verified_at')
+                    ->label('Подтверждение E-mail')
                     ->dateTime()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создания')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Дата изменения')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -64,11 +74,11 @@ class SubAffiliateResource extends Resource
                 //
             ])
             ->actions([
-
+                // Здесь можно добавить действия, например, Edit, View, Delete и т.д.
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-
+                    // Здесь можно добавить BulkActions
                 ]),
             ]);
     }
@@ -89,7 +99,6 @@ class SubAffiliateResource extends Resource
             SubAffiliateOverview::class,
         ];
     }
-
 
     public static function getPages(): array
     {

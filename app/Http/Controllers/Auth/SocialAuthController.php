@@ -64,7 +64,7 @@ class SocialAuthController extends Controller
                 ]);
 
                 self::saveAffiliateHistory($new_user);
-                return redirect()->to(url('/'))->with('success', 'Sua conta foi ativada com sucesso, a senha de acesso foi enviada para seu E-mail');
+                return redirect()->to(url('/'))->with('success', 'Ваша учетная запись была успешно активирована, пароль был отправлен на вашу электронную почту');
             }
 
         } catch (Exception $e) {

@@ -9,7 +9,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestAdminComissions extends BaseWidget
 {
-    protected static ?string $heading = 'Minhas Afiliações';
+    protected static ?string $heading = 'Мои аффилиации';
 
     protected static ?int $navigationSort = -1;
 
@@ -26,31 +26,37 @@ class LatestAdminComissions extends BaseWidget
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Usuário'),
+                    ->label('Пользователь'),
                 Tables\Columns\TextColumn::make('user.email')
                     ->label('E-mail'),
 
                 Tables\Columns\TextColumn::make('commission_type')
-                    ->label('Tipo'),
+                    ->label('Тип'),
+
                 Tables\Columns\TextColumn::make('commission_paid')
                     ->money('BRL')
-                    ->label('Comissão'),
+                    ->label('Комиссия'),
+
                 Tables\Columns\TextColumn::make('losses_amount')
                     ->money('BRL')
                     ->badge()
                     ->color('danger')
-                    ->label('Perdas'),
+                    ->label('Убытки'),
+
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'pendente' => 'warning',
                         'pago' => 'success',
                     }),
+
                 Tables\Columns\TextColumn::make('dateHumanReadable')
-                    ->label('Data'),
+                    ->label('Дата'),
+
                 Tables\Columns\TextColumn::make('losses')
-                    ->label('Total de Perdas')
+                    ->label('Всего убытков')
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -65,5 +71,4 @@ class LatestAdminComissions extends BaseWidget
     {
         return auth()->user()->hasRole('afiliado');
     }
-
 }

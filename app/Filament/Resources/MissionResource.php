@@ -26,9 +26,9 @@ class MissionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
 
-    protected static ?string $navigationLabel = 'Missões';
+    protected static ?string $navigationLabel = 'Миссии';
 
-    protected static ?string $modelLabel = 'Missões';
+    protected static ?string $modelLabel = 'Миссии';
 
     protected static ?string $slug = 'centro-missoes';
 
@@ -50,68 +50,79 @@ class MissionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make('')
-                ->schema([
-                    Forms\Components\TextInput::make('challenge_name')
-                        ->required()
-                        ->label('Nome da Missão')
-                        ->placeholder('Digite o nome da missão')
-                        ->columnSpanFull()
-                        ->maxLength(191),
-                    RichEditor::make('challenge_description')
-                        ->label('Descrição')
-                        ->columnSpanFull()
-                        ->placeholder('Digite a descrição da missão'),
+                    ->schema([
+                        Forms\Components\TextInput::make('challenge_name')
+                            ->label('Название миссии')
+                            ->placeholder('Введите название миссии')
+                            ->required()
+                            ->columnSpanFull()
+                            ->maxLength(191),
 
-                    RichEditor::make('challenge_rules')
-                        ->label('Regras')
-                        ->columnSpanFull()
-                        ->placeholder('Digite as regras da missão'),
-                    Select::make('challenge_type')
-                        ->default('game')
-                        ->label('Tipo da Missão')
-                        ->options([
-                            'game' => 'Jogo',
-                            'wallet' => 'Carteira',
-                            'deposit' => 'Deposito',
-                            'affiliate' => 'Afiliado',
-                        ]),
-                    Forms\Components\TextInput::make('challenge_link')
-                        ->label('Link da Missão')
-                        ->maxLength(191),
-                    Forms\Components\DateTimePicker::make('challenge_start_date')
-                        ->label('Data inicial da Missão')
-                        ->required(),
-                    Forms\Components\DateTimePicker::make('challenge_end_date')
-                        ->label('Data final da Missão')
-                        ->required(),
-                    Forms\Components\TextInput::make('challenge_bonus')
-                        ->label('Valor do Bônus')
-                        ->required()
-                        ->numeric()
-                        ->default(0.00),
-                    Forms\Components\TextInput::make('challenge_total')
-                        ->label('Total de Missões')
-                        ->required()
-                        ->numeric()
-                        ->default(1),
-                    Select::make('challenge_currency')
-                        ->label('Moeda Padrão')
-                        ->required()
-                        ->options(Currency::all()->pluck('code', 'id'))
-                        ->reactive()
-                        ->default(Wallet::where('active', 1)->first()->currency)
-                        ->searchable(),
-                    Select::make('challenge_provider')
-                        ->label('Provedor')
-                        ->options(Provider::all()->pluck('name', 'id'))
-                        ->reactive()
-                        ->searchable(),
-                    Forms\Components\TextInput::make('challenge_gameid')
-                        ->label('Game ID')
-                        ->placeholder('Digite o id do jogo, você consegue o id na listagem dos jogos')
-                        ->columnSpanFull()
-                        ->maxLength(191),
-                ])->columns(2)
+                        RichEditor::make('challenge_description')
+                            ->label('Описание')
+                            ->placeholder('Введите описание миссии')
+                            ->columnSpanFull(),
+
+                        RichEditor::make('challenge_rules')
+                            ->label('Правила')
+                            ->placeholder('Введите правила миссии')
+                            ->columnSpanFull(),
+
+                        Select::make('challenge_type')
+                            ->label('Тип миссии')
+                            ->default('game')
+                            ->options([
+                                'game'      => 'Игра',
+                                'wallet'    => 'Кошелёк',
+                                'deposit'   => 'Депозит',
+                                'affiliate' => 'Аффилиат',
+                            ]),
+
+                        Forms\Components\TextInput::make('challenge_link')
+                            ->label('Ссылка на миссию')
+                            ->maxLength(191),
+
+                        Forms\Components\DateTimePicker::make('challenge_start_date')
+                            ->label('Дата начала миссии')
+                            ->required(),
+
+                        Forms\Components\DateTimePicker::make('challenge_end_date')
+                            ->label('Дата окончания миссии')
+                            ->required(),
+
+                        Forms\Components\TextInput::make('challenge_bonus')
+                            ->label('Сумма бонуса')
+                            ->numeric()
+                            ->required()
+                            ->default(0.00),
+
+                        Forms\Components\TextInput::make('challenge_total')
+                            ->label('Всего миссий')
+                            ->numeric()
+                            ->required()
+                            ->default(1),
+
+                        Select::make('challenge_currency')
+                            ->label('Основная валюта')
+                            ->options(Currency::all()->pluck('code', 'id'))
+                            ->required()
+                            ->reactive()
+                            ->default(Wallet::where('active', 1)->first()->currency ?? null)
+                            ->searchable(),
+
+                        Select::make('challenge_provider')
+                            ->label('Провайдер')
+                            ->options(Provider::all()->pluck('name', 'id'))
+                            ->reactive()
+                            ->searchable(),
+
+                        Forms\Components\TextInput::make('challenge_gameid')
+                            ->label('ID игры')
+                            ->placeholder('Введите ID игры (можно посмотреть в списке игр)')
+                            ->columnSpanFull()
+                            ->maxLength(191),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -120,38 +131,49 @@ class MissionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('challenge_name')
-                    ->label('Nome')
+                    ->label('Название')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('challenge_type')
-                    ->label('Tipo')
+                    ->label('Тип')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('challenge_link')
-                    ->label('Link')
+                    ->label('Ссылка')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('challenge_start_date')
-                    ->label('Data Inicial')
+                    ->label('Начальная дата')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('challenge_end_date')
-                    ->label('Data Final')
+                    ->label('Конечная дата')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('challenge_bonus')
-                    ->label('Valor do Prêmio')
+                    ->label('Сумма приза')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('challenge_total')
-                    ->label('Total')
+                    ->label('Всего')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('challenge_currency')
-                    ->label('Moeda')
+                    ->label('Валюта')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создания')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Дата изменения')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -175,7 +197,7 @@ class MissionResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\UsersRelationManager::class
+            RelationManagers\UsersRelationManager::class,
         ];
     }
 

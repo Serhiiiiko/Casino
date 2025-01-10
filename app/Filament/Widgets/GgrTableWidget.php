@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class GgrTableWidget extends BaseWidget
 {
-
     protected static ?string $heading = 'GGR World Slot';
 
     protected static ?int $navigationSort = -1;
@@ -32,27 +31,32 @@ class GgrTableWidget extends BaseWidget
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Usuário'),
+                    ->label('Пользователь'),
+
                 Tables\Columns\TextColumn::make('provider')
-                    ->label('Provedor')
+                    ->label('Провайдер')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('game')
-                    ->label('Jogo')
+                    ->label('Игра')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('balance_bet')
                     ->money('BRL')
-                    ->label('Saldo Aposta'),
+                    ->label('Ставка'),
+
                 Tables\Columns\TextColumn::make('balance_win')
                     ->money('BRL')
-                    ->label('Saldo Vitoria'),
+                    ->label('Выигрыш'),
+
                 Tables\Columns\TextColumn::make('dateHumanReadable')
-                    ->label('Data')
+                    ->label('Дата'),
             ])
             ->filters([
                 Filter::make('created_at')
                     ->form([
-                        DatePicker::make('created_from')->label('Data Inicial'),
-                        DatePicker::make('created_until')->label('Data Final'),
+                        DatePicker::make('created_from')->label('Начальная дата'),
+                        DatePicker::make('created_until')->label('Конечная дата'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -69,19 +73,19 @@ class GgrTableWidget extends BaseWidget
                         $indicators = [];
 
                         if ($data['created_from'] ?? null) {
-                            $indicators['created_from'] = 'Criação Inicial ' . Carbon::parse($data['created_from'])->toFormattedDateString();
+                            $indicators['created_from'] =
+                                'Начало создания ' . Carbon::parse($data['created_from'])->toFormattedDateString();
                         }
 
                         if ($data['created_until'] ?? null) {
-                            $indicators['created_until'] = 'Criação Final ' . Carbon::parse($data['created_until'])->toFormattedDateString();
+                            $indicators['created_until'] =
+                                'Окончание создания ' . Carbon::parse($data['created_until'])->toFormattedDateString();
                         }
 
                         return $indicators;
                     }),
-            ])
-            ;
+            ]);
     }
-
 
     /**
      * @return bool

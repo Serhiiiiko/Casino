@@ -42,29 +42,34 @@ class BannerResource extends Resource
                     ->schema([
                         Forms\Components\Group::make()->schema([
                             Forms\Components\Group::make()
-                            ->schema([
-                                Forms\Components\TextInput::make('link')
-                                    ->label('Link')
-                                    ->placeholder('Digite o link do banner')
-                                    ->maxLength(191),
-                                Forms\Components\Select::make('type')
-                                    ->label('Selecione o tipo')
-                                    ->options([
-                                        'carousel' => 'Banner na Carousel',
-                                        'home' => 'Banner na Home',
-                                    ])
-                                    ->required(),
-                            ])->columns(2)->columnSpanFull(),
+                                ->schema([
+                                    Forms\Components\TextInput::make('link')
+                                        ->label('Ссылка')
+                                        ->placeholder('Введите ссылку баннера')
+                                        ->maxLength(191),
+
+                                    Forms\Components\Select::make('type')
+                                        ->label('Выберите тип')
+                                        ->options([
+                                            'carousel' => 'Баннер в карусели',
+                                            'home' => 'Баннер на главной',
+                                        ])
+                                        ->required(),
+                                ])
+                                ->columns(2)
+                                ->columnSpanFull(),
 
                             Forms\Components\Textarea::make('description')
-                                ->placeholder('Digite uma descrição')
+                                ->placeholder('Введите описание')
                                 ->maxLength(65535)
                                 ->columnSpanFull(),
                         ])->columns(2),
+
                         Forms\Components\FileUpload::make('image')
+                            ->label('Изображение')
                             ->image()
                             ->required(),
-                    ])
+                    ]),
             ]);
     }
 
@@ -77,18 +82,20 @@ class BannerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Imagem'),
+                    ->label('Изображение'),
                 Tables\Columns\TextColumn::make('link')
-                    ->label('Link')
+                    ->label('Ссылка')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
-                    ->label('Tipo')
+                    ->label('Тип')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создания')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Дата изменения')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

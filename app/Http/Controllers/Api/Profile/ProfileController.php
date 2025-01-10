@@ -14,9 +14,17 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $totalEarnings = Order::where('user_id', auth('api')->id())->where('type', 'win')->sum('amount');
-        $totalBets = Order::where('user_id', auth('api')->id())->where('type', 'bet')->count();
-        $sumBets = Order::where('user_id', auth('api')->id())->where('type', 'bet')->sum('amount');
+        $totalEarnings = Order::where('user_id', auth('api')->id())
+            ->where('type', 'win')
+            ->sum('amount');
+
+        $totalBets = Order::where('user_id', auth('api')->id())
+            ->where('type', 'bet')
+            ->count();
+
+        $sumBets = Order::where('user_id', auth('api')->id())
+            ->where('type', 'bet')
+            ->sum('amount');
 
         return response()->json([
             'status' => true,
@@ -42,8 +50,11 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        if(auth('api')->user()->update(['name' => $request->name])) {
-            return response()->json(['status' => true, 'message' => trans('Name was updated successfully')]);
+        if (auth('api')->user()->update(['name' => $request->name])) {
+            return response()->json([
+                'status' => true,
+                'message' => trans('Имя успешно обновлено'),
+            ]);
         }
     }
 
@@ -63,8 +74,12 @@ class ProfileController extends Controller
         }
 
         $avatar = \Helper::upload($request->avatar)['path'];
-        if(auth('api')->user()->update(['avatar' => $avatar])) {
-            return response()->json(['status' => true, 'message' => trans('Avatar has been updated successfully')]);
+
+        if (auth('api')->user()->update(['avatar' => $avatar])) {
+            return response()->json([
+                'status' => true,
+                'message' => trans('Аватар успешно обновлён'),
+            ]);
         }
     }
 
@@ -74,15 +89,18 @@ class ProfileController extends Controller
      */
     public function updateLanguage(Request $request)
     {
-        if(auth('api')->check()) {
+        if (auth('api')->check()) {
             $user = auth('api')->user();
 
             $user->language = $request->input('language');
             $user->save();
 
-            return response()->json(['message' => 'Idioma atualizado com sucesso']);
+            return response()->json(['message' => 'Язык успешно обновлён']);
         }
-        return response()->json(['message' => 'Idioma atualizado com sucesso, mas com dados salvo na sessão, faça login para salvar em seu perfil']);
+
+        return response()->json([
+            'message' => 'Язык успешно обновлён, но данные сохранены в сессии. Авторизуйтесь, чтобы сохранить настройки в своём профиле'
+        ]);
     }
 
     /**
@@ -93,7 +111,8 @@ class ProfileController extends Controller
         $browserLanguages = $request->getLanguages();
 
         $preferredLanguage = $browserLanguages[0] ?? 'en';
-        if(auth('api')->check()) {
+
+        if (auth('api')->check()) {
             return response()->json(['language' => auth('api')->user()->language]);
         }
 

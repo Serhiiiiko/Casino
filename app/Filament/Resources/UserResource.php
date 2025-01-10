@@ -24,11 +24,11 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'Administração';
+    protected static ?string $navigationGroup = 'Администрирование';
 
-    protected static ?string $navigationLabel = 'Usuários';
+    protected static ?string $navigationLabel = 'Пользователи';
 
-    protected static ?string $modelLabel = 'Usuários';
+    protected static ?string $modelLabel = 'Пользователи';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -70,34 +70,34 @@ class UserResource extends Resource
             ->setNavigationItems([
                 PageNavigationItem::make(__('base.list_user'))
                     ->translateLabel()
-                    ->url(static::getUrl('index'))->icon('heroicon-o-user-group')
+                    ->url(static::getUrl('index'))
+                    ->icon('heroicon-o-user-group')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.list-users');
                     }),
                 PageNavigationItem::make(__('base.view_user'))
                     ->translateLabel()
-                    ->url(static::getUrl('view', ['record' => $record->id]))->icon('heroicon-o-user')
+                    ->url(static::getUrl('view', ['record' => $this->record->id]))
+                    ->icon('heroicon-o-user')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.view');
                     }),
                 PageNavigationItem::make(__('base.edit_user'))
                     ->translateLabel()
-                    ->url(static::getUrl('edit', ['record' => $record->id]))
+                    ->url(static::getUrl('edit', ['record' => $this->record->id]))
                     ->icon('heroicon-o-pencil-square')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.edit');
                     }),
                 PageNavigationItem::make(__('base.change_password'))
                     ->translateLabel()
-                    ->url(static::getUrl('password.change', ['record' => $record->id]))
+                    ->url(static::getUrl('password.change', ['record' => $this->record->id]))
                     ->icon('heroicon-o-key')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.password.change');
                     }),
-
             ]);
     }
-
 
     /**
      * @param Form $form
@@ -110,27 +110,27 @@ class UserResource extends Resource
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label('Nome')
-                            ->placeholder('Digite o nome')
+                            ->label('Имя')
+                            ->placeholder('Введите имя')
                             ->required()
                             ->maxLength(191),
                         Forms\Components\TextInput::make('email')
                             ->label('E-mail')
-                            ->placeholder('Digite o e-mail')
+                            ->placeholder('Введите e-mail')
                             ->email()
                             ->required()
                             ->maxLength(191),
                         Forms\Components\TextInput::make('cpf')
                             ->label('CPF')
-                            ->placeholder('Digite o CPF')
+                            ->placeholder('Введите CPF')
                             ->maxLength(191),
                         Forms\Components\TextInput::make('phone')
-                            ->label('Telefone')
-                            ->placeholder('Digite o Telefone')
+                            ->label('Телефон')
+                            ->placeholder('Введите телефон')
                             ->maxLength(191),
                         Forms\Components\Select::make('inviter')
-                            ->label('Afiliado')
-                            ->placeholder('Selecione um afiliado')
+                            ->label('Аффилиат')
+                            ->placeholder('Выберите аффилиата')
                             ->relationship(name: 'affiliate', titleAttribute: 'name')
                             ->options(
                                 fn($get) => User::query()->pluck('name', 'id')
@@ -139,8 +139,10 @@ class UserResource extends Resource
                             ->preload()
                             ->live(),
                         Forms\Components\DateTimePicker::make('email_verified_at')
-                            ->label('Verificação E-mail'),
-                    ])->columns(3),
+                            ->label('Подтверждение E-mail'),
+                    ])
+                    ->columns(3),
+
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\TextInput::make('affiliate_revenue_share')
@@ -159,22 +161,21 @@ class UserResource extends Resource
                             ->label('Baseline')
                             ->required()
                             ->numeric(),
-                    ])->columns(4),
+                    ])
+                    ->columns(4),
+
                 Forms\Components\Section::make()
-                ->schema([
-                    Forms\Components\Toggle::make('banned')
-                        ->label('Banido')
-                        ->columnSpanFull()
-                    ,
-                    Forms\Components\Toggle::make('is_demo_agent')
-                        ->label('Influencer')
-                        ->columnSpanFull()
-                    ,
-                    Forms\Components\Toggle::make('status')
-                        ->label('Status')
-                        ->columnSpanFull()
-                    ,
-                ])
+                    ->schema([
+                        Forms\Components\Toggle::make('banned')
+                            ->label('Заблокирован')
+                            ->columnSpanFull(),
+                        Forms\Components\Toggle::make('is_demo_agent')
+                            ->label('Influencer')
+                            ->columnSpanFull(),
+                        Forms\Components\Toggle::make('status')
+                            ->label('Статус')
+                            ->columnSpanFull(),
+                    ]),
             ]);
     }
 
@@ -188,22 +189,25 @@ class UserResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Имя')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('E-mail')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('wallet.total_balance')
-                    ->label('Saldo')
+                    ->label('Баланс')
                     ->money('BRL'),
                 Tables\Columns\TextColumn::make('email_verified_at')
+                    ->label('Подтверждение E-mail')
                     ->dateTime()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Data')
+                    ->label('Дата')
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Atualização')
+                    ->label('Обновлено')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -211,8 +215,8 @@ class UserResource extends Resource
             ->filters([
                 Filter::make('created_at')
                     ->form([
-                        DatePicker::make('created_from')->label('Criado a partir de'),
-                        DatePicker::make('created_until')->label('Criado até'),
+                        DatePicker::make('created_from')->label('Создан от'),
+                        DatePicker::make('created_until')->label('Создан до'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -229,23 +233,25 @@ class UserResource extends Resource
                         $indicators = [];
 
                         if ($data['created_from'] ?? null) {
-                            $indicators['created_from'] = 'Criado a partir de ' . Carbon::parse($data['created_from'])->toFormattedDateString();
+                            $indicators['created_from'] = 'Создан от ' . Carbon::parse($data['created_from'])->toFormattedDateString();
                         }
 
                         if ($data['created_until'] ?? null) {
-                            $indicators['created_until'] = 'Criado até ' . Carbon::parse($data['created_until'])->toFormattedDateString();
+                            $indicators['created_until'] = 'Создан до ' . Carbon::parse($data['created_until'])->toFormattedDateString();
                         }
 
                         return $indicators;
-                    })
+                    }),
             ])
             ->actions([
                 Tables\Actions\Action::make('details')
-                    ->label('Detalhes')
+                    ->label('Детали')
                     ->icon('heroicon-o-chart-bar')
                     ->color('gray')
-                    ->action(function(User $user) {
-                        return redirect()->to(route('filament.admin.resources.users.detail', ['record' => $user]));
+                    ->action(function (User $user) {
+                        return redirect()->to(
+                            route('filament.admin.resources.users.detail', ['record' => $user])
+                        );
                     }),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),

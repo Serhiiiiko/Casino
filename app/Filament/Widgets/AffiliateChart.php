@@ -8,11 +8,11 @@ use Filament\Widgets\ChartWidget;
 
 class AffiliateChart extends ChartWidget
 {
-    protected static ?string $heading = 'Estatisticas de Conversão';
+    protected static ?string $heading = 'Статистика конверсии';
     protected int | string | array $columnSpan = 'full';
 
     /**
-     * @return array|mixed[]
+     * @return array
      */
     protected function getData(): array
     {
@@ -21,7 +21,7 @@ class AffiliateChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Estatisticas de Conversão',
+                    'label' => 'Статистика конверсии',
                     'data' => $data['comissionsPerMonth'],
                 ],
             ],
@@ -35,8 +35,7 @@ class AffiliateChart extends ChartWidget
     }
 
     /**
-     *
-     * @dev victormsalatiel
+     * @dev @victormsalatiel
      * @return array
      */
     private function getComissionPerMonth(): array
@@ -44,8 +43,9 @@ class AffiliateChart extends ChartWidget
         $now = Carbon::now();
         $comissionsPerMonth = [];
 
-        $months = collect(range(1, 12))->map(function($month) use ($now, $comissionsPerMonth ) {
-            $sum = AffiliateHistory::where('inviter', auth()->id())->where('commission_type', 'revshare')
+        $months = collect(range(1, 12))->map(function($month) use ($now, $comissionsPerMonth) {
+            $sum = AffiliateHistory::where('inviter', auth()->id())
+                ->where('commission_type', 'revshare')
                 ->whereMonth('created_at', Carbon::parse($now->month($month)->format('Y-m')))
                 ->sum('commission_paid');
 
@@ -55,7 +55,7 @@ class AffiliateChart extends ChartWidget
 
         return [
             'comissionsPerMonth' => $comissionsPerMonth,
-            'months' => $months
+            'months' => $months,
         ];
     }
 

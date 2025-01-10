@@ -15,15 +15,17 @@ use Illuminate\Database\Eloquent\Builder;
 
 class MyBetsTableWidget extends BaseWidget
 {
-
-    protected static ?string $heading = 'Todas Apostas';
+    protected static ?string $heading = 'Все ставки';
 
     protected static ?int $navigationSort = -1;
 
-    protected int | string | array $columnSpan = 'full';
+    /**
+     * В Filament, как правило, используется значение 'full'.
+     * Использование другого текста (напр. 'полный') может привести к некорректному отображению.
+     */
+    protected int | string | array $columnSpan = 'full'; 
 
     public User $record;
-    
 
     /**
      * @param Table $table
@@ -31,41 +33,50 @@ class MyBetsTableWidget extends BaseWidget
      */
     public function table(Table $table): Table
     {
-        // \Log::info('DADOS XXXXXXXXXXX ' . json_encode($this->record->id));
+        // \Log::info('ДАННЫЕ XXXXXXXXXXX ' . json_encode($this->record->id));
 
         return $table
             ->query(Order::query()->where('user_id', $this->record->id))
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('game')
-                    ->label('Jogo')
+                    ->label('Игра')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('type')
-                    ->label('Tipo')
+                    ->label('Тип')
                     ->badge()
                     ->searchable(),
+
+                /**
+                 * Цвет также обычно задаётся как 'success', 'danger' и т.д. 
+                 * Если указать 'успешный', Filament не распознает такой цвет.
+                 */
                 Tables\Columns\TextColumn::make('type_money')
-                    ->label('Tipo de Transação')
+                    ->label('Тип транзакции')
                     ->badge()
-                    ->color('success')
+                    ->color('success') // Если указать 'успешный', Filament не поймёт
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('amount')
-                    ->label('Preço')
+                    ->label('Цена')
                     ->money('BRL')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('providers')
-                    ->label('Provedor')
+                    ->label('Поставщик')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Data')
+                    ->label('Дата')
                     ->dateTime()
                     ->sortable(),
             ])
             ->filters([
                 Filter::make('created_at')
                     ->form([
-                        DatePicker::make('created_from')->label('Data Inicial'),
-                        DatePicker::make('created_until')->label('Data Final'),
+                        DatePicker::make('created_from')->label('Начальная дата'),
+                        DatePicker::make('created_until')->label('Конечная дата'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -82,19 +93,19 @@ class MyBetsTableWidget extends BaseWidget
                         $indicators = [];
 
                         if ($data['created_from'] ?? null) {
-                            $indicators['created_from'] = 'Criação Inicial ' . Carbon::parse($data['created_from'])->toFormattedDateString();
+                            $indicators['created_from'] =
+                                'Начало создания ' . Carbon::parse($data['created_from'])->toFormattedDateString();
                         }
 
                         if ($data['created_until'] ?? null) {
-                            $indicators['created_until'] = 'Criação Final ' . Carbon::parse($data['created_until'])->toFormattedDateString();
+                            $indicators['created_until'] =
+                                'Конец создания ' . Carbon::parse($data['created_until'])->toFormattedDateString();
                         }
 
                         return $indicators;
                     }),
-            ])
-            ;
+            ]);
     }
-
 
     /**
      * @return bool

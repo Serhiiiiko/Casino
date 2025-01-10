@@ -12,17 +12,17 @@ class NewWithdrawalNotification extends Notification
     use Queueable;
 
     /**
-     * @var $name
+     * Имя пользователя, который запросил вывод.
      */
     public $name;
 
     /**
-     * @var $amout
+     * Сумма вывода.
      */
     public $amout;
 
     /**
-     * Create a new notification instance.
+     * Создаёт новый экземпляр уведомления.
      */
     public function __construct($name, $amout)
     {
@@ -31,7 +31,7 @@ class NewWithdrawalNotification extends Notification
     }
 
     /**
-     * Get the notification's delivery channels.
+     * Определяет каналы доставки уведомления.
      *
      * @return array<int, string>
      */
@@ -41,24 +41,30 @@ class NewWithdrawalNotification extends Notification
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Представление уведомления в виде письма (Mail).
      */
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)->view(
-            'emails.new-withdrawal', ['usuario' => $this->name, 'valor' => \Helper::amountFormatDecimal($this->amout)]
+            'emails.new-withdrawal', [
+                'usuario' => $this->name,
+                'valor'   => \Helper::amountFormatDecimal($this->amout),
+            ]
         );
     }
 
     /**
-     * Get the array representation of the notification.
+     * Данные для хранения в БД (канал 'database').
      *
      * @return array<string, mixed>
      */
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'Olá Administrador, Foi solicitado um saque de ' . \Helper::amountFormatDecimal($this->amout) . ' , pelo usuário' . $this->name,
+            'message' => 'Здравствуйте, Администратор. Был запрошен вывод средств на сумму '
+                . \Helper::amountFormatDecimal($this->amout)
+                . ' пользователем '
+                . $this->name,
         ];
     }
 }

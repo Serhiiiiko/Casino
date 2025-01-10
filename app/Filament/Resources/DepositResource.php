@@ -21,11 +21,11 @@ class DepositResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-tray';
 
-    protected static ?string $navigationLabel = 'Depositos';
+    protected static ?string $navigationLabel = 'Депозиты';
 
-    protected static ?string $modelLabel = 'Depositos';
+    protected static ?string $modelLabel = 'Депозиты';
 
-    protected static ?string $navigationGroup = 'Administração';
+    protected static ?string $navigationGroup = 'Администрирование';
 
     protected static ?string $slug = 'todos-depositos';
 
@@ -45,6 +45,7 @@ class DepositResource extends Resource
      */
     public static function getNavigationBadge(): ?string
     {
+        // Количество неподтверждённых (status = 0) депозитов
         return static::getModel()::where('status', 0)->count();
     }
 
@@ -53,6 +54,7 @@ class DepositResource extends Resource
      */
     public static function getNavigationBadgeColor(): string|array|null
     {
+        // Если больше 5 неподтверждённых депозитов — цвет «success», иначе «warning»
         return static::getModel()::where('status', 0)->count() > 5 ? 'success' : 'warning';
     }
 
@@ -64,36 +66,40 @@ class DepositResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Cadastro de Deposito')
-                ->schema([
-                    Forms\Components\Select::make('user_id')
-                        ->label('Usuários')
-                        ->placeholder('Selecione um usuário')
-                        ->options(
-                            fn($get) => User::query()
-                                ->pluck('name', 'id')
-                        )
-                        ->searchable()
-                        ->preload()
-                        ->live()
-                        ->required(),
-                    Forms\Components\TextInput::make('amount')
-                        ->label('Valor')
-                        ->required()
-                        ->default(0.00),
-                    Forms\Components\TextInput::make('type')
-                        ->label('Tipo')
-                        ->required()
-                        ->maxLength(191),
-                    Forms\Components\FileUpload::make('proof')
-                        ->label('Comprovante')
-                        ->placeholder('Carregue a imagem do comprovante')
-                        ->image()
-                        ->columnSpanFull()
-                        ->required(),
-                    Forms\Components\Toggle::make('status')
-                        ->required(),
-                ])
+                Forms\Components\Section::make('Создание депозита')
+                    ->schema([
+                        Forms\Components\Select::make('user_id')
+                            ->label('Пользователи')
+                            ->placeholder('Выберите пользователя')
+                            ->options(
+                                fn($get) => User::query()->pluck('name', 'id')
+                            )
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            ->required(),
+
+                        Forms\Components\TextInput::make('amount')
+                            ->label('Сумма')
+                            ->required()
+                            ->default(0.00),
+
+                        Forms\Components\TextInput::make('type')
+                            ->label('Тип')
+                            ->required()
+                            ->maxLength(191),
+
+                        Forms\Components\FileUpload::make('proof')
+                            ->label('Квитанция')
+                            ->placeholder('Загрузите изображение квитанции')
+                            ->image()
+                            ->columnSpanFull()
+                            ->required(),
+
+                        Forms\Components\Toggle::make('status')
+                            ->label('Статус')
+                            ->required(),
+                    ]),
             ]);
     }
 
@@ -103,27 +109,39 @@ class DepositResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('payment_id')
-                    ->label('ID Pag.')
+                    ->label('ID Платежа')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('user.name')
+                    ->label('Пользователь')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('amount')
-                    ->label('Valor')
+                    ->label('Сумма')
                     ->formatStateUsing(fn (Deposit $record): string => $record->symbol . ' ' . $record->amount)
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('type')
-                    ->label('Tipo')
+                    ->label('Тип')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('proof')
+                    ->label('Квитанция')
                     ->searchable(),
+
                 Tables\Columns\IconColumn::make('status')
+                    ->label('Статус')
                     ->boolean(),
+
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Дата создания')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Дата изменения')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

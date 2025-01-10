@@ -14,7 +14,6 @@ class SuitPayController extends Controller
 {
     use SuitpayTrait;
 
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -37,9 +36,9 @@ class SuitPayController extends Controller
 
         //\DB::table('debug')->insert(['text' => json_encode($request->all())]);
 
-        if(isset($data['idTransaction']) && $data['typeTransaction'] == 'PIX') {
-            if($data['statusTransaction'] == "PAID_OUT" || $data['statusTransaction'] == "PAYMENT_ACCEPT") {
-                if(self::finalizePayment($data['idTransaction'])) {
+        if (isset($data['idTransaction']) && $data['typeTransaction'] === 'PIX') {
+            if ($data['statusTransaction'] === "PAID_OUT" || $data['statusTransaction'] === "PAYMENT_ACCEPT") {
+                if (self::finalizePayment($data['idTransaction'])) {
                     return response()->json([], 200);
                 }
             }
@@ -69,39 +68,39 @@ class SuitPayController extends Controller
     public function withdrawalFromModal($id)
     {
         $withdrawal = Withdrawal::find($id);
-        if(!empty($withdrawal)) {
+        if (! empty($withdrawal)) {
             $suitpayment = SuitPayPayment::create([
                 'withdrawal_id' => $withdrawal->id,
                 'user_id'       => $withdrawal->user_id,
                 'pix_key'       => $withdrawal->pix_key,
                 'pix_type'      => $withdrawal->pix_type,
                 'amount'        => $withdrawal->amount,
-                'observation'   => 'Saque direto',
+                'observation'   => 'Прямой вывод',
             ]);
 
-            if($suitpayment) {
+            if ($suitpayment) {
                 $parm = [
-                    'pix_key'           => $withdrawal->pix_key,
-                    'pix_type'          => $withdrawal->pix_type,
-                    'amount'            => $withdrawal->amount,
-                    'suitpayment_id'    => $suitpayment->id
+                    'pix_key'        => $withdrawal->pix_key,
+                    'pix_type'       => $withdrawal->pix_type,
+                    'amount'         => $withdrawal->amount,
+                    'suitpayment_id' => $suitpayment->id,
                 ];
 
                 $resp = self::pixCashOut($parm);
 
-                if($resp) {
+                if ($resp) {
                     $withdrawal->update(['status' => 1]);
                     Notification::make()
-                        ->title('Saque solicitado')
-                        ->body('Saque solicitado com sucesso')
+                        ->title('Запрос на вывод')
+                        ->body('Вывод средств успешно запрошен')
                         ->success()
                         ->send();
 
                     return back();
-                }else{
+                } else {
                     Notification::make()
-                        ->title('Erro no saque')
-                        ->body('Erro ao solicitar o saque')
+                        ->title('Ошибка при выводе')
+                        ->body('Ошибка при запросе на вывод средств')
                         ->danger()
                         ->send();
 
@@ -119,18 +118,18 @@ class SuitPayController extends Controller
     public function cancelWithdrawalFromModal($id)
     {
         $withdrawal = Withdrawal::find($id);
-        if(!empty($withdrawal)) {
+        if (! empty($withdrawal)) {
             $wallet = Wallet::where('user_id', $withdrawal->user_id)
                 ->where('currency', $withdrawal->currency)
                 ->first();
 
-            if(!empty($wallet)) {
+            if (! empty($wallet)) {
                 $wallet->increment('balance_withdrawal', $withdrawal->amount);
-
                 $withdrawal->update(['status' => 2]);
+
                 Notification::make()
-                    ->title('Saque cancelado')
-                    ->body('Saque cancelado com sucesso')
+                    ->title('Вывод отменён')
+                    ->body('Вывод средств успешно отменён')
                     ->success()
                     ->send();
 

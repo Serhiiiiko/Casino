@@ -17,22 +17,22 @@ class AffiliateWidgets extends BaseWidget
      */
     protected function getCards(): array
     {
-        $inviterId      = auth()->user()->id;
-        $usersIds       = User::where('inviter', $inviterId)->get()->pluck('id');
-        $usersTotal     = User::where('inviter', $inviterId)->count();
-        $comissaoTotal  = Wallet::whereIn('user_id', $usersIds)->sum('refer_rewards');
+        $inviterId     = auth()->user()->id;
+        $usersIds      = User::where('inviter', $inviterId)->pluck('id');
+        $usersTotal    = User::where('inviter', $inviterId)->count();
+        $comissaoTotal = Wallet::whereIn('user_id', $usersIds)->sum('refer_rewards');
 
         return [
-            Stat::make('Saldo à Receber', \Helper::amountFormatDecimal($comissaoTotal))
-                ->description('O valor a receber')
+            Stat::make('Сумма к получению', \Helper::amountFormatDecimal($comissaoTotal))
+                ->description('Сумма, доступная к получению')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
-            Stat::make('Saldo Disponível', \Helper::amountFormatDecimal(0))
-                ->description('Saldo Disponível para saque')
+            Stat::make('Доступный баланс', \Helper::amountFormatDecimal(0))
+                ->description('Баланс, доступный к выводу')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
-            Stat::make('Cadastros', $usersTotal)
-                ->description('Usuários cadastrados com meu link')
+            Stat::make('Регистрации', $usersTotal)
+                ->description('Пользователи, зарегистрировавшиеся по моей ссылке')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
         ];

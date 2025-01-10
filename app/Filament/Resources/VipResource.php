@@ -21,9 +21,9 @@ class VipResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-trophy';
 
-    protected static ?string $navigationLabel = 'Vip';
+    protected static ?string $navigationLabel = 'VIP';
 
-    protected static ?string $modelLabel = 'Vip';
+    protected static ?string $modelLabel = 'VIP';
 
     protected static ?string $slug = 'vip';
 
@@ -40,42 +40,37 @@ class VipResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Vip')
-                    ->description('Cadastre sua lista vip de bonus')
+                Forms\Components\Section::make('VIP')
+                    ->description('Зарегистрируйте свой VIP-список бонусов')
                     ->schema([
                         FileUpload::make('bet_symbol')
-                            ->label('Símbolo')
-                            ->placeholder('Carregue um Símbolo')
+                            ->label('Символ')
+                            ->placeholder('Загрузите символ')
                             ->image()
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('bet_level')
-                            ->label('Level')
+                            ->label('Уровень')
                             ->required()
-                            //->readOnly(fn (string $context): bool => $context === 'create')
-                            ->placeholder('Mantenha a lista numérica na ordem')
-//                            ->default(function() {
-//                                $ultimoRegistro = Vip::latest()->first();
-//                                return $ultimoRegistro ? $ultimoRegistro->id + 1 : 1;
-//                            })
-                        ,
+                            ->placeholder('Сохраняйте числовой порядок в списке'),
                         Forms\Components\TextInput::make('bet_required')
-                            ->label('Aposta necessária')
+                            ->label('Необходимая ставка')
                             ->required()
-                            ->placeholder('Digite aposta necessária para ganhar o prêmio')
+                            ->placeholder('Укажите требуемую ставку для получения приза')
                             ->numeric(),
                         Forms\Components\Select::make('bet_period')
-                            ->label('Período')
+                            ->label('Период')
                             ->options([
-                                'weekly' => 'Semanal',
-                                'monthly' => 'Mensal',
-                                'yearly' => 'Anual',
+                                'weekly' => 'Еженедельно',
+                                'monthly' => 'Ежемесячно',
+                                'yearly' => 'Ежегодно',
                             ]),
                         Forms\Components\TextInput::make('bet_bonus')
-                            ->label('Bônus')
-                            ->placeholder('Digite o total de bônus')
+                            ->label('Бонус')
+                            ->placeholder('Введите сумму бонуса')
                             ->required()
                             ->numeric(),
-                    ])->columns(2)
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -84,27 +79,33 @@ class VipResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('bet_symbol')
-                    ->label('Imagem'),
+                    ->label('Изображение'),
+
                 Tables\Columns\TextColumn::make('bet_level')
-                    ->label('Level')
+                    ->label('Уровень')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('bet_required')
-                    ->label('Aposta necessária')
+                    ->label('Необходимая ставка')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('bet_period')
-                    ->label('Período')
+                    ->label('Период')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('bet_bonus')
-                    ->label('Bônus')
+                    ->label('Бонус')
                     ->numeric()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Data')
+                    ->label('Дата')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

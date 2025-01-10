@@ -67,7 +67,6 @@ class AdminPanelProvider extends PanelProvider
                 'success' => Color::Emerald,
                 'warning' => Color::Orange,
             ])
-
             ->font('Roboto Condensed')
             ->brandLogo(fn () => view('filament.components.logo'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -96,111 +95,108 @@ class AdminPanelProvider extends PanelProvider
 
                             NavigationItem::make('settings')
                                 ->icon('heroicon-o-cog-6-tooth')
-                                ->label(fn (): string => 'Configurações')
+                                ->label(fn (): string => 'Настройки')
                                 ->url(fn (): string => SettingResource::getUrl())
                                 ->isActiveWhen(fn () => request()->routeIs('filament.pages.settings'))
                                 ->visible(fn(): bool => auth()->user()->hasRole('admin')),
 
                             NavigationItem::make('setting-spin')
                                 ->icon('heroicon-o-cog-6-tooth')
-                                ->label(fn (): string => 'Definições do Spin')
+                                ->label(fn (): string => 'Настройки Spin')
                                 ->url(fn (): string => SettingSpin::getUrl())
                                 ->isActiveWhen(fn () => request()->routeIs('filament.pages.setting-spin'))
                                 ->visible(fn(): bool => auth()->user()->hasRole('admin')),
 
                             NavigationItem::make('games-key')
                                 ->icon('heroicon-o-cog-6-tooth')
-                                ->label(fn (): string => 'Chaves dos Jogos')
+                                ->label(fn (): string => 'Игровые ключи')
                                 ->url(fn (): string => GamesKeyPage::getUrl())
                                 ->isActiveWhen(fn () => request()->routeIs('filament.pages.games-key-page'))
                                 ->visible(fn(): bool => auth()->user()->hasRole('admin')),
 
                             NavigationItem::make('setting-mail')
                                 ->icon('heroicon-o-cog-6-tooth')
-                                ->label(fn (): string => 'Definições de Email')
+                                ->label(fn (): string => 'Настройки Email')
                                 ->url(fn (): string => SettingMailPage::getUrl())
                                 ->isActiveWhen(fn () => request()->routeIs('filament.pages.setting-mail-page'))
                                 ->visible(fn(): bool => auth()->user()->hasRole('admin')),
 
                             NavigationItem::make('sub_affiliates')
                                 ->icon('heroicon-o-user-group')
-                                ->label(fn (): string => 'Sub Afiliados')
+                                ->label(fn (): string => 'Суб-аффилиаты')
                                 ->url(fn (): string => SubAffiliateResource::getUrl())
                                 ->isActiveWhen(fn () => request()->routeIs('filament.admin.resources.sub-affiliates.index '))
                                 ->visible(fn(): bool => auth()->user()->hasRole('afiliado')),
 
                             NavigationItem::make('withdraw_affiliates')
                                 ->icon('heroicon-o-banknotes')
-                                ->label(fn (): string => auth()->user()->hasRole('afiliado') ? 'Meus Saques' : 'Saques de Afiliados')
+                                ->label(fn (): string => auth()->user()->hasRole('afiliado') ? 'Мои выводы' : 'Выводы аффилиатов')
                                 ->url(fn (): string => AffiliateWithdrawResource::getUrl())
                                 ->isActiveWhen(fn () => request()->routeIs('filament.admin.resources.sub-affiliates.index'))
                                 ->visible(fn(): bool => auth()->user()->hasRole('afiliado') || auth()->user()->hasRole('admin')),
+                        ]),
 
-                        ])
-                    ,
-                    auth()->user()->hasRole('admin') ?
-                        NavigationGroup::make('Modulos')
+                    auth()->user()->hasRole('admin')
+                        ? NavigationGroup::make('Модули')
                             ->items([
                                 ...MissionResource::getNavigationItems(),
                                 ...VipResource::getNavigationItems(),
                             ])
-                        : NavigationGroup::make()
-                    ,
-                    auth()->user()->hasRole('admin') ?
-                        NavigationGroup::make('Meus Jogos')
+                        : NavigationGroup::make(),
+
+                    auth()->user()->hasRole('admin')
+                        ? NavigationGroup::make('Мои игры')
                             ->items([
                                 ...CategoryResource::getNavigationItems(),
                                 ...ProviderResource::getNavigationItems(),
                                 ...GameResource::getNavigationItems(),
                             ])
-                        : NavigationGroup::make()
-                    ,
-                    auth()->user()->hasRole('admin') ?
-                        NavigationGroup::make('Pagamentos')
+                        : NavigationGroup::make(),
+
+                    auth()->user()->hasRole('admin')
+                        ? NavigationGroup::make('Платежи')
                             ->items([
                                 NavigationItem::make('gateway')
                                     ->icon('heroicon-o-cog-6-tooth')
-                                    ->label(fn (): string => 'Gateway de Pagamentos')
+                                    ->label(fn (): string => 'Платёжный Gateway')
                                     ->url(fn (): string => GatewayPage::getUrl())
                                     ->isActiveWhen(fn () => request()->routeIs('filament.pages.gateway-page'))
                                     ->visible(fn(): bool => auth()->user()->hasRole('admin')),
 
                                 NavigationItem::make('suitpay-pagamentos')
                                     ->icon('heroicon-o-currency-dollar')
-                                    ->label(fn (): string => 'SuitPay Pagamentos')
+                                    ->label(fn (): string => 'SuitPay Платежи')
                                     ->url(fn (): string => SuitPayPaymentPage::getUrl())
                                     ->isActiveWhen(fn () => request()->routeIs('filament.pages.suit-pay-payment-page'))
                                     ->visible(fn(): bool => auth()->user()->hasRole('admin')),
                             ])
-                        : NavigationGroup::make()
-                    ,
-                    auth()->user()->hasRole('admin') ?
-                        NavigationGroup::make('Customização')
+                        : NavigationGroup::make(),
+
+                    auth()->user()->hasRole('admin')
+                        ? NavigationGroup::make('Кастомизация')
                             ->items([
                                 ...BannerResource::getNavigationItems(),
-
                                 NavigationItem::make('custom-layout')
                                     ->icon('heroicon-o-paint-brush')
-                                    ->label(fn (): string => 'Customização')
+                                    ->label(fn (): string => 'Кастомизация')
                                     ->url(fn (): string => LayoutCssCustom::getUrl())
                                     ->isActiveWhen(fn () => request()->routeIs('filament.pages.layout-css-custom'))
                                     ->visible(fn(): bool => auth()->user()->hasRole('admin'))
                             ])
-                        : NavigationGroup::make()
-                    ,
-                    auth()->user()->hasRole('admin') ?
-                        NavigationGroup::make('Administração')
+                        : NavigationGroup::make(),
+
+                    auth()->user()->hasRole('admin')
+                        ? NavigationGroup::make('Администрирование')
                             ->items([
                                 ...UserResource::getNavigationItems(),
                                 ...WalletResource::getNavigationItems(),
                                 ...DepositResource::getNavigationItems(),
                                 ...WithdrawalResource::getNavigationItems(),
                             ])
-                        : NavigationGroup::make()
-                    ,
+                        : NavigationGroup::make(),
 
-                    auth()->user()->hasRole('admin') ?
-                        NavigationGroup::make(__(config('filament-spatie-roles-permissions.navigation_section_group', 'filament-spatie-roles-permissions::filament-spatie.section.roles_and_permissions')))
+                    auth()->user()->hasRole('admin')
+                        ? NavigationGroup::make(__(config('filament-spatie-roles-permissions.navigation_section_group', 'filament-spatie-roles-permissions::filament-spatie.section.roles_and_permissions')))
                             ->items([
                                 NavigationItem::make(__('filament-spatie-roles-permissions::filament-spatie.section.role'))
                                     ->icon('heroicon-o-user-group')
@@ -211,6 +207,7 @@ class AdminPanelProvider extends PanelProvider
                                         'filament.admin.resources.roles.edit',
                                     ]))
                                     ->url(fn (): string => '/admin/roles'),
+
                                 NavigationItem::make(__('filament-spatie-roles-permissions::filament-spatie.section.permission'))
                                     ->icon('heroicon-o-lock-closed')
                                     ->isActiveWhen(fn () => request()->routeIs([
@@ -221,14 +218,14 @@ class AdminPanelProvider extends PanelProvider
                                     ]))
                                     ->url(fn (): string => '/admin/permissions'),
                             ])
-                        : NavigationGroup::make()
-                    ,
-                    NavigationGroup::make('maintenance')
-                        ->label('Manutenção')
+                        : NavigationGroup::make(),
+
+                    NavigationGroup::make('Обслуживание')
+                        ->label('Обслуживание')
                         ->items([
                             NavigationItem::make('advanced_page')
                                 ->icon('heroicon-o-banknotes')
-                                ->label(fn (): string => 'Opções Avançada')
+                                ->label(fn (): string => 'Расширенные опции')
                                 ->url(fn (): string => AdvancedPage::getUrl())
                                 ->isActiveWhen(fn () => request()->routeIs('filament.admin.resources.sub-affiliates.index'))
                                 ->visible(fn(): bool => auth()->user()->hasRole('admin')),
@@ -236,15 +233,17 @@ class AdminPanelProvider extends PanelProvider
                             NavigationItem::make('Limpar o cache')
                                 ->url(url('/clear'), shouldOpenInNewTab: false)
                                 ->icon('heroicon-o-trash')
-                        ])
-                    ,
-                    auth()->user()->hasRole('afiliado') ?
-                        NavigationGroup::make('affiliate_link')
-                            ->label('Marketing')
+                                ->label('Очистить кэш'),
+                        ]),
+
+                    auth()->user()->hasRole('afiliado')
+                        ? NavigationGroup::make('Маркетинг')
+                            ->label('Маркетинг')
                             ->items([
                                 NavigationItem::make('Link de Convite')
                                     ->url(url('/register?code='.auth()->user()->inviter_code), shouldOpenInNewTab: true)
                                     ->icon('heroicon-o-link')
+                                    ->label('Пригласительная ссылка'),
                             ])
                         : NavigationGroup::make(),
                 ]);
@@ -263,7 +262,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
-            ;
+            ->plugin(FilamentSpatieRolesPermissionsPlugin::make());
     }
 }

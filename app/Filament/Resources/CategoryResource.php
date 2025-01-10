@@ -20,9 +20,9 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Todas as Categorias';
+    protected static ?string $navigationLabel = 'Все категории';
 
-    protected static ?string $modelLabel = 'Todas as Categorias';
+    protected static ?string $modelLabel = 'Все категории';
 
     /**
      * @dev @victormsalatiel
@@ -42,22 +42,26 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make()
-                ->schema([
-                    Forms\Components\TextInput::make('name')
-                        ->label('Nome')
-                        ->required()
-                        ->unique(ignorable: fn ($record) => $record)
-                        ->maxLength(191),
-                    Forms\Components\TextInput::make('description')
-                        ->label('Descrição')
-                        ->required()
-                        ->maxLength(191),
-                    Forms\Components\FileUpload::make('image')
-                        ->label('Capa')
-                        ->image(),
-                    Forms\Components\TextInput::make('slug')
-                        ->maxLength(191),
-                ])->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Название')
+                            ->required()
+                            ->unique(ignorable: fn ($record) => $record)
+                            ->maxLength(191),
+
+                        Forms\Components\TextInput::make('description')
+                            ->label('Описание')
+                            ->required()
+                            ->maxLength(191),
+
+                        Forms\Components\FileUpload::make('image')
+                            ->label('Обложка')
+                            ->image(),
+
+                        Forms\Components\TextInput::make('slug')
+                            ->maxLength(191),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -66,20 +70,25 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nome')
+                    ->label('Название')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Descrição')
+                    ->label('Описание')
                     ->limit(70)
                     ->searchable(),
+
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Imagem'),
+                    ->label('Изображение'),
+
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -109,8 +118,9 @@ class CategoryResource extends Resource
     {
         return [
             'index' => Pages\ListCategories::route('/'),
-//            'create' => Pages\CreateCategory::route('/create'),
-//            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            // Если нужно включить создание и редактирование категорий, раскомментируйте следующие маршруты:
+            // 'create' => Pages\CreateCategory::route('/create'),
+            // 'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
 }

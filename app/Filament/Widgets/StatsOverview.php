@@ -12,9 +12,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 class StatsOverview extends BaseWidget
 {
     protected static ?int $sort = 2;
-
     protected static ?string $pollingInterval = '15s';
-
     protected static bool $isLazy = true;
 
     /**
@@ -31,21 +29,23 @@ class StatsOverview extends BaseWidget
         $totalLoseLast7Days = $totalApostas;
 
         return [
-            Stat::make('Total Usuários', User::count())
-                ->description('Novos usuários')
+            Stat::make('Всего пользователей', User::count())
+                ->description('Новые пользователи')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('info')
                 ->chart([7,3,4,5,6,3,5,3]),
-            Stat::make('Total Ganhos', \Helper::amountFormatDecimal($totalWonLast7Days))
-                ->description('Ganhos dos usuários')
+
+            Stat::make('Всего выигрышей', \Helper::amountFormatDecimal($totalWonLast7Days))
+                ->description('Выигрыши пользователей')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success')
                 ->chart([7,3,4,5,6,3,5,3]),
-            Stat::make('Total Perdas', \Helper::amountFormatDecimal($totalLoseLast7Days))
-                ->description('Perdas dos usuários')
+
+            Stat::make('Всего проигрышей', \Helper::amountFormatDecimal($totalLoseLast7Days))
+                ->description('Проигрыши пользователей')
                 ->descriptionIcon('heroicon-m-arrow-trending-down')
                 ->color('danger')
-                ->chart([7,3,4,5,6,3,5,3])
+                ->chart([7,3,4,5,6,3,5,3]),
         ];
     }
 

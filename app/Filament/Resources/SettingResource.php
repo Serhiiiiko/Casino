@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SettingResource extends Resource
 {
-
     protected Setting $record;
 
     protected static ?string $model = Setting::class;
@@ -35,7 +34,7 @@ class SettingResource extends Resource
     }
 
     /**
-     * @dev victormsalatiel - Meu instagram
+     * @dev victormsalatiel - Мой Instagram
      * @return void
      */
     public function mount(): void
@@ -50,43 +49,53 @@ class SettingResource extends Resource
     public static function sidebar(Model $record): FilamentPageSidebar
     {
         return FilamentPageSidebar::make()
-            ->setTitle('Definições')
-            ->setDescription('Ajustes da plataforma')
+            ->setTitle('Настройки')
+            ->setDescription('Настройки платформы')
             ->setNavigationItems([
-                PageNavigationItem::make('Padrão')
+                PageNavigationItem::make('По умолчанию')
                     ->translateLabel()
-                    ->url(static::getUrl('index'))->icon('heroicon-o-cog-6-tooth')
+                    ->url(static::getUrl('index'))
+                    ->icon('heroicon-o-cog-6-tooth')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.index');
                     }),
 
-                PageNavigationItem::make('Bônus Vip')
+                PageNavigationItem::make('VIP-бонус')
                     ->translateLabel()
-                    ->url(static::getUrl('bonus', ['record' => $record->id]))->icon('heroicon-o-currency-dollar')
+                    ->url(static::getUrl('bonus', ['record' => $record->id]))
+                    ->icon('heroicon-o-currency-dollar')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.bonus');
                     }),
-                 PageNavigationItem::make('Rollover')
-                     ->translateLabel()
-                     ->url(static::getUrl('rollover', ['record' => $record->id]))->icon('heroicon-o-currency-dollar')
-                     ->isActiveWhen(function () {
-                         return request()->routeIs(static::getRouteBaseName() . '.rollover');
-                     }),
-                PageNavigationItem::make('Taxas')
+
+                PageNavigationItem::make('Ролловер')
                     ->translateLabel()
-                    ->url(static::getUrl('fee', ['record' => $record->id]))->icon('heroicon-o-chart-pie')
+                    ->url(static::getUrl('rollover', ['record' => $record->id]))
+                    ->icon('heroicon-o-currency-dollar')
+                    ->isActiveWhen(function () {
+                        return request()->routeIs(static::getRouteBaseName() . '.rollover');
+                    }),
+
+                PageNavigationItem::make('Комиссии')
+                    ->translateLabel()
+                    ->url(static::getUrl('fee', ['record' => $record->id]))
+                    ->icon('heroicon-o-chart-pie')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.fee');
                     }),
-                PageNavigationItem::make('Limites')
+
+                PageNavigationItem::make('Лимиты')
                     ->translateLabel()
-                    ->url(static::getUrl('limit', ['record' => $record->id]))->icon('heroicon-o-adjustments-vertical')
+                    ->url(static::getUrl('limit', ['record' => $record->id]))
+                    ->icon('heroicon-o-adjustments-vertical')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.limit');
                     }),
-                PageNavigationItem::make('Pagamentos')
+
+                PageNavigationItem::make('Платежи')
                     ->translateLabel()
-                    ->url(static::getUrl('payment', ['record' => $record->id]))->icon('heroicon-o-banknotes')
+                    ->url(static::getUrl('payment', ['record' => $record->id]))
+                    ->icon('heroicon-o-banknotes')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.payment');
                     }),

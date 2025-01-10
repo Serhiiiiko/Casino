@@ -13,12 +13,11 @@ use App\Helpers\Core as Helper;
 
 class StatsUserDetailOverview extends BaseWidget
 {
-
     public User $record;
 
     public function mount($record)
     {
-       $this->record = $record;
+        $this->record = $record;
     }
 
     /**
@@ -26,21 +25,30 @@ class StatsUserDetailOverview extends BaseWidget
      */
     protected function getStats(): array
     {
-        $totalGanhos = Order::where('user_id', $this->record->id)->where('type', 'win')->sum('amount');
-        $totalPerdas = Order::where('user_id', $this->record->id)->where('type', 'loss')->sum('amount');
-        $totalAfiliados = AffiliateHistory::where('inviter', $this->record->id)->sum('commission_paid');
+        $totalGanhos = Order::where('user_id', $this->record->id)
+            ->where('type', 'win')
+            ->sum('amount');
+
+        $totalPerdas = Order::where('user_id', $this->record->id)
+            ->where('type', 'loss')
+            ->sum('amount');
+
+        $totalAfiliados = AffiliateHistory::where('inviter', $this->record->id)
+            ->sum('commission_paid');
 
         return [
-            Stat::make('Total de Ganhos', Helper::amountFormatDecimal(Helper::formatNumber($totalGanhos)))
-                ->description('Total de Ganhos na plataforma')
+            Stat::make('Общая сумма выигрышей', Helper::amountFormatDecimal(Helper::formatNumber($totalGanhos)))
+                ->description('Суммарные выигрыши на платформе')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
-            Stat::make('Total de Perdas', Helper::amountFormatDecimal(Helper::formatNumber($totalPerdas)))
-                ->description('Total de Perdas na plataforma')
+
+            Stat::make('Общая сумма проигрышей', Helper::amountFormatDecimal(Helper::formatNumber($totalPerdas)))
+                ->description('Суммарные проигрыши на платформе')
                 ->descriptionIcon('heroicon-m-arrow-trending-down')
                 ->color('danger'),
-            Stat::make('Ganhos como Afiliado', Helper::amountFormatDecimal(Helper::formatNumber($totalAfiliados)))
-                ->description('Total de Ganhos como afiliado')
+
+            Stat::make('Заработано как аффилиат', Helper::amountFormatDecimal(Helper::formatNumber($totalAfiliados)))
+                ->description('Общая сумма, заработанная как аффилиат')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success'),
         ];

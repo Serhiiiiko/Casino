@@ -1,3 +1,3 @@
-<x-filament-page-with-sidebar::page>
-    @include(\App\Filament\Resources\UserResource::getIncludedSidebarView())
-</x-filament-page-with-sidebar::page>
+<!-- <x-filament-page-with-sidebar::page>
+    @include($this->getIncludedSidebarView())
+</x-filament-page-with-sidebar::page> -->

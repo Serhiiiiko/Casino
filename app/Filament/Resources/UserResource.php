@@ -77,7 +77,7 @@ class UserResource extends Resource
                     }),
                 PageNavigationItem::make(__('base.view_user'))
                     ->translateLabel()
-                    ->url(static::getUrl('view', ['record' => $this->record->id]))
+                    ->url(static::getUrl('view', ['record' => $record->id]))
                     ->icon('heroicon-o-user')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.view');

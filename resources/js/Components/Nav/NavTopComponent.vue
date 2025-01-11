@@ -227,7 +227,7 @@
                         <p class="text-sm text-gray-500 dark:text-gray-300 mb-6">Новая запись? <a href="" @click.prevent="hideLoginShowRegisterToggle"><strong>Зарегистрироваться</strong></a></p>
                     </form>
 
-                    <div class="login-wrap mt-5">
+                    <!-- <div class="login-wrap mt-5">
                         <div class="line-text">
                             <div class="l"></div>
                             <div class="t">{{ $t('Log in directly with') }}</div>
@@ -239,7 +239,7 @@
                                 <i class="fa-brands fa-google"></i>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -397,7 +397,7 @@
                         </div>
                     </form>
 
-                    <div class="login-wrap mt-5">
+                    <!-- <div class="login-wrap mt-5">
                         <div class="line-text">
                             <div class="l"></div>
                             <div class="t">{{ $t('Register with your social networks') }}</div>
@@ -409,7 +409,7 @@
                                 <i class="fa-brands fa-google"></i>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -654,9 +654,9 @@ export default {
         toggleSearch: function() {
             this.searchGameDataStore.setSearchGameToogle();
         },
-        redirectSocialTo: function() {
-            return '/auth/redirect/google'
-        },
+        // redirectSocialTo: function() {
+        //     return '/auth/redirect/google'
+        // },
         like: async function(id) {
             const _this = this;
             const _toast = useToast();

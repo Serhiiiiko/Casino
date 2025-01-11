@@ -144,7 +144,7 @@
                                     </div>
                                 </form>
 
-                                <div class="login-wrap mt-5">
+                                <!-- <div class="login-wrap mt-5">
                                     <div class="line-text">
                                         <div class="l"></div>
                                         <div class="t">{{ $t('Register with your social networks') }}</div>
@@ -156,7 +156,7 @@
                                             <i class="fa-brands fa-google"></i>
                                         </a>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -249,9 +249,9 @@ export default {
         }
     },
     methods: {
-        redirectSocialTo: function() {
-            return '/auth/redirect/google'
-        },
+        // redirectSocialTo: function() {
+        //     return '/auth/redirect/google'
+        // },
         togglePassword: function() {
             if(this.typeInputPassword === 'password') {
                 this.typeInputPassword = 'text';

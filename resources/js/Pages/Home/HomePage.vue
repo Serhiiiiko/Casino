@@ -61,7 +61,7 @@
                             <input @click.prevent="toggleSearch" type="search"
                                    readonly
                                    class="block dark:focus:border-green-500 p-2.5 w-full z-20 text-sm text-gray-900 rounded-e-lg input-color-primary border-none focus:outline-none dark:border-s-gray-800  dark:border-gray-800 dark:placeholder-gray-400 dark:text-white "
-                                   placeholder="Nome do jogo | Provedor" required>
+                                   placeholder="Поиск по играм" required>
 
                             <button type="submit" class="absolute top-0 end-0 h-full p-2.5 text-sm font-medium text-white rounded-e-lg
                                  dark:bg-[#1C1E22] ">

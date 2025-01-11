@@ -50,21 +50,7 @@
                                             <strong>{{ $t('Create an account') }}</strong>
                                         </RouterLink>
                                     </p>
-                                </form>
-
-                                <!-- <div class="login-wrap mt-5">
-                                    <div class="line-text">
-                                        <div class="l"></div>
-                                        <div class="t">{{ $t('Register with your social networks') }}</div>
-                                        <div class="l"></div>
-                                    </div>
-
-                                    <div class="social-group mt-3">
-                                        <a :href="redirectSocialTo()" class="text-social-button hover:text-white focus:ring-4 focus:outline-none font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:hover:text-white ">
-                                            <i class="fa-brands fa-google"></i>
-                                        </a>
-                                    </div>
-                                </div> -->
+                                </form>                               
                             </div>
                         </div>
                     </div>

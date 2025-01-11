@@ -84,14 +84,14 @@ class UserResource extends Resource
                     }),
                 PageNavigationItem::make(__('base.edit_user'))
                     ->translateLabel()
-                    ->url(static::getUrl('edit', ['record' => $this->record->id]))
+                    ->url(static::getUrl('edit', ['record' => $record->id]))
                     ->icon('heroicon-o-pencil-square')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.edit');
                     }),
                 PageNavigationItem::make(__('base.change_password'))
                     ->translateLabel()
-                    ->url(static::getUrl('password.change', ['record' => $this->record->id]))
+                    ->url(static::getUrl('password.change', ['record' => $record->id]))
                     ->icon('heroicon-o-key')
                     ->isActiveWhen(function () {
                         return request()->routeIs(static::getRouteBaseName() . '.password.change');

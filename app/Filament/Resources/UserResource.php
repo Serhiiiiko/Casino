@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\Widgets\UserOverview;
 use App\Models\User;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -20,61 +21,36 @@ use AymanAlhattami\FilamentPageWithSidebar\PageNavigationItem;
 
 class UserResource extends Resource
 {
-    /**
-     * Модель, к которой привязан ресурс
-     */
     protected static ?string $model = User::class;
-
-    /**
-     * Иконка, группа, лейблы
-     */
     protected static ?string $navigationIcon  = 'heroicon-o-users';
     protected static ?string $navigationGroup = 'Администрирование';
     protected static ?string $navigationLabel = 'Пользователи';
     protected static ?string $modelLabel      = 'Пользователи';
-    
-    /**
-     * Какое поле модели использовать как заголовок записи
-     */
     protected static ?string $recordTitleAttribute = 'name';
 
-    /**
-     * Кто может получить доступ к ресурсу
-     */
     public static function canAccess(): bool
     {
         return auth()->check() && auth()->user()->hasRole('admin');
     }
 
-    /**
-     * Заголовок для глобального поиска Filament
-     */
     public static function getGlobalSearchResultTitle(Model $record): string
     {
         return $record->name;
     }
 
-    /**
-     * Какие поля искать в глобальном поиске
-     */
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'email'];
     }
 
-    /**
-     * Боковое меню с помощью пакета filament-page-with-sidebar.
-     */
     public static function sidebar(Model $record): FilamentPageSidebar
     {
         return FilamentPageSidebar::make()
-            // Если нет $record — ставим заглушку '—'
             ->setTitle($record?->name ?? '—')
-
-            // created_at теперь Carbon, значит format() не упадёт
-            ->setDescription($record && $record->created_at
-                ? $record->created_at->format('d.m.Y H:i')
-                : ''
+            ->setDescription(
+                $record && $record->created_at
+                    ? Carbon::parse($record->created_at)->format('d.m.Y H:i')
+                    : ''
             )
             ->setNavigationItems([
                 PageNavigationItem::make(__('base.list_user'))
@@ -103,9 +79,6 @@ class UserResource extends Resource
             ]);
     }
 
-    /**
-     * Описание формы (create/edit)
-     */
     public static function form(Form $form): Form
     {
         return $form
@@ -117,22 +90,18 @@ class UserResource extends Resource
                             ->placeholder('Введите имя')
                             ->required()
                             ->maxLength(191),
-
                         Forms\Components\TextInput::make('email')
                             ->label('E-mail')
                             ->placeholder('Введите e-mail')
                             ->email()
                             ->required()
                             ->maxLength(191),
-
                         Forms\Components\TextInput::make('cpf')
                             ->label('CPF')
                             ->maxLength(191),
-
                         Forms\Components\TextInput::make('phone')
                             ->label('Телефон')
                             ->maxLength(191),
-
                         Forms\Components\Select::make('inviter')
                             ->label('Аффилиат')
                             ->relationship('affiliate', 'name')
@@ -140,46 +109,38 @@ class UserResource extends Resource
                             ->searchable()
                             ->preload()
                             ->live(),
-
                         Forms\Components\DateTimePicker::make('email_verified_at')
                             ->label('Подтверждение E-mail'),
                     ])
                     ->columns(3),
-
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\TextInput::make('affiliate_revenue_share')
                             ->label('Revenue Share (%)')
                             ->required()
                             ->numeric(),
-
                         Forms\Components\TextInput::make('affiliate_revenue_share_fake')
                             ->label('Revenue Share Fake (%)')
                             ->required()
                             ->numeric(),
-
                         Forms\Components\TextInput::make('affiliate_cpa')
                             ->label('CPA')
                             ->required()
                             ->numeric(),
-
                         Forms\Components\TextInput::make('affiliate_baseline')
                             ->label('Baseline')
                             ->required()
                             ->numeric(),
                     ])
                     ->columns(4),
-
                 Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Toggle::make('banned')
                             ->label('Заблокирован')
                             ->columnSpanFull(),
-
                         Forms\Components\Toggle::make('is_demo_agent')
                             ->label('Influencer')
                             ->columnSpanFull(),
-
                         Forms\Components\Toggle::make('status')
                             ->label('Статус')
                             ->columnSpanFull(),
@@ -187,9 +148,6 @@ class UserResource extends Resource
             ]);
     }
 
-    /**
-     * Описание таблицы (List)
-     */
     public static function table(Table $table): Table
     {
         return $table
@@ -198,25 +156,19 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Имя')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('email')
                     ->label('E-mail')
                     ->searchable(),
-
-                // Пример столбца 'created_at' (дата)
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Дата')
                     ->dateTime()
                     ->sortable(),
-
-                // Другие столбцы...
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Обновлено')
                     ->dateTime()
                     ->sortable(),
             ])
             ->filters([
-                // Пример фильтра по дате
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('created_from')->label('Создан от'),
@@ -235,17 +187,14 @@ class UserResource extends Resource
                     })
                     ->indicateUsing(function (array $data): array {
                         $indicators = [];
-
                         if ($data['created_from'] ?? null) {
                             $indicators['created_from'] =
-                                'Создан от ' . \Carbon\Carbon::parse($data['created_from'])->toFormattedDateString();
+                                'Создан от ' . Carbon::parse($data['created_from'])->toFormattedDateString();
                         }
-
                         if ($data['created_until'] ?? null) {
                             $indicators['created_until'] =
-                                'Создан до ' . \Carbon\Carbon::parse($data['created_until'])->toFormattedDateString();
+                                'Создан до ' . Carbon::parse($data['created_until'])->toFormattedDateString();
                         }
-
                         return $indicators;
                     }),
             ])
@@ -274,17 +223,11 @@ class UserResource extends Resource
             ]);
     }
 
-    /**
-     * Если у вас есть какие-то отношения (Relations) — опишите тут
-     */
     public static function getRelations(): array
     {
         return [];
     }
 
-    /**
-     * Виджеты, если нужны
-     */
     public static function getWidgets(): array
     {
         return [
@@ -292,9 +235,6 @@ class UserResource extends Resource
         ];
     }
 
-    /**
-     * Роуты для страниц ресурса
-     */
     public static function getPages(): array
     {
         return [

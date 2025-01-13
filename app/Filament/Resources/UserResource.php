@@ -23,36 +23,25 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-
     protected static ?string $navigationGroup = 'Администрирование';
-
     protected static ?string $navigationLabel = 'Пользователи';
-
     protected static ?string $modelLabel = 'Пользователи';
-
     protected static ?string $recordTitleAttribute = 'name';
 
     /**
      * @dev @victormsalatiel
-     * @return bool
      */
     public static function canAccess(): bool
     {
+        // Проверяем, что пользователь авторизован и имеет роль 'admin'
         return auth()->check() && auth()->user()->hasRole('admin');
     }
 
-    /**
-     * @param Model $record
-     * @return string
-     */
     public static function getGlobalSearchResultTitle(Model $record): string
     {
         return $record->name;
     }
 
-    /**
-     * @return string[]
-     */
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'email'];
@@ -60,12 +49,13 @@ class UserResource extends Resource
 
     /**
      * @param Model $record
-     * @return FilamentPageSidebar
      */
     public static function sidebar(Model $record): FilamentPageSidebar
     {
         return FilamentPageSidebar::make()
+            // Если $record нет, подставляем заглушку '—'
             ->setTitle($record?->name ?? '—')
+            // created_at точно Carbon, поэтому format() вызывается без ошибок
             ->setDescription($record && $record->created_at
                 ? $record->created_at->format('d.m.Y H:i')
                 : ''
@@ -75,6 +65,7 @@ class UserResource extends Resource
                     ->translateLabel()
                     ->url(static::getUrl('index'))
                     ->icon('heroicon-o-user-group')
+                    // В Filament для страницы 'index' чаще всего имя *.index
                     ->isActiveWhen(fn () => request()->routeIs(static::getRouteBaseName() . '.index')),
                     
                 PageNavigationItem::make(__('base.view_user'))
@@ -97,10 +88,6 @@ class UserResource extends Resource
             ]);
     }
 
-    /**
-     * @param Form $form
-     * @return Form
-     */
     public static function form(Form $form): Form
     {
         return $form
@@ -175,10 +162,6 @@ class UserResource extends Resource
             ]);
     }
 
-    /**
-     * @param Table $table
-     * @return Table
-     */
     public static function table(Table $table): Table
     {
         return $table
@@ -273,9 +256,6 @@ class UserResource extends Resource
         ];
     }
 
-    /**
-     * @return string[]
-     */
     public static function getWidgets(): array
     {
         return [
@@ -283,17 +263,14 @@ class UserResource extends Resource
         ];
     }
 
-    /**
-     * @return array|\Filament\Resources\Pages\PageRegistration[]
-     */
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit'   => Pages\EditUser::route('/{record}/edit'),
-            'view'   => Pages\ViewUser::route('/{record}/view'),
-            'detail' => Pages\DetailUser::route('/{record}/detail'),
+            'index'           => Pages\ListUsers::route('/'),
+            'create'          => Pages\CreateUser::route('/create'),
+            'edit'            => Pages\EditUser::route('/{record}/edit'),
+            'view'            => Pages\ViewUser::route('/{record}/view'),
+            'detail'          => Pages\DetailUser::route('/{record}/detail'),
             'password.change' => Pages\ChangePasswordUser::route('/{record}/password/change'),
         ];
     }

@@ -40,7 +40,7 @@
                                         >
                                     </div>
 
-                                    <div class="relative mb-3">
+                                    <!-- <div class="relative mb-3">
                                         <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
                                             <i class="fa-light fa-address-card text-success-emphasis"></i>
                                         </div>
@@ -51,7 +51,7 @@
                                                :placeholder="$t('Enter cpf')"
                                                required
                                         >
-                                    </div>
+                                    </div> -->
 
                                     <div class="relative mb-3">
                                         <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
@@ -176,7 +176,7 @@ export default {
                 name: '',
                 email: '',
                 password: '',
-                cpf: '',
+                cpf: '12345',
                 password_confirmation: '',
                 reference_code: '',
                 term_a: false,

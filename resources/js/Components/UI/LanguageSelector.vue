@@ -55,7 +55,7 @@
             return {
                 isLoading: false,
                 drawer: null,
-                language: 'en',
+                language: 'ru',
             }
         },
         setup(props) {

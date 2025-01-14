@@ -83,6 +83,11 @@
 
         },
         mounted() {
+        // Force Russian
+            this.language = 'ru';
+            loadLanguageAsync('ru');
+            this.updateLanguage();
+
             if(document.getElementById('drawer-language')) {
                 const options = {
                     placement: 'right',

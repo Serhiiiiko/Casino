@@ -25,10 +25,12 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Filament\Forms\Components\Actions\Action;
 use Creagia\FilamentCodeField\CodeField;
 use Livewire\WithFileUploads;
+use App\Traits\Providers\Games2ApiTrait;
+
 
 class AdvancedPage extends Page implements HasForms
 {
-    use InteractsWithForms, WorldSlotTrait, WithFileUploads;
+    use InteractsWithForms, WorldSlotTrait, WithFileUploads, Games2ApiTrait;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
@@ -68,13 +70,19 @@ class AdvancedPage extends Page implements HasForms
      */
     public function loadProvider($type)
     {
-        self::getProviderWorldslot($type);
+        if ($type === 'worldslot') {
+            self::getProviderWorldslot($type);
+        } elseif ($type === 'games2api') {
+            self::GetAllProvidersGames2Api();
+        }
+    
         Notification::make()
             ->title('Успех')
-            ->body('Провайдеры успешно загружены')
+            ->body("Провайдеры '{$type}' успешно загружены")
             ->success()
             ->send();
     }
+    
 
     /**
      * @return void

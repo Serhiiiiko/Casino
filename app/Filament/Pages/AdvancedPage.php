@@ -89,7 +89,7 @@ class AdvancedPage extends Page implements HasForms
      */
     public function loadGames()
     {
-        self::getGamesWorldslot();
+        self::GetAllGamesGames2Api();
         Notification::make()
             ->title('Успех')
             ->body('Игры успешно загружены')

@@ -30,7 +30,7 @@ use App\Traits\Providers\Games2ApiTrait;
 
 class AdvancedPage extends Page implements HasForms
 {
-    use InteractsWithForms, WorldSlotTrait, WithFileUploads, Games2ApiTrait;
+    use InteractsWithForms, WithFileUploads, Games2ApiTrait;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
@@ -68,20 +68,17 @@ class AdvancedPage extends Page implements HasForms
      * @param $type
      * @return void
      */
-    public function loadProvider($type)
+    public function loadProvider()
     {
-        if ($type === 'worldslot') {
-            self::getProviderWorldslot($type);
-        } elseif ($type === 'games2api') {
-            self::GetAllProvidersGames2Api();
-        }
+        self::GetAllProvidersGames2Api();
     
         Notification::make()
             ->title('Успех')
-            ->body("Провайдеры '{$type}' успешно загружены")
+            ->body('Games2Api провайдеры успешно загружены')
             ->success()
             ->send();
     }
+    
     
 
     /**

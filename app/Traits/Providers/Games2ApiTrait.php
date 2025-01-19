@@ -88,24 +88,40 @@ trait Games2ApiTrait
      */
     public static function GetAllGamesGames2Api()
     {
-        if(self::getCredentialsGames2Api()) {
+        \Log::info('Запуск загрузки игр из Games2Api...');
+    
+        if (self::getCredentialsGames2Api()) {
             $providers = Provider::where('distribution', 'games2_api')->get();
-
+            \Log::info('Найдено провайдеров: ' . $providers->count());
+    
             if(count($providers) > 0) {
                 foreach($providers as $provider) {
+                    \Log::info('Загружаем игры для провайдера: ' . $provider->code);
+    
                     $dataArray = [
                         "method"        => "game_list",
                         "agent_code"    => self::$agentCode,
                         "agent_token"   => self::$agentToken,
                         "provider_code" => $provider->code
                     ];
-
+    
                     $response = Http::post(self::$apiEndpoint, $dataArray);
-
+    
                     if($response->successful()) {
+                        \Log::info('Успешный ответ от API, обрабатываем JSON...');
                         $allGames = $response->json();
+    
+                        if (!isset($allGames['games'])) {
+                            \Log::warning("В ответе нет ключа 'games': " . json_encode($allGames));
+                            continue;
+                        }
+    
+                        \Log::info('Всего игр: ' . count($allGames['games']));
+    
                         foreach($allGames['games'] as $game) {
+                            \Log::info('Сохраняем игру: ' . $game['game_code']);
                             $image = self::uploadFromUrl($game['banner'], $game['game_code']);
+                            
                             $data = [
                                 'provider_id'   => $provider->id,
                                 'game_id'       => $game['id'],
@@ -117,19 +133,27 @@ trait Games2ApiTrait
                                 'cover'         => $image,
                                 'status'        => 1,
                             ];
-
                             Game::create($data);
+                            
+                            // Убрать sleep или сделать короче, если слишком долго
+                            \Log::info('Игра создана: ' . $game['game_code']);
                             sleep(2);
-
-                            echo "jogo criado com sucesso \n";
                         }
-                    }else{
+                    } else {
+                        \Log::error('Ошибка при запросе game_list: ' . $response->status());
                         return response()->json(['status' => false, 'errors' => ['Erro ao carregar os jogos']]);
                     }
                 }
+            } else {
+                \Log::info('Не найдено провайдеров (games2_api). Возможно, надо загрузить провайдеров.');
             }
+        } else {
+            \Log::error('Не удалось получить креденшлы для Games2Api');
+            dd('NÂO AUTENTICADO');
         }
+        \Log::info('Загрузка игр Games2Api завершена.');
     }
+    
 
 
     /**

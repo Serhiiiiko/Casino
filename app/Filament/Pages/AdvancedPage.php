@@ -68,16 +68,24 @@ class AdvancedPage extends Page implements HasForms
      * @param $type
      * @return void
      */
-    public function loadProvider()
+    public function loadProvider($type)
     {
-        self::GetAllProvidersGames2Api();
+        \Log::info('loadProvider() получил параметр: '.$type);
+    
+        if ($type === 'slot') {
+            // Загрузить провайдеры только для слотов…
+        } elseif ($type === 'casino') {
+            // Для казино…
+        }
+        // Или любой нужный вам код
     
         Notification::make()
             ->title('Успех')
-            ->body('Games2Api провайдеры успешно загружены')
+            ->body("Провайдеры {$type} успешно загружены")
             ->success()
             ->send();
     }
+    
     
     
 

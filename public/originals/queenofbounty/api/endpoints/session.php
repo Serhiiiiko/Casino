@@ -166,7 +166,7 @@ $data->drop_line = [
         "ActiveLines" => []
     ]
 ];
-$data->currency_prefix = "R$";
+$data->currency_prefix = "Rub$";
 $data->currency_suffix = "";
 $data->currency_thousand = ".";
 $data->currency_decimal = ",";

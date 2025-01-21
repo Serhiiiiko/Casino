@@ -57,7 +57,7 @@ class IndicationsTableWidget extends BaseWidget
 
                 Tables\Columns\TextColumn::make('commission_paid')
                     ->label('Комиссия')
-                    ->money('BRL')
+                    ->money('RUB')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('created_at')

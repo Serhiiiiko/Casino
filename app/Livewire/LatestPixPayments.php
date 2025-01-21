@@ -32,7 +32,7 @@ class LatestPixPayments extends BaseWidget
                 Tables\Columns\TextColumn::make('pix_type')
                     ->label('Тип ключа'),
                 Tables\Columns\TextColumn::make('amount')
-                    ->money('BRL')
+                    ->money('RUB')
                     ->label('Сумма'),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()

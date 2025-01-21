@@ -42,11 +42,11 @@ class GgrTableWidget extends BaseWidget
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('balance_bet')
-                    ->money('BRL')
+                    ->money('RUB')
                     ->label('Ставка'),
 
                 Tables\Columns\TextColumn::make('balance_win')
-                    ->money('BRL')
+                    ->money('RUB')
                     ->label('Выигрыш'),
 
                 Tables\Columns\TextColumn::make('dateHumanReadable')

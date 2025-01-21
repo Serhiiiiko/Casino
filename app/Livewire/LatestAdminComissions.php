@@ -34,11 +34,11 @@ class LatestAdminComissions extends BaseWidget
                     ->label('Тип'),
 
                 Tables\Columns\TextColumn::make('commission_paid')
-                    ->money('BRL')
+                    ->money('RUB')
                     ->label('Комиссия'),
 
                 Tables\Columns\TextColumn::make('losses_amount')
-                    ->money('BRL')
+                    ->money('RUB')
                     ->badge()
                     ->color('danger')
                     ->label('Убытки'),

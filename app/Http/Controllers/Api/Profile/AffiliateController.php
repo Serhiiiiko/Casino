@@ -111,7 +111,7 @@ class AffiliateController extends Controller
                 'amount' => $request->amount,
                 'pix_key' => $request->pix_key,
                 'pix_type' => $request->pix_type,
-                'currency' => 'BRL',
+                'currency' => 'RUB',
                 'symbol' => 'R$',
             ]);
 

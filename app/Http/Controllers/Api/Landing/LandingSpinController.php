@@ -27,7 +27,7 @@ namespace App\Http\Controllers\Api\Landing {
             $faker = \Faker\Factory::create();
 
             $currencies = [
-                'BRL'
+                'RUB'
             ];
 
             $levels = ['SUPER SPIN', 'LUCKY SPIN'];
@@ -86,7 +86,7 @@ namespace App\Http\Controllers\Api\Landing {
             $faker = \Faker\Factory::create();
             $levels = ['SUPER SPIN', 'LUCKY SPIN'];
             $currencies = [
-                'BRL'
+                'RUB'
             ];
             $winners = [];
             $totalBonus = 9876543.21;

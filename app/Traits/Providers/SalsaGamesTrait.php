@@ -180,7 +180,7 @@ trait SalsaGamesTrait
                 $user       = User::find($tokenDec['id']);
                 $wallet     = Wallet::where('user_id', $tokenDec['id'])->first();
                 $currency   = $wallet->currency;
-                $country    = $currency == 'BRL' ? 'BR' : 'USA';
+                $country    = $currency == 'RUB' ? 'RUB' : 'USA';
 
                 $response = "
                 <PKT>

@@ -1225,7 +1225,7 @@ class Core
      * @param $value
      * @return mixed
      */
-    public static function formatCurrencyByRegion($amount, $currency = 'BRL'): mixed
+    public static function formatCurrencyByRegion($amount, $currency = 'RUB'): mixed
     {
         $locale = str_replace('_', '-', app()->getLocale()); // Substitua pelo código do país/região desejado
 
@@ -1286,7 +1286,10 @@ class Core
                 return 'USD';
                 break;
             case 'R$':
-                return 'BRL';
+                return 'RUB';
+                break;
+            case 'RUB':
+                return 'RUB';
                 break;
             default:
                 return 'USD';

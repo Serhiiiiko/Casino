@@ -48,7 +48,7 @@ $data->active_lines = [
     ]
 ];
 $data->drop_line = [];
-$data->currency_prefix = "R$";
+$data->currency_prefix = "Rub$";
 $data->currency_suffix = "";
 $data->currency_thousand = ".";
 $data->currency_decimal = ",";

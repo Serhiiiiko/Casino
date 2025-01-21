@@ -868,9 +868,9 @@ class Core
         }
 
         if ($settings->currency_position == 'left') {
-            $amount = ($settings->prefix ?? 'R$').number_format(floatval($value), 2, $decimalDot, $decimalComma);
+            $amount = ($settings->prefix ?? 'Rub$').number_format(floatval($value), 2, $decimalDot, $decimalComma);
         } elseif ($settings->currency_position == 'right') {
-            $amount = number_format(floatval($value), 2, $decimalDot, $decimalComma).($settings->prefix ?? 'R$');
+            $amount = number_format(floatval($value), 2, $decimalDot, $decimalComma).($settings->prefix ?? 'Rub$');
         } else {
             $amount = $settings->prefix.number_format(floatval($value), 2, $decimalDot, $decimalComma);
         }
@@ -1285,7 +1285,7 @@ class Core
             case '$':
                 return 'USD';
                 break;
-            case 'R$':
+            case 'Rub$':
                 return 'RUB';
                 break;
             case 'RUB':

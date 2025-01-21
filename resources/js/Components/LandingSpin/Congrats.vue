@@ -8,7 +8,7 @@
 				<div class="cont">
 					<div class="tit ttu">{{ $t('Congratulations') }}!</div>
 					<div class="desc">{{ $t('You’ve got free money to bet on our games') }}!</div>
-					<div class="scoll-num amount sxm7p3g"><span v-if="prize.currency == 'BRL'">R$&nbsp;</span>{{ (animatedNumber).toFixed(2).replace('.',',') }} <span v-if="prize.currency != 'BRL'">{{ prize.currency }}</span></div>
+					<div class="scoll-num amount sxm7p3g"><span v-if="prize.currency == 'RUB'">Rub$&nbsp;</span>{{ (animatedNumber).toFixed(2).replace('.',',') }} <span v-if="prize.currency != 'BRL'">{{ prize.currency }}</span></div>
 					<button class="ui-button button-normal s-conic" @click="ClaimReawards()">
 						<div class="button-inner">{{  $t('Claim Rewards') }}</div>
 					</button>

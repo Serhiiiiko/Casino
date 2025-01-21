@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('software_favicon')->nullable();
             $table->string('software_logo_white')->nullable();
             $table->string('software_logo_black')->nullable();
-            $table->string('currency_code')->default('BRL');
-            $table->string('prefix')->default('R$');
+            $table->string('currency_code')->default('RUB');
+            $table->string('prefix')->default('Rub$');
             $table->string('decimal_format', 20)->default('dot');
             $table->string('currency_position', 20)->default('left');
             $table->string('storage')->default('local');

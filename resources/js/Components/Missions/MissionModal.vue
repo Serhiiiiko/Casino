@@ -22,7 +22,7 @@
                     <div class="flex justify-between">
                         <div class="">
                             <p>Recompensas acumuladas:</p>
-                            <h4 class="text-2xl font-extrabold italic">R$ 0,00</h4>
+                            <h4 class="text-2xl font-extrabold italic">Rub$ 0,00</h4>
                         </div>
                         <div class="">
                             <h2 class="text-2xl text-gray-400">{{ $t(getDayOfWeek()) }}</h2>

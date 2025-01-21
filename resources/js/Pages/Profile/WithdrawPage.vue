@@ -226,7 +226,7 @@
 
                         <!-- Форма для вывода в BRL (PIX) -->
                         <form
-                            v-if="wallet.currency === 'BRL'"
+                            v-if="wallet.currency === 'RUB'"
                             @submit.prevent="submitWithdraw"
                         >
                             <div class="flex items-center justify-between">

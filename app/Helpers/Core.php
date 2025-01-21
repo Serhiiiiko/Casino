@@ -868,9 +868,9 @@ class Core
         }
 
         if ($settings->currency_position == 'left') {
-            $amount = ($settings->prefix ?? 'R$').number_format(floatval($value), 2, $decimalDot, $decimalComma);
+            $amount = ($settings->prefix ?? 'Rub$').number_format(floatval($value), 2, $decimalDot, $decimalComma);
         } elseif ($settings->currency_position == 'right') {
-            $amount = number_format(floatval($value), 2, $decimalDot, $decimalComma).($settings->prefix ?? 'R$');
+            $amount = number_format(floatval($value), 2, $decimalDot, $decimalComma).($settings->prefix ?? 'Rub$');
         } else {
             $amount = $settings->prefix.number_format(floatval($value), 2, $decimalDot, $decimalComma);
         }
@@ -1225,7 +1225,7 @@ class Core
      * @param $value
      * @return mixed
      */
-    public static function formatCurrencyByRegion($amount, $currency = 'BRL'): mixed
+    public static function formatCurrencyByRegion($amount, $currency = 'RUB'): mixed
     {
         $locale = str_replace('_', '-', app()->getLocale()); // Substitua pelo código do país/região desejado
 
@@ -1285,8 +1285,11 @@ class Core
             case '$':
                 return 'USD';
                 break;
-            case 'R$':
-                return 'BRL';
+            case 'Rub$':
+                return 'RUB';
+                break;
+            case 'RUB':
+                return 'RUB';
                 break;
             default:
                 return 'USD';

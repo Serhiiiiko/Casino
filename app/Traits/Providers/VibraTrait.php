@@ -38,7 +38,7 @@ trait VibraTrait
         $params = [
             'siteId'    => 'valebetsports',
             'gameMode'  => 'REAL', // FUN - REAL
-            'currency'  => 'BRL',
+            'currency'  => 'RUB',
             'channel'   => 'desktop',
             'locale'    => 'pt',
             'gameId'    => $siteID,
@@ -102,7 +102,7 @@ trait VibraTrait
                         //'stakeDefaultLevel' => 10,
                         //'accountFreeBalance' => '',
                         'accountBalance' => $wallet->total_balance * 100,
-                        'accountCurrency' => 'BRL',
+                        'accountCurrency' => 'RUB',
                         'token' => $token,
                     ]
                 ]);
@@ -135,7 +135,7 @@ trait VibraTrait
                         //'stakeDefaultLevel' => 10,
                         //'accountFreeBalance' => '',
                         'accountBalance' => $wallet->total_balance * 100,
-                        'accountCurrency' => 'BRL',
+                        'accountCurrency' => 'RUB',
                         'token' => $token,
                     ]
                 ]);
@@ -209,7 +209,7 @@ trait VibraTrait
                         "timestamp" => time(),
                         "data" => [
                             "accountBalance" => $wallet->total_balance * 100,
-                            "accountCurrency" => "BRL",
+                            "accountCurrency" => "RUB",
                             "transactionId" => $data['transactionId'],
                             "token" => $data['token']
                         ]
@@ -362,7 +362,7 @@ trait VibraTrait
                             "timestamp" => time(),
                             "data" => [
                                 "accountBalance" => $wallet->total_balance * 100,
-                                "accountCurrency" => "BRL",
+                                "accountCurrency" => "RUB",
                                 "transactionId" => $data['transactionId'],
                                 "token" => $data['token']
                             ]

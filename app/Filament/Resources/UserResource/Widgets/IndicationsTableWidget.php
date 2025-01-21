@@ -45,7 +45,7 @@ class IndicationsTableWidget extends BaseWidget
 
                 Tables\Columns\TextColumn::make('losses')
                     ->formatStateUsing(fn (AffiliateHistory $record): string => 
-                        'Кол-во: '.$record->losses.' - Сумма: R$'.$record->losses_amount
+                        'Кол-во: '.$record->losses.' - Сумма: Rub$'.$record->losses_amount
                     )
                     ->label('Потери')
                     ->searchable(),
@@ -57,7 +57,7 @@ class IndicationsTableWidget extends BaseWidget
 
                 Tables\Columns\TextColumn::make('commission_paid')
                     ->label('Комиссия')
-                    ->money('BRL')
+                    ->money('RUB')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('created_at')

@@ -60,7 +60,7 @@ class MyBetsTableWidget extends BaseWidget
 
                 Tables\Columns\TextColumn::make('amount')
                     ->label('Цена')
-                    ->money('BRL')
+                    ->money('RUB')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('providers')

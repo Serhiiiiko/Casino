@@ -56,7 +56,7 @@ trait SlotegratorTrait
                 'player_name'       => auth('api')->user()->name,
                 'email'             => auth('api')->user()->email,
                 'return_url'        => url('/'),
-                'currency'          => 'BRL',
+                'currency'          => 'RUB',
                 'session_id'        => $this->generateRandomString(),
                 'language'          => 'pt',
                 'lobby_data'        => $this->getLobby($gameuuid, false),
@@ -194,7 +194,7 @@ trait SlotegratorTrait
      */
     public function getLobby($gameuuid, bool $api = true)
     {
-        $url = $this->merchantUrl . '/games/lobby?game_uuid=' . $gameuuid . '&currency=BRL&technology=HTML5';
+        $url = $this->merchantUrl . '/games/lobby?game_uuid=' . $gameuuid . '&currency=RUB&technology=HTML5';
         $merchantId     = $this->merchantId;
         $merchantKey    = $this->merchantKey;
         $nonce          = md5(uniqid(mt_rand(), true));
@@ -208,7 +208,7 @@ trait SlotegratorTrait
 
         $requestParams = [
             'game_uuid' => $gameuuid,
-            'currency' => 'BRL',
+            'currency' => 'RUB',
             'technology' => 'HTML5',
         ];
 

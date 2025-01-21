@@ -25,10 +25,12 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Filament\Forms\Components\Actions\Action;
 use Creagia\FilamentCodeField\CodeField;
 use Livewire\WithFileUploads;
+use App\Traits\Providers\Games2ApiTrait;
+
 
 class AdvancedPage extends Page implements HasForms
 {
-    use InteractsWithForms, WorldSlotTrait, WithFileUploads;
+    use InteractsWithForms, WithFileUploads, Games2ApiTrait;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
@@ -68,20 +70,31 @@ class AdvancedPage extends Page implements HasForms
      */
     public function loadProvider($type)
     {
-        self::getProviderWorldslot($type);
+        \Log::info('loadProvider() получил параметр: '.$type);
+    
+        if ($type === 'slot') {
+            // Загрузить провайдеры только для слотов…
+        } elseif ($type === 'casino') {
+            // Для казино…
+        }
+        // Или любой нужный вам код
+    
         Notification::make()
             ->title('Успех')
-            ->body('Провайдеры успешно загружены')
+            ->body("Провайдеры {$type} успешно загружены")
             ->success()
             ->send();
     }
+    
+    
+    
 
     /**
      * @return void
      */
     public function loadGames()
     {
-        self::getGamesWorldslot();
+        self::GetAllGamesGames2Api();
         Notification::make()
             ->title('Успех')
             ->body('Игры успешно загружены')

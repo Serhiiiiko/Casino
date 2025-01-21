@@ -285,7 +285,7 @@
                         fontWeight: '900'
                     };
                     const topText = new PIXI.Text('GIRE E GANHE', textOptions);
-                    const topTextAmount = new PIXI.Text('R$100 mil', {
+                    const topTextAmount = new PIXI.Text('Rub$100 mil', {
                         ...textOptions,
                         dropShadow: true,
                         dropShadowAlpha: 0.8,

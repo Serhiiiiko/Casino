@@ -111,8 +111,8 @@ class AffiliateController extends Controller
                 'amount' => $request->amount,
                 'pix_key' => $request->pix_key,
                 'pix_type' => $request->pix_type,
-                'currency' => 'BRL',
-                'symbol' => 'R$',
+                'currency' => 'RUB',
+                'symbol' => 'Rub$',
             ]);
 
             auth('api')->user()->wallet->decrement('refer_rewards', $request->amount);

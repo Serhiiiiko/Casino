@@ -163,7 +163,7 @@ class GameController extends Controller
                         case 'salsa':
                             return response()->json([
                                 'game' => $game,
-                                'gameUrl' => self::playGameSalsa('CHARGED', 'BRL', 'BR', $game->game_id),
+                                'gameUrl' => self::playGameSalsa('CHARGED', 'RUB', 'RU', $game->game_id),
                                 'token' => $token
                             ]);
                         case 'kagaming':

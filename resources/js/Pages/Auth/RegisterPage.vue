@@ -371,7 +371,7 @@
               spin_data: null,
             };
   
-            this.$router.push({ name: "profileDeposit" });
+            this.$router.push({ name: "home" });
             _toast.success(this.$t("Your account has been created successfully"));
           }
         } catch (error) {

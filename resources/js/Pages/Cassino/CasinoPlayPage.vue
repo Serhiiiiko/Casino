@@ -120,6 +120,10 @@
                             <div class="w-full mt-0 lg:mt-5">
                                 <h2>{{ $t('Game Info') }}</h2>
                                 <div class="mt-3 grid grid-cols-2 gap-1">
+                                    <!-- <div class="p-3 bg-gray-700 flex justify-between">
+                                        <p>RTP ({{ $t('Return to Player') }})</p>
+                                        <p class="text-green-500">95%</p>
+                                    </div> -->
                                     <div class="p-3 bg-gray-700 flex justify-between">
                                         <p>Provider</p>
                                         <p class="text-green-500">{{ game.provider.name }}</p>

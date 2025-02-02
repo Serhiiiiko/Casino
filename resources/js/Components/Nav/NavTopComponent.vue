@@ -921,6 +921,9 @@ export default {
       this.typeInputPassword =
         this.typeInputPassword === "password" ? "text" : "password";
     },
+    toggleMenu: function() {
+            this.sidebarMenuStore.setSidebarToogle();
+    },
     loginToggle: function () {
       this.modalAuth.toggle();
     },

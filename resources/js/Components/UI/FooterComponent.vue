@@ -50,8 +50,7 @@
                     <ul class="list-none mt-5">
                         <li class="transition duration-700 hover:dark:text-white text-gray-600 dark:text-gray-400 hover:text-gray-800 text-[12px]"><a @click="$router.push('/terms/service')" href="">{{ $t('Service Terms') }}</a></li>
                         <li class="transition duration-700 hover:dark:text-white text-gray-600 dark:text-gray-400 hover:text-gray-800 text-[12px]"><a @click="$router.push('/terms/privacy-policy')" href="">{{ $t('Privacy Policy') }}</a></li>
-                        <li class="transition duration-700 hover:dark:text-white text-gray-600 dark:text-gray-400 hover:text-gray-800 text-[12px]"><a @click="$router.push('/terms/bonus')" href="">{{ $t('Bonus Terms') }}</a></li>
-                        <li class="transition duration-700 hover:dark:text-white text-gray-600 dark:text-gray-400 hover:text-gray-800 text-[12px]"><a @click="$router.push('/terms/bonus-welcome')" href="">{{ $t('Welcome Bonus') }}</a></li>
+                        <li class="transition duration-700 hover:dark:text-white text-gray-600 dark:text-gray-400 hover:text-gray-800 text-[12px]"> <a @click="$router.push('/terms/refund-policy')" href="">{{ $t('Refund Policy') }}</a></li>
                     </ul>
                 </div>
             </div>

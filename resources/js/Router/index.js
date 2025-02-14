@@ -33,6 +33,7 @@ import LandingPage from "@/Pages/Landing/LandingPage.vue";
 import CasinoPlayPage from "@/Pages/Cassino/CasinoPlayPage.vue";
 import ForgotPassword from "@/Pages/Auth/ForgotPassword.vue";
 import ResetPassword from "@/Pages/Auth/ResetPassword.vue";
+import RefundPolicy from "@/Pages/Terms/RefundPolicy.vue";
 
 export const routes = [
     {
@@ -203,6 +204,11 @@ export const routes = [
         name: 'welcomeBonus',
         path: '/terms/bonus-welcome',
         component: WelcomeBonus
+    },
+    {
+        path: '/terms/refund-policy',
+        name: 'RefundPolicy',
+        component: RefundPolicy,
     },
     {
         name: 'dataPage',

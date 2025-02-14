@@ -110,8 +110,8 @@ class ProfileController extends Controller
     {
         $browserLanguages = $request->getLanguages();
 
-        $preferredLanguage = $browserLanguages[0] ?? 'en';
-
+        // $preferredLanguage = $browserLanguages[0] ?? 'en';
+        $preferredLanguage = 'ru';
         if (auth('api')->check()) {
             return response()->json(['language' => auth('api')->user()->language]);
         }
